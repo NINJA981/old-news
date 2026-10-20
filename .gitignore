@@ -1,0 +1,17 @@
+node_modules/
+.output/
+.wxt/
+dist/
+coverage/
+playwright-report/
+test-results/
+*.log
+.DS_Store
+Thumbs.db
+.env
+.env.*
+# Model weights are fetched at build time with a pinned SHA-256 (scripts/fetch-model.ts)
+public/models/
+public/ort/
+# Local-only impeccable settings
+.impeccable/config.local.json
