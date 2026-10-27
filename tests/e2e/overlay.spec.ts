@@ -287,7 +287,8 @@ test.describe('pause, popup and app', () => {
     await worker.evaluate(() => chrome.storage.local.set({ settings: { pausedOrigins: [] } }));
     await page.reload();
     await waitForOverlay(page);
-    expect(await opacityOf(page, 'At least 40 firefighters')).toBeLessThan(1);
+    // The pill appears as the dissolve starts; the fade lands as it plays, so poll for it.
+    await expect.poll(() => opacityOf(page, 'At least 40 firefighters')).toBeLessThan(1);
   });
 
   test('popup: story card and Drift rows (AC14.1, AC15.1), and the unmapped state (AC2.2)', async ({

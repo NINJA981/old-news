@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-10-27T16:39:02.104Z",
+  "measuredAt": "2026-10-27T18:03:55.287Z",
   "corpus": {
     "stories": 4,
     "articles": 12,
     "labelledParagraphs": 118,
     "changedMeaningPairs": 166,
     "negativesWikinews": 0,
-    "sha256": "b890ca2f621e8fcda4cfc16111996dd946514e5997a256621c682ae68e5f55e9"
+    "sha256": "c41b1ddcbbc5a5f9fcc2c246f71078d6cb9766f62848c2345ad7bba3da4f8c21"
   },
   "model": {
     "id": "Xenova/all-MiniLM-L6-v2 (q8)",

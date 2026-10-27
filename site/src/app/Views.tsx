@@ -41,7 +41,7 @@ export function StoriesView({ version, onSample }: { version: number; onSample: 
   const now = Date.now();
   return (
     <div className="view">
-      <h2 className="page-h">Stories</h2>
+      <h1 className="page-h">Stories</h1>
       {state.s === 'loading' ? (
         <div className="skeleton-list" aria-hidden="true">
           {[0, 1, 2].map((i) => (
@@ -139,7 +139,7 @@ export function StoriesView({ version, onSample }: { version: number; onSample: 
           </ul>
           {state.loose.length > 0 ? (
             <>
-              <h3 className="sec-h">Read once, not linked to a story</h3>
+              <h2 className="sec-h">Read once, not linked to a story</h2>
               <ul className="story-articles card">
                 {state.loose.map((a) => (
                   <li key={a.id}>
@@ -208,12 +208,12 @@ export function SettingsView({
 
   return (
     <div className="view">
-      <h2 className="page-h">Settings</h2>
+      <h1 className="page-h">Settings</h1>
 
       <section className="card sect" aria-labelledby="s-look">
-        <h3 id="s-look" className="card-h">
+        <h2 id="s-look" className="card-h">
           Appearance
-        </h3>
+        </h2>
         <div className="row-between">
           <span className="row-label" id="theme-l">
             Theme
@@ -232,9 +232,9 @@ export function SettingsView({
       </section>
 
       <section className="card sect" aria-labelledby="s-read">
-        <h3 id="s-read" className="card-h">
+        <h2 id="s-read" className="card-h">
           Reading
-        </h3>
+        </h2>
         <div className="row-between">
           <span className="row-label">Fade strength</span>
           <Seg
@@ -268,9 +268,9 @@ export function SettingsView({
       </section>
 
       <section className="card sect" aria-labelledby="s-model">
-        <h3 id="s-model" className="card-h">
+        <h2 id="s-model" className="card-h">
           Meaning match
-        </h3>
+        </h2>
         <p className="body">
           The sample stories carry precomputed vectors from the same MiniLM model the extension
           runs, so “similar wording” works on them with no download. For text you paste, turning
@@ -311,9 +311,9 @@ export function SettingsView({
       </section>
 
       <section className="card sect" aria-labelledby="s-mem">
-        <h3 id="s-mem" className="card-h">
+        <h2 id="s-mem" className="card-h">
           Memory
-        </h3>
+        </h2>
         <p className="body">
           What the web app remembers lives in this browser’s IndexedDB, on this device only. Nothing
           is uploaded.
@@ -371,9 +371,9 @@ export function SettingsView({
       </section>
 
       <section className="card sect" aria-labelledby="s-app">
-        <h3 id="s-app" className="card-h">
+        <h2 id="s-app" className="card-h">
           This app
-        </h3>
+        </h2>
         <p className="body">
           Runs entirely in your browser. Nothing is uploaded. After the first load it works offline,
           and it makes no network requests beyond its own static files.

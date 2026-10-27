@@ -278,7 +278,7 @@
 /* Type */
 .page-h,
 .empty-h1,
-.art-head h2 {
+.art-head h1 {
   font-family: var(--font-read);
   font-optical-sizing: auto;
   font-weight: 500;
@@ -610,7 +610,7 @@ textarea.field {
   gap: var(--s-2);
   margin-bottom: var(--s-4);
 }
-.art-head h2 {
+.art-head h1 {
   font-size: 22px;
   line-height: 28px;
   letter-spacing: -0.015em;

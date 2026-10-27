@@ -531,7 +531,7 @@ function EmptyRead({
   return (
     <>
       <div className="empty-hero">
-        <h2 className="empty-h1">Paste two articles about the same story.</h2>
+        <h1 className="empty-h1">Paste two articles about the same story.</h1>
         <p className="lead">
           Old News fades the paragraphs you’ve already read, tells you where you read them, and
           lights up the one number that changed. It all happens in this tab.

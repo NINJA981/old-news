@@ -143,6 +143,39 @@ function pick(
   return { ...top, findings: topFindings ?? guard(p.facts, top.entry.facts) };
 }
 
+/**
+ * The same text embedded in two different batches scores up to ~0.01 apart (the quantised model's
+ * padding), so candidates within this distance of the best one are treated as equally good.
+ */
+const SCORE_NOISE = 0.02;
+
+/**
+ * Orders meaning candidates so the source a tag names does not depend on that noise (or on the
+ * order the index was filled in), whichever embedder (live model or build-time vectors) made the
+ * vectors. Repeatedly takes the best remaining score and the candidates within the noise of it;
+ * inside that group the closer wording wins, then the copy read first (the tag says where you
+ * first read it), then the id.
+ */
+function rankMeaning(p: PreparedParagraph, candidates: Scored[]): Scored[] {
+  const rest = [...candidates].sort((a, b) => b.score - a.score);
+  const wording = (s: Scored): number => jaccardEstimate(p.minhash, s.entry.minhash);
+  const out: Scored[] = [];
+  while (rest.length > 0) {
+    const floor = (rest[0] as Scored).score - SCORE_NOISE;
+    const group: Scored[] = [];
+    while (rest.length > 0 && (rest[0] as Scored).score >= floor)
+      group.push(rest.shift() as Scored);
+    group.sort(
+      (a, b) =>
+        wording(b) - wording(a) ||
+        a.entry.readAt - b.entry.readAt ||
+        (a.entry.id < b.entry.id ? -1 : a.entry.id > b.entry.id ? 1 : 0),
+    );
+    out.push(...group);
+  }
+  return out;
+}
+
 export function matchPrepared(
   prepared: readonly PreparedParagraph[],
   index: MemoryIndex,
@@ -167,7 +200,7 @@ export function matchPrepared(
       .jaccardCandidates(p.minhash, p.bands, opts.keep)
       .filter((s) => s.score >= t.jNear);
     const mj = pick(p, jc, t.jSeen);
-    const cc = p.vec ? index.cosineCandidates(p.vec.q, TOP_K, opts.keep) : [];
+    const cc = p.vec ? rankMeaning(p, index.cosineCandidates(p.vec.q, TOP_K, opts.keep)) : [];
     const mc = pick(p, cc, t.cSim);
     const feedback =
       (mj !== null && fb(feedbackPairKey(p.fingerprint, mj.entry.id))) ||

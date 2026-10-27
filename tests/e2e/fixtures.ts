@@ -10,7 +10,7 @@ import { mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import type { BrowserContext, Page, Worker } from '@playwright/test';
-import { chromium, test as base } from '@playwright/test';
+import { chromium, expect, test as base } from '@playwright/test';
 import type { PageTheme } from '../fixtures/story-page';
 import { loadStoryArticle, renderInfinitePage, renderStoryPage } from '../fixtures/story-page';
 
@@ -35,6 +35,8 @@ interface Fixtures {
 const isLocal = (url: string, siteOrigin: string): boolean =>
   url.startsWith('chrome-extension://') ||
   url.startsWith(siteOrigin) ||
+  // Loopback never leaves the machine (other local servers a test starts, e.g. the web app's build).
+  /^https?:\/\/127\.0\.0\.1(:|\/)/.test(url) ||
   url.startsWith('data:') ||
   url.startsWith('blob:') ||
   url.startsWith('about:') ||
@@ -100,6 +102,9 @@ export const test = base.extend<Fixtures>({
     });
     await use(context);
     await context.close();
+    // AC17.4: nothing leaves the machine in ANY test, whether or not the test asserted it.
+    const leaked = requests.filter((r) => r.external).map((r) => r.url);
+    expect(leaked, 'requests that left the machine (AC17.4)').toEqual([]);
   },
   worker: async ({ context }, use) => {
     const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));

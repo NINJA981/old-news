@@ -42,6 +42,7 @@ const REASONS: Record<string, string> = {
   'too-few-paragraphs': 'Fewer than three paragraphs were found',
   'low-mapping': 'Text is split across ad slots or scripts',
   'double-mapped': 'The same text appears in two places',
+  'too-little-text': 'There is hardly any text to read (it may be drawn on a canvas)',
 };
 
 function hostOf(origin: string | null | undefined): string | null {
@@ -421,7 +422,11 @@ function Popup() {
   const pausedHere = !!tab?.origin && settings.pausedOrigins.includes(tab.origin);
   const storyId = status?.status === 'result' ? status.storyId : null;
   const story = status?.status === 'result' ? status.story : null;
-  const firstRun = stats !== null && stats.paragraphs === 0 && status?.status !== 'result';
+  // The welcome screen yields to a page status that explains what happened on *this* page: a
+  // fresh install on a page that cannot be lined up must still say so (SPEC AC2.2).
+  const pageExplained =
+    status?.status === 'result' || status?.status === 'unmapped' || status?.status === 'error';
+  const firstRun = stats !== null && stats.paragraphs === 0 && !pageExplained;
 
   function toggleSite(on: boolean): void {
     if (!tab?.origin || !host) return;

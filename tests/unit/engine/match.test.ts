@@ -190,3 +190,66 @@ describe('MemoryIndex', () => {
     expect(index.cosineCandidates(new Int8Array(384), 2)).toEqual([]);
   });
 });
+
+describe('equal scores name the same source whatever order the index was filled in', () => {
+  const copies: [id: string, readAt: number][] = [
+    ['wire', 1_000],
+    ['calder', 2_000],
+    ['morrow', 3_000],
+  ];
+  async function sourceFor(order: typeof copies, withEmbedder: boolean): Promise<string | null> {
+    const index = new MemoryIndex();
+    const e = new FakeEmbedder();
+    for (const [id, readAt] of order) {
+      await rememberPrepared(index, withEmbedder ? e : null, id, [WIRE[0]!], readAt);
+    }
+    const { result } = await matchArticle(
+      [{ ordinal: 0, text: WIRE[0]! }],
+      index,
+      withEmbedder ? e : null,
+    );
+    return result.paragraphs[0]?.matchArticleId ?? null;
+  }
+
+  it.each([true, false])('picks the copy read first (embedder: %s)', async (withEmbedder) => {
+    const forward = await sourceFor(copies, withEmbedder);
+    const backward = await sourceFor([...copies].reverse(), withEmbedder);
+    expect(forward).toBe('wire');
+    expect(backward).toBe('wire');
+  });
+});
+
+describe('batch noise in the vectors does not change which source a tag names', () => {
+  /** Embeds like FakeEmbedder, then nudges every vector a little differently on each call. */
+  class NoisyEmbedder implements Embedder {
+    readonly id = 'noisy';
+    private calls = 0;
+    private readonly inner = new FakeEmbedder();
+    async embed(texts: readonly string[]): Promise<Float32Array[]> {
+      const call = ++this.calls;
+      const out = await this.inner.embed(texts);
+      return out.map((v) => {
+        const w = v.map((x, i) => x + 0.012 * Math.sin(i * 12.9898 + call * 78.233));
+        const norm = Math.hypot(...w) || 1;
+        return w.map((x) => x / norm);
+      });
+    }
+  }
+
+  it('names the copy read first for any noise seed', async () => {
+    for (const order of [
+      ['wire', 'calder', 'morrow'],
+      ['morrow', 'calder', 'wire'],
+    ]) {
+      const index = new MemoryIndex();
+      const e = new NoisyEmbedder();
+      let readAt = 1_000;
+      for (const id of order) await rememberPrepared(index, e, id, [WIRE[0]!], (readAt += 1_000));
+      const first = order[0];
+      for (let i = 0; i < 6; i++) {
+        const { result } = await matchArticle([{ ordinal: 0, text: WIRE[0]! }], index, e);
+        expect(result.paragraphs[0]?.matchArticleId).toBe(first);
+      }
+    }
+  });
+});

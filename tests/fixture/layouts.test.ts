@@ -85,9 +85,9 @@ describe.each(files)('%s', (file) => {
   }
 
   if (want.status === 'reject') {
-    it('does nothing: no mapping is produced', () => {
+    it('does nothing: no mapping is produced, and the reason is "could not line up" (AC2.1, AC2.2)', () => {
       const result = analyseDocument(load(file), urlFor(file));
-      expect(result.status).not.toBe('mapped');
+      expect(result.status).toBe('unmapped');
     });
   }
 

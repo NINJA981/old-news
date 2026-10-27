@@ -34,10 +34,18 @@ export function stopwordRatio(text: string): number {
   return hits / words.length;
 }
 
+/** Fewer words than this and the stopword ratio cannot say which language the text is in. */
+export const MIN_WORDS_TO_JUDGE = 30;
+
+/** True when there is too little text to tell a language from (e.g. a canvas-drawn story). */
+export function tooShortToJudge(text: string): boolean {
+  return tokenize(text).filter((t) => /\p{L}/u.test(t)).length < MIN_WORDS_TO_JUDGE;
+}
+
 /** True when the text reads as English prose (needs at least 30 words to decide). */
 export function isEnglishText(text: string): boolean {
   const words = tokenize(text).filter((t) => /\p{L}/u.test(t));
-  if (words.length < 30) return false;
+  if (words.length < MIN_WORDS_TO_JUDGE) return false;
   return stopwordRatio(text) >= MIN_STOPWORD_RATIO;
 }
 

@@ -25,7 +25,8 @@ export interface MappedBlock {
   element: Element;
 }
 
-export type RejectReason = 'too-few-paragraphs' | 'low-mapping' | 'double-mapped';
+export type RejectReason =
+  'too-few-paragraphs' | 'low-mapping' | 'double-mapped' | 'too-little-text';
 
 export type MapResult =
   | { ok: true; blocks: MappedBlock[]; total: number; mapped: number }

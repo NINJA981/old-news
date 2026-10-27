@@ -125,7 +125,7 @@ test.describe('extension pages through the engine host', () => {
     await expect(popup.getByTestId('meter')).toContainText('nothing remembered yet');
 
     const app = await openExtensionPage('app.html');
-    await expect(app.getByRole('heading', { name: 'Stories' })).toBeVisible();
+    await expect(app.getByRole('heading', { name: 'Stories', exact: true })).toBeVisible();
     await expect(app.getByText('No stories yet.')).toBeVisible();
 
     expect(requests.filter((r) => r.external)).toEqual([]);

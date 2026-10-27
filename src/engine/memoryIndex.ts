@@ -29,6 +29,21 @@ export interface Scored {
   score: number;
 }
 
+/**
+ * Best first: higher score, then the copy read first ("you first read this in ..."), then the
+ * smaller id. Equal scores are
+ * real (the same wire copy in three outlets), and without a total order the winner would depend on
+ * the order the index was filled in, so the same memory could name a different source on a second
+ * device or after a reload.
+ */
+export function byBest(a: Scored, b: Scored): number {
+  return (
+    b.score - a.score ||
+    a.entry.readAt - b.entry.readAt ||
+    (a.entry.id < b.entry.id ? -1 : a.entry.id > b.entry.id ? 1 : 0)
+  );
+}
+
 export function entryFromRecord(r: ParagraphRecord): IndexEntry {
   return {
     id: r.id,
@@ -100,7 +115,7 @@ export class MemoryIndex {
       if (!entry || (keep && !keep(entry))) continue;
       out.push({ entry, score: jaccardEstimate(minhash, entry.minhash) });
     }
-    return out.sort((a, b) => b.score - a.score);
+    return out.sort(byBest);
   }
 
   /** Meaning candidates: the k entries with the highest int8 cosine, best first. */
@@ -113,10 +128,10 @@ export class MemoryIndex {
       const score = cosine8(q, entry.vec, qNorm, entry.normSq);
       if (top.length < k) {
         top.push({ entry, score });
-        top.sort((a, b) => b.score - a.score);
-      } else if (score > (top[k - 1] as Scored).score) {
+        top.sort(byBest);
+      } else if (byBest({ entry, score }, top[k - 1] as Scored) < 0) {
         top[k - 1] = { entry, score };
-        top.sort((a, b) => b.score - a.score);
+        top.sort(byBest);
       }
     }
     return top;

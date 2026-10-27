@@ -1,7 +1,7 @@
 # HANDOFF: Old News
 
-**Last stage:** Stage 3a, Product UI (2026-10-27)
-**Next stage:** Stage 3b is the landing/web app in `site/` (another agent; untouched here), then QA, store assets and release
+**Last stage:** Stage 4, Test engineer (2026-10-28)
+**Next stage:** store assets, CI, release (see "Known issues")
 
 ## State in one paragraph
 
@@ -9,9 +9,64 @@ Every user-facing surface exists and runs on the real engine: the in-page overla
 provenance tags, hover card, drift highlight and chip, status pill, "Previously on" tray, N fold,
 J/K, "Not old news"), the toolbar popup (all states), the app page (Stories, Drift, Receipt, Memory,
 Settings, Playground, command palette), onboarding with the open-tab ingest, and the playground
-that reproduces the dissolve. `pnpm lint`, `pnpm typecheck`, `pnpm test` (575 tests), `pnpm build`,
-`pnpm build:firefox`, `pnpm check-tokens` and `pnpm test:e2e` (17 tests, real model, includes an axe
+that reproduces the dissolve. `pnpm lint`, `pnpm typecheck`, `pnpm test` (583 tests), `pnpm build`,
+`pnpm build:firefox`, `pnpm check-tokens` and `pnpm test:e2e` (24 tests, real model, includes an axe
 pass with 0 WCAG A/AA violations) all pass. Screenshots are in `docs/screenshots/`.
+
+## Stage 4 summary (tests)
+
+Every SPEC acceptance criterion is mapped to tests in **`docs/TEST-MATRIX.md`** (AC1.1 to AC19.1, none
+unmapped), with the gaps listed at the bottom. Green at the end of this stage:
+
+| Check | Result |
+|---|---|
+| `pnpm lint`, `pnpm typecheck`, `pnpm check-tokens` | pass |
+| `pnpm test` | 583 tests in 28 files |
+| `pnpm test:e2e` (extension, real model) | 24 passed, 1 skipped (the screenshot pass, `OLD_NEWS_SHOTS=1` only) |
+| `pnpm eval` | gates pass; metrics unchanged (changed-meaning recall 0.816, still below the 0.85 target) |
+| `pnpm build`, `pnpm build:firefox` | pass (56.67 MB and 57.29 MB unpacked; the Firefox build is not run anywhere) |
+| `site/`: typecheck, lint, 21 unit tests, `pnpm build` | pass |
+| `site/`: `pnpm test:e2e` | 61 passed (legacy 375 suite, plus `phone` 375x812 touch and `desktop` 1440x900 projects) |
+
+New this stage:
+
+- **Extension e2e** (`tests/e2e/coverage.spec.ts`): every layout fixture in the real browser with a
+  MutationObserver diff (AC1.1, 1.2, 2.1, 2.2), the offscreen document lifecycle through the real
+  idle alarm (AC5.1), the model removed from the build (AC5.3), measured contrast on light, dark and
+  tinted pages (AC8.1), and the N/J/K input guard (AC12.1). `fixtures.ts` now fails *any* test that
+  made a non-local request (AC17.4 for the whole suite, not just the tests that asserted it).
+- **Parity** (`tests/e2e/parity.spec.ts`): the web app (`site/dist`) and the extension (real model)
+  run every paragraph of every bundled sample story and must agree on tier, fingerprint, the outlet
+  the tag names and the changed figures. `global-setup.ts` rebuilds `site/dist` when `src/` or
+  `site/src/` is newer, so the test never compares against a stale engine.
+- **Site and web app** (`site/tests/e2e`): `smoke`, `a11y` (axe on every surface, light and dark),
+  `pwa` (manifest, icons at their real pixel sizes, service worker scope and activation, precache
+  list, offline deep links), `webapp` (sample, paste, upload, offline after first load, only
+  same-origin GETs, no WebSockets, no model download without opt-in). Each runs at 375x812 touch
+  and at 1440x900 (Playwright projects `phone` and `desktop`).
+
+### Bugs found and fixed this stage
+
+1. **The source a tag names depended on embedder noise and fill order** (`src/engine/memoryIndex.ts`,
+   `src/engine/match.ts`). The same sentence embedded in two batches scores up to about 0.01 apart
+   (measured 0.992 to 0.994 against itself), and equal Jaccard scores had no tie-break, so the web
+   app (build-time vectors) and the extension (live model) named different outlets for the same
+   paragraph, and a reload could change it. Ties now resolve to the copy you read first, with
+   candidates within 0.02 cosine of the best treated as equal and the closer wording preferred. The
+   corpus metrics are unchanged. Found by the parity test; unit tests cover both orders and a noisy
+   embedder.
+2. **A page with an English `lang` and almost no text (a canvas-drawn story) was reported as "not
+   English"** instead of "couldn't line up this page's paragraphs" (`src/extract/english.ts`,
+   `index.ts`, `map.ts`; new reject reason `too-little-text`). SPEC AC2.2 wants the second.
+3. **The popup welcome screen hid the "couldn't line up" explanation on a fresh install**
+   (`entrypoints/popup/main.tsx`): the first-run state now yields to an unmapped or error status.
+4. **The web app had no `<h1>`** on any screen (`site/src/app/*`): the empty state, Stories,
+   Settings and the article title are now h1, the Settings sections h2.
+
+Test-only fixes (not product bugs): a heading selector that matched two elements, a pause test that
+read opacity before the dissolve had applied it, and a11y scans that ran while a hover card or the
+drift chip was mid-fade. `site/pnpm-lock.yaml` is back to pnpm's native format and is in
+`site/.prettierignore`.
 
 ## Stage 3a summary
 
@@ -70,7 +125,7 @@ pnpm fetch-model     # once: downloads the model (pinned revision + SHA-256) int
 pnpm dev             # Chrome with hot reload (runs `pnpm assets` first)
 pnpm build           # .output/chrome-mv3      pnpm build:firefox -> .output/firefox-mv3
 pnpm test            # Vitest: unit + fixture tests (jsdom for the DOM ones)
-pnpm test:e2e        # builds .output-e2e, then drives Chromium with the real model (17 tests incl. axe)
+pnpm test:e2e        # builds .output-e2e (and site/dist if stale), real model, 24 tests incl. axe + parity
 pnpm screenshots     # OLD_NEWS_SHOTS=1: rewrites docs/screenshots (3 widths x 2 themes, states, dissolve strip)
 pnpm lint && pnpm typecheck
 pnpm eval            # corpus metrics with the real model -> metrics.json (gates: see below)
@@ -173,9 +228,11 @@ Raw numbers: `metrics.json` (`pnpm eval`) and `test-results/engine-perf.json` (e
    re-measured this stage. WebGPU was slower than WASM in headless Chromium only; no real-GPU run.
 7. **Firefox is built, not run.** `pnpm build:firefox` succeeds (57.3 MB); the engine in the background
    page and the overlay were never executed there. The build warns about `import.meta` in IIFE output.
-8. **Not covered by an e2e:** AC5.1 (the 5-minute unload is fake-timer unit tested), AC1.2 (a French
-   page; `french-article.html` exists and is covered by the page-gate unit tests), keyboard-only
-   operation of the onboarding permission prompt (`permissions.request` needs a real user gesture).
+8. **Not covered by an e2e:** the onboarding permission prompt (`permissions.request` needs a real user
+   gesture), the PWA install prompt (each installability criterion is asserted instead), the web
+   app's optional 23 MB model path (`enableModel`), and anything in Firefox. AC5.1 and AC1.2 now have
+   browser tests (`coverage.spec.ts`); the idle alarm test shortens the 5-minute delay, and the
+   5-minute constant itself is covered by the unit test. See `docs/TEST-MATRIX.md`.
 9. **Drift only becomes stored once a changed paragraph is dwelled on.** Until then it is listed on the
    card and the popup (transient), but not in the app's Drift screen.
 10. **Ad copy inside a paragraph element** can trigger drift chips about ad numbers when the ad slot's
@@ -188,3 +245,9 @@ Raw numbers: `metrics.json` (`pnpm eval`) and `test-results/engine-perf.json` (e
 13. **A shell trap for the next agent:** inside a double-quoted `node -e "..."` in this environment,
     backslashes are eaten. Write scripts to files. Prettier and editors can turn a literal NBSP into
     an "irregular whitespace" lint error; use ` ` in regexes.
+12. **Site notes live in `site/HANDOFF.md`** (landing and web app, Stage 3b). Its perf numbers are from
+    one laptop under emulation and noisy; re-measure LCP on the deployed host. Lighthouse "Agentic
+    Browsing" scores 75 (an experimental `ai-catalog.json` audit), left as is.
+13. **Parity depends on the sample vectors being current.** `site/src/data/embeddings.json` holds
+    build-time MiniLM vectors; if the sample stories or the model change, regenerate them
+    (`pnpm --dir site fixtures`) or the parity test will say so.

@@ -3,7 +3,7 @@
  * APIs. Used by the content script, install-time ingest (same code via scripting) and tests.
  */
 import type { ArticleKind } from '../engine/types';
-import { isEnglish } from './english';
+import { isEnglishLangTag, isEnglishText, tooShortToJudge } from './english';
 import type { MappedBlock, RejectReason } from './map';
 import { mapParagraphs } from './map';
 import { findLiveBlogPosts } from './liveblog';
@@ -38,11 +38,16 @@ function sampleText(doc: Document): string {
 export function analyseDocument(doc: Document, url: string): PageAnalysis {
   const signals = articleSignals(doc);
   if (!hasArticleSignal(signals)) return { status: 'not-article', reason: 'no-signal' };
-  if (!isEnglish(doc.documentElement.getAttribute('lang'), sampleText(doc)))
-    return { status: 'non-english' };
-
+  const sample = sampleText(doc);
+  if (!isEnglishLangTag(doc.documentElement.getAttribute('lang'))) return { status: 'non-english' };
   const kind = articleKind(signals);
   const page = pageInfo(doc, url);
+  // An English-tagged page with almost no text (a story drawn on a canvas, say) is not "not
+  // English": it is a page whose paragraphs cannot be lined up, and the popup should say so.
+  if (tooShortToJudge(sample)) {
+    return { status: 'unmapped', reason: 'too-little-text', total: 0, mapped: 0, page, kind };
+  }
+  if (!isEnglishText(sample)) return { status: 'non-english' };
 
   if (kind === 'liveblog') {
     const posts = findLiveBlogPosts(doc);

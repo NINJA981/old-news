@@ -98,7 +98,7 @@ export function ArticleReader({
     <section aria-labelledby={`h-${article.id}`}>
       <header className="art-head">
         <p className="caption">{article.sample ? 'Fixture story' : 'Pasted article'}</p>
-        <h2 id={`h-${article.id}`}>{view.title}</h2>
+        <h1 id={`h-${article.id}`}>{view.title}</h1>
         <dl className="kv">
           <dt>Source</dt>
           <dd>{view.siteName}</dd>
