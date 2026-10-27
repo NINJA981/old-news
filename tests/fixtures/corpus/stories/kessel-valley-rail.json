@@ -1,0 +1,76 @@
+{
+  "id": "kessel-valley-rail",
+  "story": "Kessel Valley rail closure",
+  "license": "CC0-1.0",
+  "provenance": "Authored for this repo on 2026-10-20. Every place, person, company and outlet is invented. See tests/fixtures/PROVENANCE.md.",
+  "readingOrder": ["wire", "gazette", "day2"],
+  "articles": {
+    "wire": {
+      "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+      "siteName": "Fenwick Wire",
+      "title": "Kessel Valley line to close for six weeks of bridge repairs",
+      "kind": "news",
+      "readAtMinutes": 0,
+      "paragraphs": [
+        "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+        "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+        "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+        "The operator apologised for the disruption and said the work could not be put off without risking a longer closure in the depths of winter.",
+        "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website.",
+        "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" }
+      ]
+    },
+    "gazette": {
+      "url": "https://harbour-gazette.example/transport/kessel-valley-shutdown-commuters",
+      "siteName": "Harbour Gazette",
+      "title": "Six-week rail shutdown: what Kessel Valley commuters need to know",
+      "kind": "news",
+      "readAtMinutes": 120,
+      "paragraphs": [
+        "Commuters in the lower valley face a difficult autumn, and the Gazette has gathered what we know about how the closure will affect journeys into the city.",
+        "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+        "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+        "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+        "Gazette readers have told us that the replacement buses used during last year's engineering works were often full by the second stop.",
+        "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#0", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#1", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#2", "variant": "verbatim" },
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#4", "variant": "verbatim" }
+      ]
+    },
+    "day2": {
+      "url": "https://fenwick-wire.example/2026/10/20/kessel-valley-closure-delayed",
+      "siteName": "Fenwick Wire",
+      "title": "Kessel Valley closure pushed back a week",
+      "kind": "news",
+      "readAtMinutes": 1440,
+      "paragraphs": [
+        "The Kessel Valley railway line will close for six weeks from 10 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+        "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 30 minutes during the closure.",
+        "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+        "Kessel Rail said the one-week delay would give bus companies more time to recruit drivers for the replacement service.",
+        "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers."
+      ],
+      "labels": [
+        { "tier": "changed", "source": "wire#0", "variant": "edit", "drift": ["date"] },
+        { "tier": "changed", "source": "wire#1", "variant": "edit", "drift": ["number"] },
+        { "tier": "seen", "source": "wire#2", "variant": "verbatim" },
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#5", "variant": "verbatim" }
+      ]
+    }
+  }
+}

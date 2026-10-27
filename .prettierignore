@@ -1,0 +1,18 @@
+node_modules
+.output
+.wxt
+coverage
+playwright-report
+test-results
+public/models
+public/ort
+pnpm-lock.yaml
+# Authored documents and fixtures keep their hand formatting.
+*.md
+tests/fixtures/**/*.html
+tests/fixtures/**/*.jsonl
+.output-e2e
+public/fonts
+metrics.json
+scripts/size-baseline.json
+scripts/model-manifest.json

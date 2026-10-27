@@ -1,0 +1,51 @@
+{
+  "id": "sleep-blogs",
+  "story": "Long-form health blog cluster: sleep and caffeine",
+  "license": "CC0-1.0",
+  "provenance": "Authored for this repo on 2026-10-20. Both blogs are invented. The text is generic illustrative copy for matching tests, not health advice. See tests/fixtures/PROVENANCE.md.",
+  "readingOrder": ["quiet", "northlight"],
+  "articles": {
+    "quiet": {
+      "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+      "siteName": "Quiet Hours Journal",
+      "title": "Why your afternoon coffee might be costing you sleep",
+      "kind": "blog",
+      "readAtMinutes": 0,
+      "paragraphs": [
+        "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+        "Caffeine can stay in your system for up to six hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+        "Sleep researchers often describe caffeine as borrowing alertness from later in the day, because it blocks the chemical signal that builds up as you get tired.",
+        "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+        "If you want to cut back, reduce your intake gradually over a week or two rather than stopping all at once, to avoid headaches."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" }
+      ]
+    },
+    "northlight": {
+      "url": "https://northlight-wellness.example/blog/better-sleep-guide",
+      "siteName": "Northlight Wellness",
+      "title": "The no-nonsense guide to better sleep",
+      "kind": "blog",
+      "readAtMinutes": 30,
+      "paragraphs": [
+        "We get asked about sleep more than any other topic, so this guide collects the habits our readers say have made the biggest difference.",
+        "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+        "Caffeine can stay in your system for up to ten hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+        "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+        "A cool, dark bedroom helps too: many readers told us that blackout curtains made more difference than any supplement they tried."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "seen", "source": "quiet#0", "variant": "verbatim" },
+        { "tier": "changed", "source": "quiet#1", "variant": "edit", "drift": ["number"] },
+        { "tier": "seen", "source": "quiet#3", "variant": "verbatim" },
+        { "tier": "new" }
+      ]
+    }
+  }
+}

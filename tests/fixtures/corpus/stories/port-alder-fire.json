@@ -1,0 +1,109 @@
+{
+  "id": "port-alder-fire",
+  "story": "Port Alder warehouse fire",
+  "license": "CC0-1.0",
+  "provenance": "Authored for this repo on 2026-10-20. Every place, person, company and outlet is invented. See tests/fixtures/PROVENANCE.md.",
+  "readingOrder": ["wire", "calder", "morrow", "day2"],
+  "articles": {
+    "wire": {
+      "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+      "siteName": "Fenwick Wire",
+      "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+      "kind": "news",
+      "readAtMinutes": 0,
+      "paragraphs": [
+        "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+        "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+        "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+        "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+        "Residents within half a mile of the site were told to keep windows and doors closed overnight while crews dampened down hot spots.",
+        "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+        "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+        "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" },
+        { "tier": "new" }
+      ]
+    },
+    "calder": {
+      "url": "https://calder-courier.example/news/harbour-smoke-port-alder-warehouse-blaze",
+      "siteName": "Calder Courier",
+      "title": "Harbour smoke: what we know about the Port Alder warehouse blaze",
+      "kind": "news",
+      "readAtMinutes": 6,
+      "paragraphs": [
+        "If you woke up to the smell of smoke in Calder this morning, here is why: a warehouse fire down the coast burned for most of the night.",
+        "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+        "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+        "Calder commuters who use the coast road should expect delays this week, the county highways department told the Courier on Monday.",
+        "The warehouse, which is owned by logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers around the region.",
+        "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+        "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+        "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#0", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#1", "variant": "verbatim" },
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#3", "variant": "edit" },
+        { "tier": "seen", "source": "wire#5", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#2", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#7", "variant": "verbatim" }
+      ]
+    },
+    "morrow": {
+      "url": "https://morrow-daily.example/2026/10/19/port-alder-blaze-dozen-hurt",
+      "siteName": "Morrow Daily",
+      "title": "Port Alder blaze: dozen hurt as warehouse burns",
+      "kind": "news",
+      "readAtMinutes": 14,
+      "paragraphs": [
+        "A dozen people needed treatment for breathing in smoke when the Port Alder warehouse caught fire, according to officials, though none were seriously hurt.",
+        "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+        "People living close to the site were advised to shut their windows and doors through the night as firefighters tackled the remaining hot spots.",
+        "Morrow Daily understands that the building had passed a fire safety inspection in the spring, though the inspection report has not been published.",
+        "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead."
+      ],
+      "labels": [
+        { "tier": "similar", "source": "wire#1", "variant": "paraphrase" },
+        { "tier": "seen", "source": "wire#2", "variant": "verbatim" },
+        { "tier": "similar", "source": "wire#4", "variant": "paraphrase" },
+        { "tier": "new" },
+        { "tier": "seen", "source": "wire#6", "variant": "verbatim" }
+      ]
+    },
+    "day2": {
+      "url": "https://fenwick-wire.example/2026/10/19/port-alder-fire-man-arrested",
+      "siteName": "Fenwick Wire",
+      "title": "Port Alder fire: 14 treated, man arrested on suspicion of arson",
+      "kind": "news",
+      "readAtMinutes": 1440,
+      "paragraphs": [
+        "Police investigating the Port Alder warehouse fire have arrested a 34-year-old man on suspicion of arson, the regional force said on Tuesday.",
+        "14 people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+        "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+        "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+        "Harbour Road and Quay Lane reopened on Tuesday morning, and the town council advised drivers to use the coast road instead.",
+        "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response.",
+        "The man was released on bail pending further inquiries and is due to report back to police in November, a force spokesperson added."
+      ],
+      "labels": [
+        { "tier": "new" },
+        { "tier": "changed", "source": "wire#1", "variant": "edit", "drift": ["number"] },
+        { "tier": "seen", "source": "wire#2", "variant": "verbatim" },
+        { "tier": "seen", "source": "wire#3", "variant": "verbatim" },
+        { "tier": "changed", "source": "wire#6", "variant": "edit", "drift": ["outcome", "date"] },
+        { "tier": "seen", "source": "wire#7", "variant": "verbatim" },
+        { "tier": "new" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "measuredAt": "2026-10-27T14:57:12.391Z",
+  "unpackedBytes": 56195635,
+  "packedBytes": 24584252,
+  "parts": {
+    "html, manifest, other": 3664,
+    "CSS": 18878,
+    "extension JS": 865873,
+    "content script": 63981,
+    "fonts (latin subsets)": 406364,
+    "tokenizer and config": 712677,
+    "model (int8 MiniLM)": 22972370,
+    "ONNX Runtime loaders": 75299,
+    "ONNX Runtime wasm (base + JSPI)": 31076529
+  },
+  "contentScriptGzBytes": 21737,
+  "popupJsGzBytes": 74093
+}

@@ -15,3 +15,5 @@ public/models/
 public/ort/
 # Local-only impeccable settings
 .impeccable/config.local.json
+.output-e2e/
+public/fonts/

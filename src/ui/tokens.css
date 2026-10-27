@@ -1,0 +1,279 @@
+/*
+ * Old News design tokens, from DESIGN.md (D2 OXIDE + T4). Single source for extension pages;
+ * scripts/check-tokens.ts verifies every value against the DESIGN.md front matter, checks the
+ * contrast pairs, and fails CI on drift. Do not add colours here that DESIGN.md does not define.
+ *
+ * Theme: `data-theme="light|dark"` on <html> (set before first paint by src/ui/theme.ts).
+ * With no attribute, the OS preference decides (dark-first product, light re-derived).
+ */
+@import 'tailwindcss';
+
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* Fonts: Fontsource latin subsets, copied to /fonts by scripts/copy-assets.ts. */
+@font-face {
+  font-family: 'Newsreader Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/newsreader-opsz-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Newsreader Variable';
+  font-style: italic;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/newsreader-opsz-italic.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Hanken Grotesk Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/hanken-grotesk-wght-normal.woff2') format('woff2-variations');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Light (re-derived, not inverted). */
+:root {
+  color-scheme: light;
+  --bg: #f8f6f3;
+  --surface: #fefdfc;
+  --surface-2: #f0ece8;
+  --surface-3: #e6e2dd;
+  --border: #dedad4;
+  --border-strong: #847f78;
+  --text: #1e1a16;
+  --text-muted: #5c5751;
+  --text-subtle: #76706a;
+  --accent: #1d7779;
+  --accent-hover: #12676a;
+  --accent-text: #12676a;
+  --on-accent: #f6fefe;
+  --accent-soft: #d5f2f2;
+  --drift: #8d5406;
+  --drift-soft: #ffeccd;
+  --success: #287c42;
+  --danger: #c52c2a;
+  --danger-soft: #ffe8e6;
+  --info: #0d70a4;
+  --shadow-e1: 0 0 0 1px var(--border), 0 1px 2px oklch(0.25 0.02 70 / 0.04);
+  --shadow-e3:
+    0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
+    0 8px 16px -4px oklch(0.25 0.02 70 / 0.1);
+  --shadow-overlay:
+    0 0 0 1px oklch(0.25 0.02 70 / 0.1), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.08),
+    0 12px 24px -6px oklch(0.25 0.02 70 / 0.18);
+}
+
+/* Dark (primary, D2 OXIDE). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #110e0b;
+  --surface: #191512;
+  --surface-2: #211d19;
+  --surface-3: #2a2621;
+  --border: #2d2925;
+  --border-strong: #68625c;
+  --text: #ece7df;
+  --text-muted: #c3bdb4;
+  --text-subtle: #a09a93;
+  --accent: #77cfd3;
+  --accent-hover: #91dde1;
+  --accent-text: #77cfd3;
+  --on-accent: #001517;
+  --accent-soft: #082c2e;
+  --drift: #efbe72;
+  --drift-soft: #3a270b;
+  --success: #6fc884;
+  --danger: #fc928a;
+  --danger-soft: #421c19;
+  --info: #68b7ed;
+  --shadow-e1: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+  --shadow-e3: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+  --shadow-overlay: 0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55);
+}
+
+/* No attribute yet (first paint) or "system": follow the OS. Same values as the dark block. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #110e0b;
+    --surface: #191512;
+    --surface-2: #211d19;
+    --surface-3: #2a2621;
+    --border: #2d2925;
+    --border-strong: #68625c;
+    --text: #ece7df;
+    --text-muted: #c3bdb4;
+    --text-subtle: #a09a93;
+    --accent: #77cfd3;
+    --accent-hover: #91dde1;
+    --accent-text: #77cfd3;
+    --on-accent: #001517;
+    --accent-soft: #082c2e;
+    --drift: #efbe72;
+    --drift-soft: #3a270b;
+    --success: #6fc884;
+    --danger: #fc928a;
+    --danger-soft: #421c19;
+    --info: #68b7ed;
+    --shadow-e1: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+    --shadow-e3: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+    --shadow-overlay: 0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55);
+  }
+}
+
+@theme inline {
+  --color-*: initial;
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--text);
+  --color-fg-muted: var(--text-muted);
+  --color-fg-subtle: var(--text-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-text: var(--accent-text);
+  --color-on-accent: var(--on-accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-drift: var(--drift);
+  --color-drift-soft: var(--drift-soft);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-read: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* 4 px base; Tailwind's numeric scale (1 = 4 px) matches DESIGN.md spacing. */
+  --spacing: 4px;
+
+  /* Radius grammar 4 / 8 / 12 / 16. */
+  --radius-*: initial;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-*: initial;
+  --shadow-e1: var(--shadow-e1);
+  --shadow-e3: var(--shadow-e3);
+  --shadow-overlay: var(--shadow-overlay);
+
+  /* Type scale (DESIGN.md typography). */
+  --text-*: initial;
+  --text-micro: 11px;
+  --text-micro--line-height: 16px;
+  --text-micro--letter-spacing: 0.01em;
+  --text-micro--font-weight: 500;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-caption--letter-spacing: 0.005em;
+  --text-caption--font-weight: 450;
+  --text-ui: 13px;
+  --text-ui--line-height: 20px;
+  --text-ui--letter-spacing: 0em;
+  --text-ui--font-weight: 450;
+  --text-button: 14px;
+  --text-button--line-height: 20px;
+  --text-button--letter-spacing: -0.005em;
+  --text-button--font-weight: 600;
+  --text-body: 14px;
+  --text-body--line-height: 22px;
+  --text-body--letter-spacing: -0.005em;
+  --text-body--font-weight: 400;
+  --text-lead: 16px;
+  --text-lead--line-height: 24px;
+  --text-lead--letter-spacing: -0.01em;
+  --text-lead--font-weight: 450;
+  --text-label-h3: 18px;
+  --text-label-h3--line-height: 24px;
+  --text-label-h3--letter-spacing: -0.012em;
+  --text-label-h3--font-weight: 550;
+  --text-count: 28px;
+  --text-count--line-height: 32px;
+  --text-count--letter-spacing: -0.02em;
+  --text-count--font-weight: 600;
+  --text-read-title: 17px;
+  --text-read-title--line-height: 24px;
+  --text-read-title--letter-spacing: -0.008em;
+  --text-read-title--font-weight: 500;
+  --text-read-snippet: 15px;
+  --text-read-snippet--line-height: 24px;
+  --text-read-snippet--letter-spacing: 0em;
+  --text-read-snippet--font-weight: 400;
+  --text-read-body: 18px;
+  --text-read-body--line-height: 29px;
+  --text-read-body--letter-spacing: -0.003em;
+  --text-read-body--font-weight: 400;
+  --text-h2: 22px;
+  --text-h2--line-height: 28px;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h2--font-weight: 500;
+  --text-h1: 28px;
+  --text-h1--line-height: 32px;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h1--font-weight: 500;
+  --text-display: 44px;
+  --text-display--line-height: 46px;
+  --text-display--letter-spacing: -0.025em;
+  --text-display--font-weight: 500;
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 20px;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+  }
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Newsreader lane: words that came from the news. */
+  .font-read {
+    font-optical-sizing: auto;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
