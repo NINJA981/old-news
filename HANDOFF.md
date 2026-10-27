@@ -3,6 +3,25 @@
 **Last stage:** Stage 4, Test engineer (2026-10-28)
 **Next stage:** store assets, CI, release (see "Known issues")
 
+## QA round 1: design critic (2026-10-28), verdict REVISE
+
+Independent review of fresh screenshots (`docs/screenshots/qa-r1/`: `ext/` is the extension pass from
+`pnpm screenshots`, `site-*` is the landing page and web app at 375/768/1440 in light and dark). No code was
+edited. Rubric average **8.2** (min 7.5), no hard fail observed, so the gate (avg >= 9, min >= 8) is **not met**.
+Scores: identity 8.5, typography 8.5, colour 8.5, layout 7.5, hierarchy/content 7.5, component craft 8.5,
+states/a11y 8.5, motion 8.0, system states 8.5, responsive 8.0. Top fixes, in order:
+
+1. Drift chips cover text at narrow widths (landing hero and web app at 375: two chips stack and hide the
+   changed paragraph's first line) and touch the previous line at 1440 (the open item below).
+2. Stale numbers on the landing page: `site/src/generated/measured.json` says 3 stories and 56.2 MB; the corpus
+   is 4 stories and the build is 56.67 MB. Re-run `pnpm --dir site fixtures` and add a freshness check.
+3. Dark `--drift-mark` (alpha 0.24) renders as grey-brown; the signature amber is barely visible on dark pages.
+4. The hero "Add to Chrome" button is a link to `#install` while the page says it is not in the store yet.
+5. Pill count and width are not deterministic under `__frame` (frame 0 reads "19 of 23" with every paragraph
+   still in full ink) and the pill width jumps as digits change. No reduced-motion frame strip exists.
+
+Full list with exact fixes is in the critic report returned to the orchestrator.
+
 ## State in one paragraph
 
 Every user-facing surface exists and runs on the real engine: the in-page overlay (fade painting,
