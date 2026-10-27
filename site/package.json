@@ -1,0 +1,46 @@
+{
+  "name": "old-news-site",
+  "version": "0.1.0",
+  "description": "Old News landing page and phone-friendly web app (static Vite build). Imports the real engine from ../src/core/index.ts.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "assets": "tsx scripts/copy-assets.ts",
+    "fixtures": "tsx scripts/build-fixtures.ts",
+    "icons": "tsx scripts/make-icons.ts",
+    "dev": "pnpm assets && vite",
+    "build": "pnpm assets && tsc --noEmit && vite build && tsx scripts/size-report.ts",
+    "preview": "vite preview --port 4391 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check-tokens": "tsx scripts/check-tokens.ts",
+    "format": "prettier --write .",
+    "lint": "prettier --check .",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@fontsource-variable/hanken-grotesk": "5.3.0",
+    "@fontsource-variable/newsreader": "5.3.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/chrome": "0.3.6",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "fake-indexeddb": "6.2.6",
+    "prettier": "3.9.10",
+    "sharp": "0.35.5",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
+  }
+}

@@ -305,3 +305,33 @@ The same timeline drives the deterministic capture for the README GIF and Linked
 | Chrome or Gemini ships a platform version | Open source, on-device, with provenance and a drift guard as differentiators |
 | Package is ≈ 40–50 MB | Lazy-loaded; measured and stated in the README; CI size budget |
 | DOM mapping across thousands of layouts | Strict do-nothing rule plus layout fixtures plus a real-site manual smoke list per release |
+
+## 14. Web app (`/app`, Stage 3b)
+
+**Why it exists:** most readers meet the product from a phone, where no extension can run. `/app` lets them try the same engine on pasted or dropped text. It is a static page in `site/`; there is no server.
+
+**What it is:** a client-only PWA. It imports the real engine from `src/core/index.ts` through the `@engine` Vite alias (no copy of the matcher, tiers, fact guard or receipt logic). The only environment code is a thin adapter in `site/src/app/engine.ts`: which IndexedDB database to open (`old-news-web`), which `Embedder` to inject, and a clock. History is stored locally in IndexedDB. Nothing is uploaded and the app makes no request beyond its own static files.
+
+**Embedder choice (stated, not hidden):** the bundled sample stories carry precomputed MiniLM vectors (the same model as the extension), so they show all three tiers without a download. Pasted text uses exact wording and the changed-fact guard only (degraded mode, labelled as such) until the reader opts in to download the 23 MB model from this site's own files, once, for offline use.
+
+### Acceptance criteria
+
+Each one is automated in `site/tests/e2e/site.spec.ts` (Playwright against the production build) unless the "How" column names another gate.
+
+| # | Criterion | How it is tested |
+|---|---|---|
+| W1 | **Empty state:** with no history, `/app/` shows the heading "Paste two articles about the same story.", the line "Runs entirely in your browser. Nothing is uploaded.", a primary **Try a sample story** button, a paste box and a file picker. | e2e `375: empty state` |
+| W2 | **Sample, success state:** pressing **Try a sample story** reads the bundled story through the real engine. The pill reads "N of 7 paragraphs are new to you", the paragraphs are tagged seen 3, changed 2, new 2, and the first drift chip reads "Twelve → 14" with an amber highlight. | e2e `375: empty state` |
+| W3 | **Paste, two articles:** pasting article A, then article B with one repeated paragraph and one changed number, fades the repeated paragraph and flags the number. | e2e `pasting two articles` |
+| W4 | **Drop or choose files:** `.txt`, `.md` and `.html` files are accepted, each read in the order added. Unreadable or too-short input shows an error that says why and offers Retry or Dismiss; it is never swallowed. | e2e `too little text`, unit `parse.test.ts` |
+| W5 | **Loading state:** while an article is analysed the page shows a live "…" status line, and a skeleton if it takes longer than the slow threshold. | e2e `375: empty state` (busy line), manual for the skeleton |
+| W6 | **Contrast floor:** every faded paragraph stays at or above 4.5:1 against its sheet, measured from computed styles. | e2e `375: empty state` |
+| W7 | **Offline:** after one online load, the app reloads and works with the network off (sample story included). History survives a reload. | e2e `works offline` |
+| W8 | **Forget everything:** asks twice, then empties the IndexedDB database. | e2e `Forget everything` |
+| W9 | **No network:** across load, a sample read and a paste, every request is to the page's own origin. The page's CSP has `connect-src 'self'`. There is no analytics, font or CDN host. | e2e `no foreign requests` (all web-app tests) |
+| W10 | **Installable:** `/app/manifest.webmanifest` has `start_url` and `scope` `/app/`, 192 and 512 px icons plus a maskable one, and a service worker at `/app/sw.js` precaches the app shell. | `pnpm build` prints the precache count; e2e `works offline` proves the worker serves the shell; the install prompt itself is a manual check in Chrome |
+| W11 | **Reduced motion:** with `prefers-reduced-motion: reduce`, the result is shown in its final state with no sequence. | e2e `reduced motion` |
+| W12 | **Responsive:** laid out mobile-first at 375, then 768 and 1440. No horizontal scroll at 375. Every control has a hit area of at least 44 px (inline links in a sentence are exempt). Light and dark both work. | e2e `375: empty state` (no overflow), e2e `375 touch` (hit areas in the empty, result and settings views) |
+| W13 | **Tokens:** only DESIGN.md tokens; no colour literal outside `site/src/styles/tokens.css`. | `pnpm check-tokens` in `site/` |
+| W14 | **Engine reuse:** the app has no matching, fading or drift logic of its own. It imports `@engine`. | code review; the aliases are in `site/vite.config.ts` |
+| W15 | **Budget:** first-route JS <= 170 KB gz (`pnpm build` prints it); LCP <= 2.0 s with CLS 0 on the 375 px profile with 4x CPU slowdown and Fast 4G, cold cache. Measured values are recorded in `site/HANDOFF.md`. | Lighthouse and a performance trace via chrome-devtools |

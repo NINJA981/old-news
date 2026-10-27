@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2023", "DOM", "DOM.Iterable", "WebWorker"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node", "vite/client", "chrome"],
+    "paths": {
+      "@engine": ["../src/core/index.ts"],
+      "@adapters/*": ["../src/adapters/*"],
+      "@extract/*": ["../src/extract/*"]
+    }
+  },
+  "include": ["src", "scripts", "vite.config.ts", "tests"],
+  "exclude": ["node_modules", "dist"]
+}

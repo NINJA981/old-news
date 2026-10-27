@@ -1,0 +1,176 @@
+/*
+ * Old News design tokens for the site (landing + web app), from DESIGN.md (D2 OXIDE + T4).
+ * Every colour here is a DESIGN.md token; scripts/check-tokens.ts fails the build on any value
+ * that is not, or on a colour literal anywhere outside this file.
+ *
+ * Themes: dark is the designed primary. `data-theme="light"` re-derives, it does not invert.
+ * The landing alternates graphite and paper bands with `data-theme` on each band; the web app
+ * sets it on <html> (System follows prefers-color-scheme while no attribute is set).
+ */
+
+@font-face {
+  font-family: 'Newsreader Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 200 800;
+  src: url('/fonts/newsreader-opsz-normal.woff2') format('woff2-variations');
+}
+@font-face {
+  font-family: 'Hanken Grotesk Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('/fonts/hanken-grotesk-wght-normal.woff2') format('woff2-variations');
+}
+
+/* Dark (primary). Also the default when no theme attribute is set. */
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #110e0b;
+  --surface: #191512;
+  --surface-2: #211d19;
+  --surface-3: #2a2621;
+  --border: #2d2925;
+  --border-strong: #68625c;
+  --text: #ece7df;
+  --text-muted: #c3bdb4;
+  --text-subtle: #a09a93;
+  --accent: #77cfd3;
+  --accent-hover: #91dde1;
+  --accent-text: #77cfd3;
+  --on-accent: #001517;
+  --accent-soft: #082c2e;
+  --drift: #efbe72;
+  --drift-soft: #3a270b;
+  --drift-mark: oklch(0.83 0.11 78 / 0.24);
+  --drift-mark-strong: oklch(0.83 0.11 78 / 0.55);
+  --success: #6fc884;
+  --danger: #fc928a;
+  --danger-soft: #421c19;
+  --info: #68b7ed;
+  --shadow-e1: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+  --shadow-e3: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
+  --shadow-e4: 0 0 0 1px oklch(1 0 0 / 0.06), 0 24px 48px -12px rgb(0 0 0 / 0.6);
+  --shadow-overlay: 0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55);
+}
+
+/* Light (re-derived). */
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f8f6f3;
+  --surface: #fefdfc;
+  --surface-2: #f0ece8;
+  --surface-3: #e6e2dd;
+  --border: #dedad4;
+  --border-strong: #847f78;
+  --text: #1e1a16;
+  --text-muted: #5c5751;
+  --text-subtle: #76706a;
+  --accent: #1d7779;
+  --accent-hover: #12676a;
+  --accent-text: #12676a;
+  --on-accent: #f6fefe;
+  --accent-soft: #d5f2f2;
+  --drift: #8d5406;
+  --drift-soft: #ffeccd;
+  --drift-mark: oklch(0.88 0.11 85 / 0.55);
+  --drift-mark-strong: oklch(0.86 0.12 85 / 0.9);
+  --success: #287c42;
+  --danger: #c52c2a;
+  --danger-soft: #ffe8e6;
+  --info: #0d70a4;
+  --shadow-e1: 0 0 0 1px var(--border), 0 1px 2px oklch(0.25 0.02 70 / 0.04);
+  --shadow-e3:
+    0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
+    0 8px 16px -4px oklch(0.25 0.02 70 / 0.1);
+  --shadow-e4:
+    0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
+    0 24px 48px -12px oklch(0.25 0.02 70 / 0.2);
+  --shadow-overlay:
+    0 0 0 1px oklch(0.25 0.02 70 / 0.1), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.08),
+    0 12px 24px -6px oklch(0.25 0.02 70 / 0.18);
+}
+
+/* Web app, System theme: follow the OS until the reader chooses. */
+@media (prefers-color-scheme: light) {
+  :root[data-follow-system]:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f8f6f3;
+    --surface: #fefdfc;
+    --surface-2: #f0ece8;
+    --surface-3: #e6e2dd;
+    --border: #dedad4;
+    --border-strong: #847f78;
+    --text: #1e1a16;
+    --text-muted: #5c5751;
+    --text-subtle: #76706a;
+    --accent: #1d7779;
+    --accent-hover: #12676a;
+    --accent-text: #12676a;
+    --on-accent: #f6fefe;
+    --accent-soft: #d5f2f2;
+    --drift: #8d5406;
+    --drift-soft: #ffeccd;
+    --drift-mark: oklch(0.88 0.11 85 / 0.55);
+    --drift-mark-strong: oklch(0.86 0.12 85 / 0.9);
+    --success: #287c42;
+    --danger: #c52c2a;
+    --danger-soft: #ffe8e6;
+    --info: #0d70a4;
+    --shadow-e1: 0 0 0 1px var(--border), 0 1px 2px oklch(0.25 0.02 70 / 0.04);
+    --shadow-e3:
+      0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
+      0 8px 16px -4px oklch(0.25 0.02 70 / 0.1);
+    --shadow-e4:
+      0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
+      0 24px 48px -12px oklch(0.25 0.02 70 / 0.2);
+    --shadow-overlay:
+      0 0 0 1px oklch(0.25 0.02 70 / 0.1), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.08),
+      0 12px 24px -6px oklch(0.25 0.02 70 / 0.18);
+  }
+}
+
+/* Non-colour tokens */
+:root {
+  --font-read: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Hanken Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+
+  --r-xs: 4px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-full: 9999px;
+
+  --s-0-5: 2px;
+  --s-1: 4px;
+  --s-1-5: 6px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+  --s-10: 40px;
+  --s-12: 48px;
+  --s-16: 64px;
+  --s-20: 80px;
+  --s-24: 96px;
+  --s-32: 128px;
+
+  --dur-0: 0ms;
+  --dur-1: 100ms;
+  --dur-2: 150ms;
+  --dur-3: 200ms;
+  --dur-4: 250ms;
+  --dur-5: 300ms;
+  --dissolve-para: 240ms;
+  --dissolve-spread: 160ms;
+  --dissolve-stagger-max: 16ms;
+  --pulse-rise: 180ms;
+  --pulse-fall: 420ms;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-out-soft: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-scene: cubic-bezier(0.65, 0.05, 0, 1);
+}

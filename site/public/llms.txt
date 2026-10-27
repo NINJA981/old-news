@@ -1,0 +1,8 @@
+# Old News
+
+> A browser extension that remembers every paragraph you read, on your own computer, and fades the ones you have already read. It runs on-device with zero network requests. This site is its landing page and a phone-friendly web app.
+
+## Pages
+
+- [Landing page](/): what it does, how it works, privacy, install
+- [Web app](/app/): paste or drop two or more articles and see the same three-tier matcher the extension runs

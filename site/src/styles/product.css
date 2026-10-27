@@ -1,0 +1,397 @@
+/*
+ * The product's own marks, reproduced in DOM from DESIGN.md "Surface 1: in-page overlay":
+ * faded paragraphs, provenance tags, the hover card, the drift highlight and chip, the status pill,
+ * the tier bar. Used by the landing page and the web app, so both draw exactly the same thing.
+ * Fades are opacity only; the solved floor for each paragraph arrives as `--a` / `data-a`.
+ */
+
+.on-sheet {
+  position: relative;
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-e1);
+}
+
+.on-read {
+  font-family: var(--font-read);
+  font-optical-sizing: auto;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+.on-read.is-body {
+  font-size: 18px;
+  line-height: 29px;
+  letter-spacing: -0.003em;
+}
+
+.on-row {
+  position: relative;
+  margin-bottom: var(--s-4);
+}
+.on-row:last-child {
+  margin-bottom: 0;
+}
+
+.on-p {
+  margin: 0;
+  text-wrap: pretty;
+  transition: opacity var(--dur-1);
+}
+.on-p[data-a] {
+  opacity: var(--a, 1);
+}
+/* Hover, focus-within or J/K focus restores full ink in 100 ms. */
+.on-row:hover > .on-p[data-a],
+.on-row:focus-within > .on-p[data-a],
+.on-row[data-focus] > .on-p[data-a] {
+  opacity: 1;
+}
+
+/* Start state of the dissolve: full ink, no tags, no pill, no chip. */
+.is-dissolving .on-p[data-a] {
+  opacity: 1;
+  transition: none;
+}
+.is-dissolving .on-tag,
+.is-dissolving .on-chip,
+.is-dissolving [data-pill],
+.is-dissolving [data-pill-only] {
+  opacity: 0;
+}
+.is-reduced-play .on-p[data-a] {
+  transition: none;
+}
+
+/* Provenance tag: Hanken micro, ring only, a focusable button. */
+.on-tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-top: var(--s-1-5);
+  padding: var(--s-0-5) var(--s-1-5);
+  border: 0;
+  border-radius: var(--r-xs);
+  background: var(--surface);
+  color: var(--text-muted);
+  box-shadow: 0 0 0 1px var(--border);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--dur-1);
+}
+.on-tag:hover,
+.on-tag[aria-expanded='true'] {
+  color: var(--text);
+}
+
+/* Right-gutter placement where there is room; inline under the paragraph where there is not. */
+@media (min-width: 900px) {
+  .on-gutter .on-tag {
+    position: absolute;
+    left: calc(100% + var(--s-4));
+    top: var(--s-0-5);
+    margin-top: 0;
+    width: max-content;
+    max-width: 144px;
+  }
+}
+
+/* Drift highlight + chip. Amber means a fact changed, and nothing else. */
+.on-row[data-drift] {
+  padding-top: 32px;
+}
+.on-row[data-drift='2'],
+.on-row[data-drift='3'] {
+  padding-top: 58px;
+}
+.on-mark {
+  position: relative;
+  background: var(--drift-mark);
+  color: inherit;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 0 color-mix(in oklch, var(--drift) 60%, transparent);
+}
+.on-mark[data-state='start'] {
+  background: transparent;
+  box-shadow: none;
+}
+.on-rect {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: var(--drift-mark-strong);
+  opacity: 0;
+  pointer-events: none;
+}
+.on-chips {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1-5);
+}
+.on-chip {
+  max-width: 360px;
+  padding: var(--s-1) var(--s-2);
+  border: 0;
+  border-radius: var(--r-xs);
+  background: var(--drift-soft);
+  color: var(--text);
+  box-shadow: 0 0 0 1px color-mix(in oklch, var(--drift) 35%, transparent);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 450;
+  letter-spacing: 0.005em;
+  text-align: left;
+}
+.on-chip b {
+  color: var(--drift);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.on-chip:hover,
+.on-chip:focus-visible {
+  box-shadow:
+    0 0 0 1px color-mix(in oklch, var(--drift) 35%, transparent),
+    var(--shadow-overlay);
+}
+
+/* Status pill: the only capsule, because it is a status and not an action. */
+.on-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 36px;
+  padding: 0 var(--s-3) 0 var(--s-3);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 450;
+}
+.on-pill b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.on-glyph {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--text);
+}
+
+/* "Not old news" sticks: full ink, tag gone. */
+.on-row[data-notold] > .on-p[data-a] {
+  opacity: 1;
+}
+.on-row[data-notold] > .on-tag {
+  display: none;
+}
+
+/* Hover card: opens from a tag. */
+.on-card {
+  position: absolute;
+  z-index: 20;
+  opacity: 0;
+  transform: scale(0.96);
+  transform-origin: top left;
+  transition:
+    opacity var(--dur-2) var(--ease-out),
+    transform var(--dur-2) var(--ease-out);
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  padding: var(--s-4);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-overlay);
+  font-family: var(--font-ui);
+}
+.on-card.is-open {
+  opacity: 1;
+  transform: none;
+}
+.on-card.is-leaving {
+  opacity: 0;
+  transform: scale(0.96);
+  transition-duration: 120ms;
+}
+.on-card.is-sheet {
+  position: fixed;
+  left: var(--s-4);
+  right: var(--s-4);
+  bottom: calc(var(--s-4) + env(safe-area-inset-bottom, 0px));
+  width: auto;
+  max-width: none;
+  transform-origin: bottom center;
+}
+.on-card .c-outlet {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+.on-card .c-when {
+  margin-left: var(--s-2);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-muted);
+}
+.on-card .c-title {
+  margin-top: var(--s-2);
+  font-family: var(--font-read);
+  font-size: 15px;
+  line-height: 20px;
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.on-card .c-snippet {
+  margin-top: var(--s-2);
+  font-family: var(--font-read);
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--text-muted);
+}
+.on-card .c-match {
+  margin-top: var(--s-3);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--text-subtle);
+}
+.on-card .c-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  margin-top: var(--s-3);
+  margin-left: calc(var(--s-3) * -1);
+}
+
+/* Tier bar: 6 px, radius 4 at the outer ends only. Never the only carrier of meaning. */
+.tier-bar {
+  display: flex;
+  height: 6px;
+  overflow: hidden;
+  border-radius: var(--r-xs);
+  background: var(--surface-3);
+}
+.tier-bar i {
+  display: block;
+  height: 100%;
+}
+.tier-bar .t-new {
+  background: var(--text);
+}
+.tier-bar .t-changed {
+  background: var(--drift);
+}
+.tier-bar .t-similar {
+  background: var(--text-subtle);
+}
+.tier-bar .t-seen {
+  background: var(--border-strong);
+}
+.tier-legend {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-1) var(--s-4);
+  margin-top: var(--s-3);
+  font-size: 12px;
+  line-height: 16px;
+}
+.tier-legend div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--s-2);
+}
+.tier-legend dt {
+  color: var(--text-muted);
+}
+.tier-legend dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Fold (N): runs of old paragraphs collapse to a hairline with a 44 px target. */
+.on-fold {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin: 0 0 var(--s-4);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-subtle);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: left;
+  position: relative;
+}
+.on-fold::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--border-strong);
+}
+.on-fold span {
+  position: relative;
+  padding-right: var(--s-2);
+  background: var(--surface);
+}
+.on-row[data-folded],
+.on-folded-hidden {
+  display: none;
+}
+
+/* J/K reading marker. */
+.on-row[data-focus]::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--s-2) * -1);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .on-p {
+    transition: none;
+  }
+}
+
+/* Touch: the tag and the chip are small by design (they sit beside the text). On a coarse pointer
+   their hit area grows to 44 px tall with an invisible layer, so the layout does not move. */
+@media (pointer: coarse) {
+  .on-tag,
+  .on-chip {
+    position: relative;
+  }
+  .on-tag::before,
+  .on-chip::before {
+    content: '';
+    position: absolute;
+    top: calc(50% - 22px);
+    left: 0;
+    right: 0;
+    height: 44px;
+  }
+}

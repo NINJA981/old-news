@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-follow-system>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Old News web app</title>
+    <meta
+      name="description"
+      content="Paste or drop two articles about the same story. Old News fades the paragraphs you have already read and lights up what changed. Runs entirely in your browser. Nothing is uploaded."
+    />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#110e0b" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f8f6f3" media="(prefers-color-scheme: light)" />
+    <link rel="manifest" href="/app/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Old News" />
+    <link
+      rel="preload"
+      href="/fonts/hanken-grotesk-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/newsreader-opsz-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script type="module" src="/src/app/main.tsx"></script>
+  </head>
+  <body>
+    <div id="root"><!--@shell--></div>
+    <noscript>
+      <p style="padding: 16px">
+        The Old News web app needs JavaScript. The extension and the landing page do not.
+      </p>
+    </noscript>
+  </body>
+</html>

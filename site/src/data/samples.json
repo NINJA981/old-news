@@ -1,0 +1,168 @@
+[
+  {
+    "id": "kessel-valley-rail",
+    "label": "Kessel Valley rail closure",
+    "license": "CC0-1.0",
+    "articles": [
+      {
+        "key": "wire",
+        "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+        "siteName": "Fenwick Wire",
+        "title": "Kessel Valley line to close for six weeks of bridge repairs",
+        "kind": "news",
+        "readAfterMinutes": 0,
+        "paragraphs": [
+          "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+          "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "The operator apologised for the disruption and said the work could not be put off without risking a longer closure in the depths of winter.",
+          "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website.",
+          "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers."
+        ]
+      },
+      {
+        "key": "gazette",
+        "url": "https://harbour-gazette.example/transport/kessel-valley-shutdown-commuters",
+        "siteName": "Harbour Gazette",
+        "title": "Six-week rail shutdown: what Kessel Valley commuters need to know",
+        "kind": "news",
+        "readAfterMinutes": 120,
+        "paragraphs": [
+          "Commuters in the lower valley face a difficult autumn, and the Gazette has gathered what we know about how the closure will affect journeys into the city.",
+          "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+          "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "Gazette readers have told us that the replacement buses used during last year's engineering works were often full by the second stop.",
+          "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website."
+        ]
+      },
+      {
+        "key": "day2",
+        "url": "https://fenwick-wire.example/2026/10/20/kessel-valley-closure-delayed",
+        "siteName": "Fenwick Wire",
+        "title": "Kessel Valley closure pushed back a week",
+        "kind": "news",
+        "readAfterMinutes": 1440,
+        "paragraphs": [
+          "The Kessel Valley railway line will close for six weeks from 10 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 30 minutes during the closure.",
+          "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "Kessel Rail said the one-week delay would give bus companies more time to recruit drivers for the replacement service.",
+          "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "port-alder-fire",
+    "label": "Port Alder warehouse fire",
+    "license": "CC0-1.0",
+    "articles": [
+      {
+        "key": "wire",
+        "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+        "siteName": "Fenwick Wire",
+        "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+        "kind": "news",
+        "readAfterMinutes": 0,
+        "paragraphs": [
+          "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+          "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+          "Residents within half a mile of the site were told to keep windows and doors closed overnight while crews dampened down hot spots.",
+          "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+          "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+          "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response."
+        ]
+      },
+      {
+        "key": "calder",
+        "url": "https://calder-courier.example/news/harbour-smoke-port-alder-warehouse-blaze",
+        "siteName": "Calder Courier",
+        "title": "Harbour smoke: what we know about the Port Alder warehouse blaze",
+        "kind": "news",
+        "readAfterMinutes": 6,
+        "paragraphs": [
+          "If you woke up to the smell of smoke in Calder this morning, here is why: a warehouse fire down the coast burned for most of the night.",
+          "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+          "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "Calder commuters who use the coast road should expect delays this week, the county highways department told the Courier on Monday.",
+          "The warehouse, which is owned by logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers around the region.",
+          "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+          "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response."
+        ]
+      },
+      {
+        "key": "morrow",
+        "url": "https://morrow-daily.example/2026/10/19/port-alder-blaze-dozen-hurt",
+        "siteName": "Morrow Daily",
+        "title": "Port Alder blaze: dozen hurt as warehouse burns",
+        "kind": "news",
+        "readAfterMinutes": 14,
+        "paragraphs": [
+          "A dozen people needed treatment for breathing in smoke when the Port Alder warehouse caught fire, according to officials, though none were seriously hurt.",
+          "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "People living close to the site were advised to shut their windows and doors through the night as firefighters tackled the remaining hot spots.",
+          "Morrow Daily understands that the building had passed a fire safety inspection in the spring, though the inspection report has not been published.",
+          "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead."
+        ]
+      },
+      {
+        "key": "day2",
+        "url": "https://fenwick-wire.example/2026/10/19/port-alder-fire-man-arrested",
+        "siteName": "Fenwick Wire",
+        "title": "Port Alder fire: 14 treated, man arrested on suspicion of arson",
+        "kind": "news",
+        "readAfterMinutes": 1440,
+        "paragraphs": [
+          "Police investigating the Port Alder warehouse fire have arrested a 34-year-old man on suspicion of arson, the regional force said on Tuesday.",
+          "14 people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+          "Harbour Road and Quay Lane reopened on Tuesday morning, and the town council advised drivers to use the coast road instead.",
+          "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response.",
+          "The man was released on bail pending further inquiries and is due to report back to police in November, a force spokesperson added."
+        ]
+      }
+    ]
+  },
+  {
+    "id": "sleep-blogs",
+    "label": "Long-form health blog cluster: sleep and caffeine",
+    "license": "CC0-1.0",
+    "articles": [
+      {
+        "key": "quiet",
+        "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+        "siteName": "Quiet Hours Journal",
+        "title": "Why your afternoon coffee might be costing you sleep",
+        "kind": "blog",
+        "readAfterMinutes": 0,
+        "paragraphs": [
+          "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+          "Caffeine can stay in your system for up to six hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+          "Sleep researchers often describe caffeine as borrowing alertness from later in the day, because it blocks the chemical signal that builds up as you get tired.",
+          "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+          "If you want to cut back, reduce your intake gradually over a week or two rather than stopping all at once, to avoid headaches."
+        ]
+      },
+      {
+        "key": "northlight",
+        "url": "https://northlight-wellness.example/blog/better-sleep-guide",
+        "siteName": "Northlight Wellness",
+        "title": "The no-nonsense guide to better sleep",
+        "kind": "blog",
+        "readAfterMinutes": 30,
+        "paragraphs": [
+          "We get asked about sleep more than any other topic, so this guide collects the habits our readers say have made the biggest difference.",
+          "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+          "Caffeine can stay in your system for up to ten hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+          "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+          "A cool, dark bedroom helps too: many readers told us that blackout curtains made more difference than any supplement they tried."
+        ]
+      }
+    ]
+  }
+]

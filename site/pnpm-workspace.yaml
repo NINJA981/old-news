@@ -1,0 +1,5 @@
+# Makes site/ its own pnpm root (it is a separate package from the extension at the repo root).
+packages: []
+onlyBuiltDependencies:
+  - esbuild
+  - sharp

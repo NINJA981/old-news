@@ -1,0 +1,69 @@
+{
+  "metrics": {
+    "measuredAt": "2026-10-27T14:46:57.623Z",
+    "corpus": {
+      "stories": 3,
+      "articles": 9,
+      "labelledParagraphs": 55,
+      "changedMeaningPairs": 166,
+      "negativesWikinews": 0,
+      "sha256": "98a3a2270b81c662ba6d3073c9c78f22fd1bd0a3d69a456c52c7811360280b66"
+    },
+    "model": {
+      "id": "Xenova/all-MiniLM-L6-v2 (q8)",
+      "sha256": "afdb6f1a0e45b715d0bb9b11772f032c399babd23bfc31fed1c170afc848bdb1"
+    },
+    "thresholds": {
+      "jSeen": 0.6,
+      "jNear": 0.35,
+      "cDup": 0.93,
+      "cSim": 0.82,
+      "lenMin": 0.7,
+      "lenMax": 1.4,
+      "status": "untuned-starting-values"
+    },
+    "metrics": {
+      "seenPrecision": 1,
+      "fadePrecision": 1,
+      "wireRecall": 0.947,
+      "paraphraseRecall": 0.5,
+      "paraphraseAsFullFade": 0,
+      "changedLabelledStillLit": 1,
+      "changedLabelledFaded": 0,
+      "newParagraphsFaded": 0,
+      "changedMeaningRecall": 0.816,
+      "changedMeaningFullFades": 0,
+      "quietControlsFaded": "25/25"
+    },
+    "counts": {
+      "newLabelled": 29,
+      "predSeen": 18,
+      "predSeenOk": 18,
+      "wireTotal": 19,
+      "wireHit": 18,
+      "paraTotal": 2,
+      "paraHit": 1,
+      "firesTotal": 141,
+      "firesCaught": 115
+    },
+    "misses": ["port-alder-fire/calder#4: wire recall miss (got similar)"]
+  },
+  "size": {
+    "measuredAt": "2026-10-27T14:57:12.391Z",
+    "unpackedBytes": 56195635,
+    "packedBytes": 24584252,
+    "parts": {
+      "html, manifest, other": 3664,
+      "CSS": 18878,
+      "extension JS": 865873,
+      "content script": 63981,
+      "fonts (latin subsets)": 406364,
+      "tokenizer and config": 712677,
+      "model (int8 MiniLM)": 22972370,
+      "ONNX Runtime loaders": 75299,
+      "ONNX Runtime wasm (base + JSPI)": 31076529
+    },
+    "contentScriptGzBytes": 21737,
+    "popupJsGzBytes": 74093
+  }
+}

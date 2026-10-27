@@ -1,0 +1,1114 @@
+{
+  "kessel-valley-rail": {
+    "wire": {
+      "title": "Kessel Valley line to close for six weeks of bridge repairs",
+      "siteName": "Fenwick Wire",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1elj5uio6gnra-3x",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "38d5bo5l85em-3h",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1gpyro4133rqph-36",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "The operator apologised for the disruption and said the work could not be put off without risking a longer closure in the depths of winter.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "11et6yt9xb1xv-37",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "sgszqe1ie8or2-38",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "4c35yg9i6eb9-3c",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 6,
+        "new": 6,
+        "seen": 0,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 6,
+      "pill": null,
+      "degraded": false,
+      "card": null,
+      "readAt": 1792375800000
+    },
+    "gazette": {
+      "title": "Six-week rail shutdown: what Kessel Valley commuters need to know",
+      "siteName": "Harbour Gazette",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "Commuters in the lower valley face a difficult autumn, and the Gazette has gathered what we know about how the closure will affect journeys into the city.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1raqg9reynpgt-3k",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1elj5uio6gnra-3x",
+          "tag": "Fenwick Wire · 2 hr ago",
+          "provenance": {
+            "paragraphId": "10a94229efb4cf191a7e8649b23ee582c02ab90e2c8b91927e9239aa0389d807",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read today, 7:40",
+            "snippet": "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during the closure.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "38d5bo5l85em-3h",
+          "tag": "Fenwick Wire · 2 hr ago",
+          "provenance": {
+            "paragraphId": "2e41867b2c1fc08cabc0fce57e17be50d13eb36edc8a8296116edd852e682061",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read today, 7:40",
+            "snippet": "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1gpyro4133rqph-36",
+          "tag": "Fenwick Wire · 2 hr ago",
+          "provenance": {
+            "paragraphId": "a4a777032ba94b1f3dbe8fb6199820d2e82ab7259c1cfaa38d19e38af03ce9e5",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read today, 7:40",
+            "snippet": "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Gazette readers have told us that the replacement buses used during last year's engineering works were often full by the second stop.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "k57ej71v45v8m-33",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its website.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "sgszqe1ie8or2-38",
+          "tag": "Fenwick Wire · 2 hr ago",
+          "provenance": {
+            "paragraphId": "ec08e75e834abb6c5f812993f8bd4cd60f32ca65a6a6c1f40ac77b8ab677ac48",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read today, 7:40",
+            "snippet": "Season ticket holders will be offered a refund for the weeks the line is shut, the company said, with details to be published on its…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 6,
+        "new": 2,
+        "seen": 4,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 2,
+      "pill": "Only 2 of 6 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Kessel Valley line to close for six weeks of bridge repairs",
+        "summary": "Previously on this story: 1 article",
+        "articles": [
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "2 hr ago"
+          }
+        ],
+        "figures": []
+      },
+      "readAt": 1792383000000
+    },
+    "day2": {
+      "title": "Kessel Valley closure pushed back a week",
+      "siteName": "Fenwick Wire",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "The Kessel Valley railway line will close for six weeks from 10 November while engineers repair a damaged bridge near Harrow Bridge station, the operator said on Monday.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "1qm8trhr9h5vu-3y",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "10a94229efb4cf191a7e8649b23ee582c02ab90e2c8b91927e9239aa0389d807",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read yesterday, 7:40",
+            "snippet": "The Kessel Valley railway line will close for six weeks from 3 November while engineers repair a damaged bridge near Harrow Bridge…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": [
+            {
+              "kind": "date",
+              "before": "3 November",
+              "after": "10 November",
+              "offset": 61,
+              "length": 11,
+              "chip": "3 November → 10 November · Fenwick Wire said 3 November, yesterday"
+            }
+          ]
+        },
+        {
+          "ordinal": 1,
+          "text": "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 30 minutes during the closure.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "k0vh7e8ce4m8-3h",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "2e41867b2c1fc08cabc0fce57e17be50d13eb36edc8a8296116edd852e682061",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read yesterday, 7:40",
+            "snippet": "The line carries about 1,200 commuters a day between Harrow Bridge and the coast, and replacement buses will run every 20 minutes during…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": [
+            {
+              "kind": "number",
+              "before": "20",
+              "after": "30",
+              "offset": 119,
+              "length": 2,
+              "chip": "20 → 30 · Fenwick Wire said 20, yesterday"
+            }
+          ]
+        },
+        {
+          "ordinal": 2,
+          "text": "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1gpyro4133rqph-36",
+          "tag": "Fenwick Wire · yesterday",
+          "provenance": {
+            "paragraphId": "a4a777032ba94b1f3dbe8fb6199820d2e82ab7259c1cfaa38d19e38af03ce9e5",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read yesterday, 7:40",
+            "snippet": "Kessel Rail said the bridge had been damaged by flooding in September and that inspections had found erosion around two of its supports.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Kessel Rail said the one-week delay would give bus companies more time to recruit drivers for the replacement service.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "af38hm1gib9hi-2s",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "4c35yg9i6eb9-3c",
+          "tag": "Fenwick Wire · yesterday",
+          "provenance": {
+            "paragraphId": "9ab1fa9b801bfd2384c123b3894807182fe8545d92c8ce9b815b188d370afd76",
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "Read yesterday, 7:40",
+            "snippet": "Local MP Dana Whitlow said she had asked the transport department to make sure replacement services were accessible for disabled passengers.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 5,
+        "new": 1,
+        "seen": 2,
+        "similar": 0,
+        "changed": 2
+      },
+      "lit": 3,
+      "pill": "Only 3 of 5 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Kessel Valley line to close for six weeks of bridge repairs",
+        "summary": "Previously on this story: 2 articles, 2 figures changed",
+        "articles": [
+          {
+            "siteName": "Harbour Gazette",
+            "title": "Six-week rail shutdown: what Kessel Valley commuters need to know",
+            "url": "https://harbour-gazette.example/transport/kessel-valley-shutdown-commuters",
+            "when": "yesterday"
+          },
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Kessel Valley line to close for six weeks of bridge repairs",
+            "url": "https://fenwick-wire.example/2026/10/19/kessel-valley-line-closure",
+            "when": "yesterday"
+          }
+        ],
+        "figures": [
+          {
+            "context": "…buses will run every 30 minutes during the closure.",
+            "before": "20",
+            "after": "30",
+            "when": "just now",
+            "source": "Fenwick Wire"
+          },
+          {
+            "context": "…for six weeks from 10 November while engineers repair…",
+            "before": "3 November",
+            "after": "10 November",
+            "when": "just now",
+            "source": "Fenwick Wire"
+          }
+        ]
+      },
+      "readAt": 1792462200000
+    }
+  },
+  "port-alder-fire": {
+    "wire": {
+      "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+      "siteName": "Fenwick Wire",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "mg1f1810sq4b-49",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1by14291nd61m3-3w",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "8mk4ulkebg9t-3b",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "hxlyqs1mb4s3x-3q",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Residents within half a mile of the site were told to keep windows and doors closed overnight while crews dampened down hot spots.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "vwiqc41qff87o-30",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1gs5iuqwhjc9b-40",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "zvumewzag1n8-30",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 7,
+          "text": "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "b0i220fuk6na-3f",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 8,
+        "new": 8,
+        "seen": 0,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 8,
+      "pill": null,
+      "degraded": false,
+      "card": null,
+      "readAt": 1792375800000
+    },
+    "calder": {
+      "title": "Harbour smoke: what we know about the Port Alder warehouse blaze",
+      "siteName": "Calder Courier",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "If you woke up to the smell of smoke in Calder this morning, here is why: a warehouse fire down the coast burned for most of the night.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1krd0cftlgalh-30",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the harbour and forcing the closure of two nearby roads.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "mg1f1810sq4b-49",
+          "tag": "Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "1fe639d174db333dc08ca3d8ee442d2845cd0d9955bdad04dee56fa72cdcc345",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "A fire tore through a storage warehouse on the Port Alder industrial estate late on Sunday, sending a column of black smoke over the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1by14291nd61m3-3w",
+          "tag": "Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "470a018e903122dcec9c8a3860f0ce91eb3313caca4fa56c37a9cbf054f7f36a",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Calder commuters who use the coast road should expect delays this week, the county highways department told the Courier on Monday.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "f3lxklqkr892-32",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "The warehouse, which is owned by logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers around the region.",
+          "tier": "similar",
+          "skipped": false,
+          "fingerprint": "1rycnjznjdv06-3u",
+          "tag": "Similar to Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "d2ae733a36af8d117a5aed29ce8eeab9e30b685b7f4616d0cb29e5f4417dc4bd",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers…",
+            "matchLine": "Similar meaning, different wording"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the building was declared safe to enter.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1gs5iuqwhjc9b-40",
+          "tag": "Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "58fac6e73df7c151d7a459596c51c991aa50010abc49d0412590e48aa3e729f9",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "Investigators have not yet said what caused the fire. A spokesperson for the regional fire service said an inquiry would begin once the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "8mk4ulkebg9t-3b",
+          "tag": "Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "19247c0e510fee0a0080a52655d38a7aa12a33681377349ef9ef18e79fd2e3e6",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 7,
+          "text": "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "b0i220fuk6na-3f",
+          "tag": "Fenwick Wire · 6 min ago",
+          "provenance": {
+            "paragraphId": "d4e7229d7d47fb262f9637718f55a19fa0769840ecdf090a6e7ed889bb90ee74",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 8,
+        "new": 2,
+        "seen": 5,
+        "similar": 1,
+        "changed": 0
+      },
+      "lit": 2,
+      "pill": "Only 2 of 8 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+        "summary": "Previously on this story: 1 article",
+        "articles": [
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "6 min ago"
+          }
+        ],
+        "figures": []
+      },
+      "readAt": 1792376160000
+    },
+    "morrow": {
+      "title": "Port Alder blaze: dozen hurt as warehouse burns",
+      "siteName": "Morrow Daily",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "A dozen people needed treatment for breathing in smoke when the Port Alder warehouse caught fire, according to officials, though none were seriously hurt.",
+          "tier": "similar",
+          "skipped": false,
+          "fingerprint": "5jq7jz1jjw7gj-3n",
+          "tag": "Similar to Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "470a018e903122dcec9c8a3860f0ce91eb3313caca4fa56c37a9cbf054f7f36a",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were…",
+            "matchLine": "Similar meaning, different wording"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "8mk4ulkebg9t-3b",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "19247c0e510fee0a0080a52655d38a7aa12a33681377349ef9ef18e79fd2e3e6",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "People living close to the site were advised to shut their windows and doors through the night as firefighters tackled the remaining hot spots.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "dvmrtr9z9u3-3c",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Morrow Daily understands that the building had passed a fire safety inspection in the spring, though the inspection report has not been published.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "5d1dz210ipdzo-3g",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "zvumewzag1n8-30",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "21b2e50f903a3d365900716c578efdfc02482c0b77fc1b24578fe1986271b779",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read today, 7:40",
+            "snippet": "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 5,
+        "new": 2,
+        "seen": 2,
+        "similar": 1,
+        "changed": 0
+      },
+      "lit": 2,
+      "pill": "Only 2 of 5 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+        "summary": "Previously on this story: 2 articles",
+        "articles": [
+          {
+            "siteName": "Calder Courier",
+            "title": "Harbour smoke: what we know about the Port Alder warehouse blaze",
+            "url": "https://calder-courier.example/news/harbour-smoke-port-alder-warehouse-blaze",
+            "when": "8 min ago"
+          },
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "14 min ago"
+          }
+        ],
+        "figures": []
+      },
+      "readAt": 1792376640000
+    },
+    "day2": {
+      "title": "Port Alder fire: 14 treated, man arrested on suspicion of arson",
+      "siteName": "Fenwick Wire",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "Police investigating the Port Alder warehouse fire have arrested a 34-year-old man on suspicion of arson, the regional force said on Tuesday.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1tv93ontiy7ov-3c",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "14 people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were described as life-threatening.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "16pfqmzie14bf-3s",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "470a018e903122dcec9c8a3860f0ce91eb3313caca4fa56c37a9cbf054f7f36a",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read yesterday, 7:40",
+            "snippet": "Twelve people were treated for smoke inhalation after the fire at the Port Alder warehouse, officials said. None of the injuries were…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": [
+            {
+              "kind": "number",
+              "before": "Twelve",
+              "after": "14",
+              "offset": 0,
+              "length": 2,
+              "chip": "Twelve → 14 · Fenwick Wire said Twelve, yesterday"
+            }
+          ]
+        },
+        {
+          "ordinal": 2,
+          "text": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under control.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "8mk4ulkebg9t-3b",
+          "tag": "Fenwick Wire · yesterday",
+          "provenance": {
+            "paragraphId": "19247c0e510fee0a0080a52655d38a7aa12a33681377349ef9ef18e79fd2e3e6",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read yesterday, 7:40",
+            "snippet": "At least 40 firefighters were sent to the scene from Port Alder and three neighbouring towns, and the blaze took 6 hours to bring under…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers across the region.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "hxlyqs1mb4s3x-3q",
+          "tag": "Fenwick Wire · yesterday",
+          "provenance": {
+            "paragraphId": "d2ae733a36af8d117a5aed29ce8eeab9e30b685b7f4616d0cb29e5f4417dc4bd",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read yesterday, 7:40",
+            "snippet": "The warehouse, owned by the logistics firm Brennock Freight, held packaging materials and household goods awaiting shipment to retailers…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Harbour Road and Quay Lane reopened on Tuesday morning, and the town council advised drivers to use the coast road instead.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "180hlpy11uyhs3-2v",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "21b2e50f903a3d365900716c578efdfc02482c0b77fc1b24578fe1986271b779",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read yesterday, 7:40",
+            "snippet": "Harbour Road and Quay Lane remained closed on Monday morning, and the town council advised drivers to use the coast road instead.",
+            "matchLine": "Similar meaning, different wording"
+          },
+          "drift": [
+            {
+              "kind": "outcome",
+              "before": "closed",
+              "after": "reopened",
+              "offset": 27,
+              "length": 8,
+              "chip": "closed → reopened · Fenwick Wire said closed, yesterday"
+            },
+            {
+              "kind": "date",
+              "before": "Monday",
+              "after": "Tuesday",
+              "offset": 39,
+              "length": 7,
+              "chip": "Monday → Tuesday · Fenwick Wire said Monday, yesterday"
+            }
+          ]
+        },
+        {
+          "ordinal": 5,
+          "text": "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their response.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "b0i220fuk6na-3f",
+          "tag": "Fenwick Wire · yesterday",
+          "provenance": {
+            "paragraphId": "d4e7229d7d47fb262f9637718f55a19fa0769840ecdf090a6e7ed889bb90ee74",
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "Read yesterday, 7:40",
+            "snippet": "Brennock Freight said in a statement that all of its staff on the night shift had been accounted for and thanked emergency crews for their…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "The man was released on bail pending further inquiries and is due to report back to police in November, a force spokesperson added.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "5ivky71qcesx8-31",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 7,
+        "new": 2,
+        "seen": 3,
+        "similar": 0,
+        "changed": 2
+      },
+      "lit": 4,
+      "pill": "Only 4 of 7 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+        "summary": "Previously on this story: 3 articles, 3 figures changed",
+        "articles": [
+          {
+            "siteName": "Morrow Daily",
+            "title": "Port Alder blaze: dozen hurt as warehouse burns",
+            "url": "https://morrow-daily.example/2026/10/19/port-alder-blaze-dozen-hurt",
+            "when": "yesterday"
+          },
+          {
+            "siteName": "Calder Courier",
+            "title": "Harbour smoke: what we know about the Port Alder warehouse blaze",
+            "url": "https://calder-courier.example/news/harbour-smoke-port-alder-warehouse-blaze",
+            "when": "yesterday"
+          },
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Fire guts Port Alder warehouse; twelve treated for smoke inhalation",
+            "url": "https://fenwick-wire.example/2026/10/18/port-alder-warehouse-fire",
+            "when": "yesterday"
+          }
+        ],
+        "figures": [
+          {
+            "context": "14 people were treated for smoke inhalation after the fire…",
+            "before": "Twelve",
+            "after": "14",
+            "when": "just now",
+            "source": "Fenwick Wire"
+          },
+          {
+            "context": "…Quay Lane reopened on Tuesday morning, and the town…",
+            "before": "Monday",
+            "after": "Tuesday",
+            "when": "just now",
+            "source": "Fenwick Wire"
+          },
+          {
+            "context": "…Road and Quay Lane reopened on Tuesday morning, and…",
+            "before": "closed",
+            "after": "reopened",
+            "when": "just now",
+            "source": "Fenwick Wire"
+          }
+        ]
+      },
+      "readAt": 1792462200000
+    }
+  },
+  "sleep-blogs": {
+    "quiet": {
+      "title": "Why your afternoon coffee might be costing you sleep",
+      "siteName": "Quiet Hours Journal",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "133163cswx2dc-39",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "Caffeine can stay in your system for up to six hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1fhn9jg1ydv81b-3b",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Sleep researchers often describe caffeine as borrowing alertness from later in the day, because it blocks the chemical signal that builds up as you get tired.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1b6cvyhbddyyq-3p",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "w6kpz4qxeeym-2y",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "If you want to cut back, reduce your intake gradually over a week or two rather than stopping all at once, to avoid headaches.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1hd73kjx1zmls-2v",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 5,
+        "new": 5,
+        "seen": 0,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 5,
+      "pill": null,
+      "degraded": false,
+      "card": null,
+      "readAt": 1792375800000
+    },
+    "northlight": {
+      "title": "The no-nonsense guide to better sleep",
+      "siteName": "Northlight Wellness",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "We get asked about sleep more than any other topic, so this guide collects the habits our readers say have made the biggest difference.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "gf1rsb1o9s39g-34",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than that.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "133163cswx2dc-39",
+          "tag": "Quiet Hours Journal · 30 min ago",
+          "provenance": {
+            "paragraphId": "72e03f08d2479cfb8b36de0e2ca3dae0c598e12f59ded5dde1b37b33893af426",
+            "siteName": "Quiet Hours Journal",
+            "title": "Why your afternoon coffee might be costing you sleep",
+            "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+            "when": "Read today, 7:40",
+            "snippet": "Most adults should aim for seven to nine hours of sleep a night, yet surveys keep finding that a large share of us regularly get less than…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Caffeine can stay in your system for up to ten hours, which means a mid-afternoon coffee may still be working when you are trying to fall asleep.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "qlxucy1bgp7tz-3b",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "505e9c60706d39d9d2cd70f7bac7572e4441281b0e5342759b6d28ad13d13ba5",
+            "siteName": "Quiet Hours Journal",
+            "title": "Why your afternoon coffee might be costing you sleep",
+            "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+            "when": "Read today, 7:40",
+            "snippet": "Caffeine can stay in your system for up to six hours, which means a mid-afternoon coffee may still be working when you are trying to fall…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": [
+            {
+              "kind": "number",
+              "before": "six",
+              "after": "ten",
+              "offset": 43,
+              "length": 3,
+              "chip": "six → ten · Quiet Hours Journal said six, 30 min ago"
+            }
+          ]
+        },
+        {
+          "ordinal": 3,
+          "text": "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "w6kpz4qxeeym-2y",
+          "tag": "Quiet Hours Journal · 30 min ago",
+          "provenance": {
+            "paragraphId": "170084b1e5db99b7f3e8522ea7e4359590e5fd0a0729504d622fa0bdff67f4fd",
+            "siteName": "Quiet Hours Journal",
+            "title": "Why your afternoon coffee might be costing you sleep",
+            "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+            "when": "Read today, 7:40",
+            "snippet": "Keeping a regular wake-up time, even at weekends, is one of the simplest habits for steadier sleep, and it costs nothing to try.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "A cool, dark bedroom helps too: many readers told us that blackout curtains made more difference than any supplement they tried.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "17yhk2sbe7ebb-30",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 5,
+        "new": 2,
+        "seen": 2,
+        "similar": 0,
+        "changed": 1
+      },
+      "lit": 3,
+      "pill": "Only 3 of 5 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Why your afternoon coffee might be costing you sleep",
+        "summary": "Previously on this story: 1 article, 1 figure changed",
+        "articles": [
+          {
+            "siteName": "Quiet Hours Journal",
+            "title": "Why your afternoon coffee might be costing you sleep",
+            "url": "https://quiet-hours-journal.example/posts/sleep-and-caffeine",
+            "when": "30 min ago"
+          }
+        ],
+        "figures": [
+          {
+            "context": "…in your system for up to ten hours, which means a…",
+            "before": "six",
+            "after": "ten",
+            "when": "just now",
+            "source": "Quiet Hours Journal"
+          }
+        ]
+      },
+      "readAt": 1792377600000
+    }
+  }
+}
