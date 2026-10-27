@@ -1,4 +1,1001 @@
 {
+  "harrow-bridge": {
+    "wire": {
+      "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+      "siteName": "Fenwick Wire",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "A pedestrian footbridge over the River Tamsin collapsed in Harrow Ford on Tuesday evening, sending commuters and cyclists into the water, emergency services said.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1bqdvej4et2va-3v",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "The Ledgerwood Bridge, a steel and timber walkway built in 1964, gave way at about 6:10 pm as the evening rush hour crossed from the railway station to the market district.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "809rcyin3xys-3y",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Northgate Rescue Service said crews from four stations reached the river within 11 minutes and pulled people from the water and from the broken deck.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "ied6o9g2acvy-3h",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "People were taken to Harrow General Hospital with injuries ranging from cuts and bruises to suspected broken bones, a hospital spokeswoman said.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "gwfetr1sjgnos-3f",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Witnesses described a loud crack followed by a section of the deck dropping away. “It just folded in the middle,” said a cyclist who had crossed seconds earlier.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1qulvg1zosfh6-3o",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "The river was running higher than usual after three days of rain, and rescuers worked from boats and from the bank with ropes and lights as darkness fell.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "av25mw5qy4d3-3j",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "Police closed Station Road, Mill Street and the riverside path, and asked the public to avoid the area so ambulances could reach the scene.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "13g5z0aszarcf-38",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 7,
+          "text": "Harrow Borough Council said the bridge had been inspected in March and had been due for repairs to its eastern bearings next spring.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1mj9rd5130rtda-32",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 8,
+          "text": "Councillor Ines Valmont, who leads the council, said her thoughts were with those hurt and that an independent investigation would begin at once.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "f60dmh17sdmsw-3f",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 9,
+          "text": "The rail line between Southgate and Marlow was suspended for several hours while engineers checked the nearby viaduct.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "t0kywu1lca6ry-2t",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 10,
+          "text": "Trains resumed at about 11 pm with delays of up to 25 minutes, the operator, Tamsin Valley Rail, said.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "8rsbzj10qx3db-2c",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 11,
+          "text": "The bridge opened in 1964 and carries an estimated 9,000 crossings on a typical weekday, according to council figures.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "12tfvfr1bd4cue-2s",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 12,
+          "text": "It was strengthened in 1998 after a survey found corrosion in several of its steel hangers, and a further survey was carried out in March.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "k0rtbl1kzl2yn-36",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 13,
+          "text": "Engineers from the firm Alder & Pike, which carried out the March inspection, said they were working with investigators and would not comment on the cause.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1shf59uxb1x6h-3m",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 14,
+          "text": "The Rail and Marine Safety Board said it had sent a team of three investigators to Harrow Ford and would publish an interim note within 30 days.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "mhbhf81obo151-3a",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 15,
+          "text": "A reception centre was opened at the Ledgerwood Community Hall for families looking for relatives, and a helpline was set up.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1od1z88r8t1o3-2x",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 16,
+          "text": "The helpline is being run by the council and police, and relatives were asked not to travel to the hospital unless contacted.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "jr63g71v6a08e-2w",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 17,
+          "text": "Traders on Mill Street said customers were turned away after the closure, and the weekly market due on Thursday has been moved to Saturday.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "12ehd6cmcg67x-38",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 18,
+          "text": "Schools in Harrow Ford will open as normal, though some buses are on diversion, the county education office said.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1fy0x181pcqoei-2n",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 19,
+          "text": "The Environment Agency said the river level was being monitored and that no further flood warnings were in force for the Tamsin valley.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1r6y1cbkh0nzq-35",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 20,
+          "text": "Divers searched the river bed overnight to confirm that nobody remained in the water, and the search was formally stood down at dawn.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "c1rhpr1v20704-33",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 21,
+          "text": "The council said it would publish the inspection reports for the bridge once the investigators agreed they could be released.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "zvmywgxomg72-2y",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 22,
+          "text": "Fenwick Wire will update this report as more information becomes available.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "38qaqy16mb1al-1t",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 23,
+        "new": 23,
+        "seen": 0,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 23,
+      "pill": null,
+      "degraded": false,
+      "card": null,
+      "readAt": 1792375800000
+    },
+    "calder": {
+      "title": "Harrow Ford bridge collapse: what we know so far",
+      "siteName": "Calder Courier",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "A total of 12 people were taken to Harrow General Hospital after the Ledgerwood footbridge collapsed, the ambulance service said, and two of them remain in a serious condition.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "xf5wbz1cckmrz-44",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "The Ledgerwood Bridge, a steel and timber walkway built in 1964, gave way at about 6:10 pm as the evening rush hour crossed from the railway station to the market district.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "809rcyin3xys-3y",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "94d4ed44dd7a4255f2824bd3c5e563b4223603fe94fe319d19baa122fc90f87b",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The Ledgerwood Bridge, a steel and timber walkway built in 1964, gave way at about 6:10 pm as the evening rush hour crossed from the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 2,
+          "text": "Northgate Rescue Service said crews from four stations reached the river within 11 minutes and pulled people from the water and from the broken deck.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "ied6o9g2acvy-3h",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "7f51b2d693949e2ea412e6ae2eded6f24034d6010b73c180e06a418cd42ab59e",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Northgate Rescue Service said crews from four stations reached the river within 11 minutes and pulled people from the water and from the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Witnesses described a loud crack followed by a section of the deck dropping away. “It just folded in the middle,” said a cyclist who had crossed seconds earlier.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1qulvg1zosfh6-3o",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "a2632980e56f36a88f7629b2785e5b09ce4b091b7fddf98bcc2bcef6020dab61",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Witnesses described a loud crack followed by a section of the deck dropping away. \"It just folded in the middle,\" said a cyclist who had…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "Members of a rowing club who were training upstream said they pulled two people onto their launch before the rescue boats arrived, the club captain told this newspaper.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1590sk016n3zzq-3x",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "The river was running higher than usual after three days of rain, and rescuers worked from boats and from the bank with ropes and lights as darkness fell.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "av25mw5qy4d3-3j",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "9f9903cb9de611b8238208080ce4a7aba3bec1d1cd1e831996ab9ffc05e42792",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The river was running higher than usual after three days of rain, and rescuers worked from boats and from the bank with ropes and lights…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "Police closed Station Road, Mill Street and the riverside path, and asked the public to avoid the area so ambulances could reach the scene.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "13g5z0aszarcf-38",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "ec75b9dfb4feea069c849e7818534d9f1ebece9083b86b07a30175ec992cbc86",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Police closed Station Road, Mill Street and the riverside path, and asked the public to avoid the area so ambulances could reach the scene.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 7,
+          "text": "Harrow Borough Council said the bridge had been inspected in March and had been due for repairs to its eastern bearings next spring.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1mj9rd5130rtda-32",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "73a59988448bc763927a446585b319290772ab0eee2afd1a2c59bd955e25aa6b",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Harrow Borough Council said the bridge had been inspected in March and had been due for repairs to its eastern bearings next spring.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 8,
+          "text": "Councillor Ines Valmont, who leads the council, said her thoughts were with those hurt and that an independent investigation would begin at once.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "f60dmh17sdmsw-3f",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "abd6b53e75abceeae3efeeae76ad6b4567b86aee4eee37ee40ed6cfb79475d58",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Councillor Ines Valmont, who leads the council, said her thoughts were with those hurt and that an independent investigation would begin…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 9,
+          "text": "The rail line between Southgate and Marlow was suspended for several hours while engineers checked the nearby viaduct.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "t0kywu1lca6ry-2t",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "fb61277a717edca46a92c58862fa441ff00adf2f73f9162ef85d4c2510346783",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The rail line between Southgate and Marlow was suspended for several hours while engineers checked the nearby viaduct.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 10,
+          "text": "Trains resumed at about 11 pm with delays of up to 25 minutes, the operator, Tamsin Valley Rail, said.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "8rsbzj10qx3db-2c",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "ba01e1de0769af5df4dfaee1d8c9f9497967d0f9ac21aa361c985edabd7bab54",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Trains resumed at about 11 pm with delays of up to 25 minutes, the operator, Tamsin Valley Rail, said.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 11,
+          "text": "The bridge opened in 1964 and carries an estimated 9,000 crossings on a typical weekday, according to council figures.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "12tfvfr1bd4cue-2s",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "996fbbc721ed87afc14ac6cebfba238c32976c2fd51cced455ba5b2c7bcbcaa6",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The bridge opened in 1964 and carries an estimated 9,000 crossings on a typical weekday, according to council figures.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 12,
+          "text": "It was strengthened in 1998 after a survey found corrosion in several of its steel hangers, and a further survey was carried out in March.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "k0rtbl1kzl2yn-36",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "8795fa1258a75aceddf9259afde5259e4f2e22e62c44ada699acbd4954d3b11e",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "It was strengthened in 1998 after a survey found corrosion in several of its steel hangers, and a further survey was carried out in March.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 13,
+          "text": "A vigil will be held at St Anselm’s Church on Wednesday at 7 pm, the vicar said, and the bells will be rung for ten minutes.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1kp9o0mba4kxy-2q",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 14,
+          "text": "A reception centre was opened at the Ledgerwood Community Hall for families looking for relatives, and a helpline was set up.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1od1z88r8t1o3-2x",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "36dfe43eec8ab4890d19eca893edbfd4bd54fe391f40568037a151ea403bc4a9",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "A reception centre was opened at the Ledgerwood Community Hall for families looking for relatives, and a helpline was set up.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 15,
+          "text": "Traders on Mill Street said customers were turned away after the closure, and the weekly market due on Thursday has been moved to Saturday.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "12ehd6cmcg67x-38",
+          "tag": "Fenwick Wire · 14 min ago",
+          "provenance": {
+            "paragraphId": "c1a5d56292d7a28adc33130238a5cf632da3392161d50383476aa082778742a6",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Traders on Mill Street said customers were turned away after the closure, and the weekly market due on Thursday has been moved to Saturday.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 16,
+          "text": "Calder Courier readers sent in more than 200 photographs and videos of the collapse, and police asked anyone with footage to upload it to the dedicated portal.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1ywd99e14hmm04-3p",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 17,
+        "new": 4,
+        "seen": 13,
+        "similar": 0,
+        "changed": 0
+      },
+      "lit": 4,
+      "pill": "Only 4 of 17 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+        "summary": "Previously on this story: 1 article",
+        "articles": [
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "14 min ago"
+          }
+        ],
+        "figures": []
+      },
+      "readAt": 1792376640000
+    },
+    "morrow": {
+      "title": "Harrow Ford bridge collapse: 14 hurt as investigators arrive",
+      "siteName": "Morrow Daily",
+      "paragraphs": [
+        {
+          "ordinal": 0,
+          "text": "A pedestrian footbridge over the River Tamsin collapsed in Harrow Ford on Tuesday evening, sending commuters and cyclists into the water, emergency services said.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1bqdvej4et2va-3v",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "8049a297f1ca170bb147ae31b8320c37a9f3920d0bdf8d4de3e91ccdc50b408c",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "A pedestrian footbridge over the River Tamsin collapsed in Harrow Ford on Tuesday evening, sending commuters and cyclists into the water…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 1,
+          "text": "A total of 14 people were taken to Harrow General Hospital after the Ledgerwood footbridge collapsed, the ambulance service said, and two of them remain in a serious condition.",
+          "tier": "changed",
+          "skipped": false,
+          "fingerprint": "2dtrwmqz67i9-44",
+          "tag": null,
+          "provenance": {
+            "paragraphId": "d4174751e4d85cf8c82c6360146ab45bedc1394c8be73b03c497d0a393e0b147",
+            "siteName": "Calder Courier",
+            "title": "Harrow Ford bridge collapse: what we know so far",
+            "url": "https://calder-courier.example/news/harrow-ford-bridge-what-we-know",
+            "when": "Read today, 7:54",
+            "snippet": "A total of 12 people were taken to Harrow General Hospital after the Ledgerwood footbridge collapsed, the ambulance service said, and two…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": [
+            {
+              "kind": "number",
+              "before": "12",
+              "after": "14",
+              "offset": 11,
+              "length": 2,
+              "chip": "12 → 14 · Calder Courier said 12, 16 min ago"
+            }
+          ]
+        },
+        {
+          "ordinal": 2,
+          "text": "The Ledgerwood Bridge, a steel and timber walkway built in 1964, gave way at about 6:10 pm as the evening rush hour crossed from the railway station to the market district.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "809rcyin3xys-3y",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "94d4ed44dd7a4255f2824bd3c5e563b4223603fe94fe319d19baa122fc90f87b",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The Ledgerwood Bridge, a steel and timber walkway built in 1964, gave way at about 6:10 pm as the evening rush hour crossed from the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 3,
+          "text": "Northgate Rescue Service said crews from four stations reached the river within 11 minutes and pulled people from the water and from the broken deck.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "ied6o9g2acvy-3h",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "7f51b2d693949e2ea412e6ae2eded6f24034d6010b73c180e06a418cd42ab59e",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Northgate Rescue Service said crews from four stations reached the river within 11 minutes and pulled people from the water and from the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 4,
+          "text": "People were taken to Harrow General Hospital with injuries ranging from cuts and bruises to suspected broken bones, a hospital spokeswoman said.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "gwfetr1sjgnos-3f",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "254cb09051b745504b861056848dba35be397219da78ffe1cbfe143af935f574",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "People were taken to Harrow General Hospital with injuries ranging from cuts and bruises to suspected broken bones, a hospital spokeswoman…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 5,
+          "text": "Witnesses described a loud crack followed by a section of the deck dropping away. “It just folded in the middle,” said a cyclist who had crossed seconds earlier.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1qulvg1zosfh6-3o",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "a2632980e56f36a88f7629b2785e5b09ce4b091b7fddf98bcc2bcef6020dab61",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Witnesses described a loud crack followed by a section of the deck dropping away. \"It just folded in the middle,\" said a cyclist who had…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 6,
+          "text": "The river was running higher than usual after three days of rain, and rescuers worked from boats and from the bank with ropes and lights as darkness fell.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "av25mw5qy4d3-3j",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "9f9903cb9de611b8238208080ce4a7aba3bec1d1cd1e831996ab9ffc05e42792",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The river was running higher than usual after three days of rain, and rescuers worked from boats and from the bank with ropes and lights…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 7,
+          "text": "Police closed Station Road, Mill Street and the riverside path, and asked the public to avoid the area so ambulances could reach the scene.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "13g5z0aszarcf-38",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "ec75b9dfb4feea069c849e7818534d9f1ebece9083b86b07a30175ec992cbc86",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Police closed Station Road, Mill Street and the riverside path, and asked the public to avoid the area so ambulances could reach the scene.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 8,
+          "text": "The Rail and Marine Safety Board said on Wednesday that its first checks pointed to a fault in the eastern bearings, but it cautioned that the finding was preliminary.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1iijdtj12co6h0-3v",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 9,
+          "text": "Harrow Borough Council said the bridge had been inspected in March and had been due for repairs to its eastern bearings next spring.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1mj9rd5130rtda-32",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "73a59988448bc763927a446585b319290772ab0eee2afd1a2c59bd955e25aa6b",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Harrow Borough Council said the bridge had been inspected in March and had been due for repairs to its eastern bearings next spring.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 10,
+          "text": "Councillor Ines Valmont, who leads the council, said her thoughts were with those hurt and that an independent investigation would begin at once.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "f60dmh17sdmsw-3f",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "abd6b53e75abceeae3efeeae76ad6b4567b86aee4eee37ee40ed6cfb79475d58",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Councillor Ines Valmont, who leads the council, said her thoughts were with those hurt and that an independent investigation would begin…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 11,
+          "text": "The bridge opened in 1964 and carries an estimated 9,000 crossings on a typical weekday, according to council figures.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "12tfvfr1bd4cue-2s",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "996fbbc721ed87afc14ac6cebfba238c32976c2fd51cced455ba5b2c7bcbcaa6",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The bridge opened in 1964 and carries an estimated 9,000 crossings on a typical weekday, according to council figures.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 12,
+          "text": "It was strengthened in 1998 after a survey found corrosion in several of its steel hangers, and a further survey was carried out in March.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "k0rtbl1kzl2yn-36",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "8795fa1258a75aceddf9259afde5259e4f2e22e62c44ada699acbd4954d3b11e",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "It was strengthened in 1998 after a survey found corrosion in several of its steel hangers, and a further survey was carried out in March.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 13,
+          "text": "Engineers from the firm Alder & Pike, which carried out the March inspection, said they were working with investigators and would not comment on the cause.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1shf59uxb1x6h-3m",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "62c0eab664514b3a62c8c84ffaada673d9601689a110d41ca992633d5e59be9b",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Engineers from the firm Alder & Pike, which carried out the March inspection, said they were working with investigators and would not…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 14,
+          "text": "The Rail and Marine Safety Board said it had sent a team of three investigators to Harrow Ford and would publish an interim note within 30 days.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "mhbhf81obo151-3a",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "1b09024fdebd1fb8da62aea7cd81d955bdf8e0fb023a02d5b2d7a70cbe5e3069",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The Rail and Marine Safety Board said it had sent a team of three investigators to Harrow Ford and would publish an interim note within 30…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 15,
+          "text": "Harrow Borough Council has set aside £2.4 million to build a temporary crossing near the station and hopes to open it by the end of the month.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "c6gzlkjkcxuv-38",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        },
+        {
+          "ordinal": 16,
+          "text": "A reception centre was opened at the Ledgerwood Community Hall for families looking for relatives, and a helpline was set up.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1od1z88r8t1o3-2x",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "36dfe43eec8ab4890d19eca893edbfd4bd54fe391f40568037a151ea403bc4a9",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "A reception centre was opened at the Ledgerwood Community Hall for families looking for relatives, and a helpline was set up.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 17,
+          "text": "The helpline is being run by the council and police, and relatives were asked not to travel to the hospital unless contacted.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "jr63g71v6a08e-2w",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "df13b23f30aee77ad488c26e86960494ff9fe6e80c21d93f7318d75e46f21e8f",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "The helpline is being run by the council and police, and relatives were asked not to travel to the hospital unless contacted.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 18,
+          "text": "Members of a rowing club who were training upstream said they pulled two people onto their launch before the rescue boats arrived, the club captain told this newspaper.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1590sk016n3zzq-3x",
+          "tag": "Calder Courier · 16 min ago",
+          "provenance": {
+            "paragraphId": "d39e82da8a8971ef6d17b8c6b22ebb8017d484d9813df1e389927fe39ff585ef",
+            "siteName": "Calder Courier",
+            "title": "Harrow Ford bridge collapse: what we know so far",
+            "url": "https://calder-courier.example/news/harrow-ford-bridge-what-we-know",
+            "when": "Read today, 7:54",
+            "snippet": "Members of a rowing club who were training upstream said they pulled two people onto their launch before the rescue boats arrived, the…",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 19,
+          "text": "A vigil will be held at St Anselm’s Church on Wednesday at 7 pm, the vicar said, and the bells will be rung for ten minutes.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1kp9o0mba4kxy-2q",
+          "tag": "Calder Courier · 16 min ago",
+          "provenance": {
+            "paragraphId": "358bc43aa316ad65a40b57f54cb89adc36381bbfbb3725127e3b159cfab86a44",
+            "siteName": "Calder Courier",
+            "title": "Harrow Ford bridge collapse: what we know so far",
+            "url": "https://calder-courier.example/news/harrow-ford-bridge-what-we-know",
+            "when": "Read today, 7:54",
+            "snippet": "A vigil will be held at St Anselm's Church on Wednesday at 7 pm, the vicar said, and the bells will be rung for ten minutes.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 20,
+          "text": "Traders on Mill Street said customers were turned away after the closure, and the weekly market due on Thursday has been moved to Saturday.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "12ehd6cmcg67x-38",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "c1a5d56292d7a28adc33130238a5cf632da3392161d50383476aa082778742a6",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Traders on Mill Street said customers were turned away after the closure, and the weekly market due on Thursday has been moved to Saturday.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 21,
+          "text": "Schools in Harrow Ford will open as normal, though some buses are on diversion, the county education office said.",
+          "tier": "seen",
+          "skipped": false,
+          "fingerprint": "1fy0x181pcqoei-2n",
+          "tag": "Fenwick Wire · 30 min ago",
+          "provenance": {
+            "paragraphId": "f6689ff57f975a2c31e9614b06aa5a0ef720e44b4aa1f6b62ad80af3d1705021",
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "Read today, 7:40",
+            "snippet": "Schools in Harrow Ford will open as normal, though some buses are on diversion, the county education office said.",
+            "matchLine": "Same wording as a paragraph you read"
+          },
+          "drift": []
+        },
+        {
+          "ordinal": 22,
+          "text": "Mill Street traders said they would ask the council for rates relief after losing three days of trade.",
+          "tier": "new",
+          "skipped": false,
+          "fingerprint": "1qo08ut14njmmt-2d",
+          "tag": null,
+          "provenance": null,
+          "drift": []
+        }
+      ],
+      "summary": {
+        "total": 23,
+        "new": 3,
+        "seen": 19,
+        "similar": 0,
+        "changed": 1
+      },
+      "lit": 4,
+      "pill": "Only 4 of 23 paragraphs are new to you",
+      "degraded": false,
+      "card": {
+        "label": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+        "summary": "Previously on this story: 2 articles, 1 figure changed",
+        "articles": [
+          {
+            "siteName": "Calder Courier",
+            "title": "Harrow Ford bridge collapse: what we know so far",
+            "url": "https://calder-courier.example/news/harrow-ford-bridge-what-we-know",
+            "when": "16 min ago"
+          },
+          {
+            "siteName": "Fenwick Wire",
+            "title": "Footbridge collapses at Harrow Ford as commuters cross the Tamsin",
+            "url": "https://fenwick-wire.example/2026/10/27/harrow-ford-footbridge-collapse",
+            "when": "30 min ago"
+          }
+        ],
+        "figures": [
+          {
+            "context": "A total of 14 people were taken to Harrow General Hospital…",
+            "before": "12",
+            "after": "14",
+            "when": "just now",
+            "source": "Calder Courier"
+          }
+        ]
+      },
+      "readAt": 1792377600000
+    }
+  },
   "kessel-valley-rail": {
     "wire": {
       "title": "Kessel Valley line to close for six weeks of bridge repairs",

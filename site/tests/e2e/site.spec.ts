@@ -25,7 +25,7 @@ test.describe('landing page', () => {
     await expect(page.locator('.try-link')).toHaveAttribute('href', '/app/');
     // the third tab's pill carries the engine's own sentence
     await expect(page.locator('#hero-sheet [data-pill]')).toContainText(
-      'of 7 paragraphs are new to you',
+      'of 23 paragraphs are new to you',
     );
     await page.waitForLoadState('load');
     expect(reqs.foreign()).toEqual([]);
@@ -104,13 +104,14 @@ test.describe('web app', () => {
     ).toBeLessThanOrEqual(0);
 
     await page.getByRole('button', { name: 'Try a sample story' }).click();
-    await expect(page.locator('[data-pill]')).toContainText('of 7 paragraphs are new to you', {
+    await expect(page.locator('[data-pill]')).toContainText('of 23 paragraphs are new to you', {
       timeout: 30_000,
     });
-    await expect(page.locator('.on-chip').first()).toContainText('Twelve → 14');
-    // tiers: 3 seen, 2 changed, 2 new
-    await expect(page.locator('.on-row[data-tier="seen"]')).toHaveCount(3);
-    await expect(page.locator('.on-row[data-tier="changed"]')).toHaveCount(2);
+    await expect(page.locator('.on-chip').first()).toContainText('12 → 14');
+    // tiers (the bridge story, third article): 19 seen, 1 changed, 3 new
+    await expect(page.locator('.on-row[data-tier="seen"]')).toHaveCount(19);
+    await expect(page.locator('.on-row[data-tier="changed"]')).toHaveCount(1);
+    await expect(page.locator('.on-row[data-tier="new"]')).toHaveCount(3);
 
     // every faded paragraph stays at or above the 4.5:1 floor against its sheet
     const worst = await page.evaluate(() => {
@@ -236,7 +237,7 @@ test.describe('web app', () => {
     ).toBeVisible();
     await expect(page.getByText('You’re offline. Everything here still works.')).toBeVisible();
     await page.getByRole('link', { name: 'Stories' }).click();
-    await expect(page.getByText('Fire guts Port Alder').first()).toBeVisible();
+    await expect(page.getByText('Footbridge collapses at Harrow Ford').first()).toBeVisible();
     // a fresh sample still reads offline (the vectors are part of the precache)
     await page.getByRole('link', { name: 'Read' }).click();
     await page.getByRole('button', { name: 'Rail closure sample' }).click();

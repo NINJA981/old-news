@@ -63,6 +63,7 @@ test.describe('sample flow', () => {
     const log = recordRequests(page);
     const cases: [button: string, minSeen: number, chip: boolean][] = [
       ['Try a sample story', 3, true],
+      ['Day-2 update sample', 3, true],
       ['Rail closure sample', 1, false],
       ['Sleep blogs sample', 1, false],
     ];
@@ -102,7 +103,7 @@ test.describe('sample flow', () => {
     await press(info, page.getByRole('button', { name: 'Try a sample story' }));
     await expect(page.locator('[data-pill]')).toBeVisible({ timeout: 30_000 });
     await press(info, page.getByRole('link', { name: 'Stories' }));
-    await expect(page.getByText('Fire guts Port Alder').first()).toBeVisible();
+    await expect(page.getByText('Footbridge collapses at Harrow Ford').first()).toBeVisible();
     await noOverflow(page);
     expectStatic(log);
   });
@@ -236,7 +237,7 @@ test.describe('offline and requests', () => {
     ).toBeVisible();
     await expect(page.getByText('You’re offline. Everything here still works.')).toBeVisible();
     await press(info, page.getByRole('link', { name: 'Stories' }));
-    await expect(page.getByText('Fire guts Port Alder').first()).toBeVisible();
+    await expect(page.getByText('Footbridge collapses at Harrow Ford').first()).toBeVisible();
 
     // Offline, a fresh sample and a pasted pair both still read (the vectors are precached).
     await press(info, page.getByRole('link', { name: 'Read' }));

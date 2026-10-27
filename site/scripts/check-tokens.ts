@@ -72,12 +72,36 @@ for (const [name, css, suffix] of [
 }
 if (design.get('accent-text') !== '#12676a')
   problems.push('DESIGN.md accent-text changed; update tokens.css');
-for (const [token, expect] of [
-  ['--drift-mark: oklch(0.83 0.11 78 / 0.24)', 'dark drift-mark'],
-  ['--drift-mark: oklch(0.88 0.11 85 / 0.55)', 'light drift-mark'],
-] as const) {
-  if (!TOKENS.includes(token))
-    problems.push(`tokens.css is missing the ${expect} from DESIGN.md Colors`);
+// drift-mark is translucent, so it lives in the Colors tables (Dark first, then Light), not the
+// front matter. Read both rows from DESIGN.md and require the same values in every theme block.
+const markRows = [
+  ...DESIGN.matchAll(/\| `drift-mark` \(in-page highlight\) \| `(oklch\([^`]+\))`/g),
+].map((m) => m[1] as string);
+const [markDark, markLight] = markRows;
+if (!markDark || !markLight) problems.push('DESIGN.md Colors tables: drift-mark rows not found');
+else {
+  const lightBlocks = TOKENS.split('\n').filter((l) => /^\s+--drift-mark:/.test(l));
+  if (!dark.includes(`--drift-mark: ${markDark};`))
+    problems.push(`dark --drift-mark must be ${markDark} (DESIGN.md Colors, Dark)`);
+  if (!light.includes(`--drift-mark: ${markLight};`))
+    problems.push(`light --drift-mark must be ${markLight} (DESIGN.md Colors, Light)`);
+  for (const l of lightBlocks) {
+    const v = l.split(':').slice(1).join(':').trim().replace(/;$/, '');
+    if (v !== markDark && v !== markLight) problems.push(`tokens.css has an off-token ${l.trim()}`);
+  }
+}
+// The underline under a changed token: 1 px at 60% on light pages, 2 px at 85% on dark (DESIGN.md).
+if (!/1 px at 60% on light pages, 2 px at 85% on dark pages/.test(DESIGN))
+  problems.push('DESIGN.md drift underline rule changed; update --drift-line-* in tokens.css');
+if (!/--drift-line-w: 2px;\s*--drift-line-mix: 85%;/.test(dark))
+  problems.push('dark --drift-line-w/--drift-line-mix must be 2px / 85%');
+if (!/--drift-line-w: 1px;\s*--drift-line-mix: 60%;/.test(light))
+  problems.push('light --drift-line-w/--drift-line-mix must be 1px / 60%');
+// Every colour custom property in tokens.css must be a DESIGN.md role (no private extras).
+const allowed = new Set([...roles, 'accent-text', 'drift-mark']);
+for (const m of TOKENS.matchAll(/--([a-z0-9-]+):\s*(#[0-9a-f]{3,8}|oklch\(|rgb\()/gi)) {
+  if (!allowed.has(m[1] as string))
+    problems.push(`tokens.css defines --${m[1]}, which is not a DESIGN.md colour`);
 }
 
 // 2. No colour literals outside tokens.css.

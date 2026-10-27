@@ -63,6 +63,11 @@
 .is-reduced-play .on-p[data-a] {
   transition: none;
 }
+/* Reduced motion shows the pill's final copy at once. */
+.is-reduced-play [data-pill],
+.is-reduced-play [data-pill-only] {
+  opacity: 1;
+}
 
 /* Provenance tag: Hanken micro, ring only, a focusable button. */
 .on-tag {
@@ -98,24 +103,20 @@
     top: var(--s-0-5);
     margin-top: 0;
     width: max-content;
-    max-width: 144px;
+    max-width: 160px;
   }
 }
 
-/* Drift highlight + chip. Amber means a fact changed, and nothing else. */
-.on-row[data-drift] {
-  padding-top: 32px;
-}
-.on-row[data-drift='2'],
-.on-row[data-drift='3'] {
-  padding-top: 58px;
-}
+/* Drift highlight + chip. Amber means a fact changed, and nothing else.
+   The chips sit in flow directly above the paragraph, so the row always reserves their height and a
+   chip never covers text at any width (DESIGN.md, QA r1). chips.ts slides them to the token's x. */
 .on-mark {
   position: relative;
   background: var(--drift-mark);
   color: inherit;
   border-radius: 2px;
-  box-shadow: 0 1px 0 0 color-mix(in oklch, var(--drift) 60%, transparent);
+  box-shadow: 0 var(--drift-line-w) 0 0
+    color-mix(in oklch, var(--drift) var(--drift-line-mix), transparent);
 }
 .on-mark[data-state='start'] {
   background: transparent;
@@ -125,22 +126,20 @@
   position: absolute;
   inset: 0;
   border-radius: 2px;
-  background: var(--drift-mark-strong);
+  background: var(--drift-mark);
   opacity: 0;
   pointer-events: none;
 }
 .on-chips {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
   display: flex;
   flex-wrap: wrap;
   gap: var(--s-1-5);
+  margin-bottom: var(--s-1-5);
 }
 .on-chip {
-  max-width: 360px;
-  padding: var(--s-1) var(--s-2);
+  max-width: min(360px, 100%);
+  min-height: 20px;
+  padding: var(--s-0-5) var(--s-2);
   border: 0;
   border-radius: var(--r-xs);
   background: var(--drift-soft);
@@ -152,6 +151,9 @@
   font-weight: 450;
   letter-spacing: 0.005em;
   text-align: left;
+}
+.on-chip > span:not(.sr-only) {
+  color: color-mix(in oklch, var(--text) 90%, transparent);
 }
 .on-chip b {
   color: var(--drift);
@@ -393,5 +395,9 @@
     left: 0;
     right: 0;
     height: 44px;
+  }
+  /* A tag above a changed paragraph and that paragraph's chips: keep their hit layers apart. */
+  .on-row[data-drift] > .on-chips {
+    padding-top: var(--s-2);
   }
 }

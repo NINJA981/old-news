@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Settings } from '@engine';
 import { createDissolver, type Dissolver } from '../shared/dissolve.ts';
 import { attachReader, type Reader as ReaderApi } from '../shared/reader.ts';
+import { watchChips } from '../shared/chips.ts';
 import { pillHtml, rowsHtml, tierBarHtml } from '../shared/render.ts';
 import { plain } from '../shared/text.ts';
 import { addFeedback, type SessionArticle } from './engine.ts';
@@ -41,6 +42,12 @@ export function ArticleReader({
     if (!root) return;
     applyFloors(root, settings.fadeStrength);
   }, [html, settings.fadeStrength]);
+
+  // Drift chips start above their changed token where the row has room.
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    return root ? watchChips(root) : undefined;
+  }, [html]);
 
   // The dissolve, once, the first time a matched article is shown (bible P7: rationed).
   useLayoutEffect(() => {

@@ -26,6 +26,8 @@ export interface LandingContext {
     size: { packedBytes: number; unpackedBytes: number; parts: Record<string, number> };
   };
   alpha: { seen: number; similar: number };
+  /** Real product screenshots (scripts/make-shots.ts, from docs/screenshots). */
+  shots?: Record<string, { src: string; width: number; height: number; alt: string }>;
   repoUrl: string;
   storeUrl: string;
 }
@@ -59,11 +61,35 @@ function sheetHead(view: ArticleView, caption = 'Fixture story'): string {
   );
 }
 
+/** How many paragraphs of the hero article are drawn: the top of the tab, as a reader first sees it. */
+export const HERO_ROWS = 6;
+
+function shot(ctx: LandingContext, name: string, caption: string): string {
+  const s = ctx.shots?.[name];
+  if (!s) return '';
+  return (
+    `<figure class="shot"><img src="${esc(s.src)}" width="${s.width}" height="${s.height}" alt="${esc(s.alt)}" loading="lazy" decoding="async" />` +
+    `<figcaption>${esc(caption)}</figcaption></figure>`
+  );
+}
+
 export function landingBody(ctx: LandingContext): string {
+  // Hero: the LANDING.md "third tab". The Harrow Ford story, read in order: Fenwick Wire, then
+  // Calder Courier, then Morrow Daily (23 paragraphs, 19 already read, one figure changed).
+  const hb = ctx.views['harrow-bridge'] as StoryViews;
+  const heroWire = hb['wire'] as ArticleView;
+  const heroCalder = hb['calder'] as ArticleView;
+  const third = hb['morrow'] as ArticleView;
+  const heroRows = third.paragraphs.slice(0, HERO_ROWS);
+  const isFaded = (p: ArticleView['paragraphs'][number]): boolean =>
+    !p.skipped && (p.tier === 'seen' || p.tier === 'similar');
+  const offscreen = third.paragraphs.filter(isFaded).length - heroRows.filter(isFaded).length;
+
+  // The other beats use the Port Alder story: its day-2 update has the "similar" tier, two changed
+  // facts in one paragraph, and a three-article "Previously on" card.
   const pa = ctx.views['port-alder-fire'] as StoryViews;
   const wire = pa['wire'] as ArticleView;
   const calder = pa['calder'] as ArticleView;
-  const morrow = pa['morrow'] as ArticleView;
   const day2 = pa['day2'] as ArticleView;
   const m = ctx.measured;
   const opts = { alpha: ctx.alpha, gutter: true };
@@ -72,15 +98,17 @@ export function landingBody(ctx: LandingContext): string {
     ctx.repoUrl
       ? `<a href="${esc(`${ctx.repoUrl}${path}`)}" rel="noopener">${esc(label)}</a>`
       : `<span>${esc(label)}</span>`;
-  const chromeHref = ctx.storeUrl || '#install';
 
   const recall = m.metrics.metrics.changedMeaningRecall.toFixed(2);
   const fires = m.metrics.counts.firesTotal;
   const caught = m.metrics.counts.firesCaught;
 
-  const driftRow = day2.paragraphs.find((p) => p.drift.length > 0) ?? day2.paragraphs[0]!;
-  const driftSource = wire.paragraphs.find((p) => /twelve/i.test(p.text)) ?? wire.paragraphs[1]!;
-  const driftChip = driftRow.drift[0]!;
+  // Beat 3a: the day-2 paragraph with the most changed facts, beside the paragraph it was read as.
+  const driftRow =
+    [...day2.paragraphs].sort((a, b) => b.drift.length - a.drift.length)[0] ?? day2.paragraphs[0]!;
+  const snippet = (driftRow.provenance?.snippet ?? '').replace(/…$/, '');
+  const driftSource =
+    wire.paragraphs.find((p) => snippet && p.text.startsWith(snippet)) ?? wire.paragraphs[0]!;
   const card = day2.card;
 
   return `
@@ -106,7 +134,11 @@ export function landingBody(ctx: LandingContext): string {
       <h1 id="h1">You’ve read this before.</h1>
       <p class="lead">Old News remembers every paragraph you read, on your own computer. On the next article about the same story, it fades what you already know, tells you where you read it, and lights up the one number that changed.</p>
       <div class="cta-row">
-        <a class="btn btn-primary hero-chrome" href="${esc(chromeHref)}">Add to Chrome</a>
+        ${
+          ctx.storeUrl
+            ? `<a class="btn btn-primary hero-chrome" href="${esc(ctx.storeUrl)}">Add to Chrome</a>`
+            : `<a class="btn btn-primary hero-chrome" href="#install">Install in Chrome from source</a>`
+        }
         <a class="try-link" href="/app/">Try it in your browser, no install</a>
       </div>
       <dl class="kv hero-kv">
@@ -120,24 +152,25 @@ export function landingBody(ctx: LandingContext): string {
       <div class="stack" id="stack">
         <div class="stack-3d">
           <article class="sheet sheet-back sheet-back-2 on-sheet" data-theme="light" aria-hidden="true" style="--i:2">
-            <span class="sheet-tab">${esc(calder.siteName)}</span>
-            ${sheetHead(calder)}
+            <span class="sheet-tab">${esc(heroWire.siteName)}</span>
+            ${sheetHead(heroWire)}
           </article>
           <article class="sheet sheet-back sheet-back-1 on-sheet" data-theme="light" aria-hidden="true" style="--i:1">
-            <span class="sheet-tab">${esc(morrow.siteName)}</span>
-            ${sheetHead(morrow)}
+            <span class="sheet-tab">${esc(heroCalder.siteName)}</span>
+            ${sheetHead(heroCalder)}
           </article>
-          <article class="sheet sheet-front on-sheet" data-theme="light" id="hero-sheet" style="--i:0" aria-label="The third article, as Old News shows it">
-            <span class="sheet-tab">${esc(day2.siteName)}</span>
-            ${sheetHead(day2)}
-            <div class="on-read on-gutter sheet-body" id="hero-rows">${rowsHtml(day2, opts)}</div>
-            <div class="sheet-pill">${pillHtml(day2)}</div>
+          <article class="sheet sheet-front on-sheet hero-pre" data-theme="light" id="hero-sheet" style="--i:0" data-offscreen="${offscreen}" aria-label="The third article, as Old News shows it">
+            <span class="sheet-tab">${esc(third.siteName)}</span>
+            ${sheetHead(third)}
+            <div class="on-read on-gutter sheet-body" id="hero-rows">${rowsHtml({ ...third, paragraphs: heroRows }, opts)}</div>
+            <p class="sr-only">The first ${HERO_ROWS} of the article’s ${third.summary.total} paragraphs are shown.</p>
+            <div class="sheet-pill">${pillHtml(third)}</div>
           </article>
         </div>
       </div>
       <div class="stage-actions">
         <button type="button" class="btn btn-ghost" id="replay" data-label-play="Play" data-label-replay="Replay">Replay</button>
-        <p class="stage-note">Fixture story with invented outlets. The tags, the fade levels and the count are what the engine returned for it.</p>
+        <p class="stage-note">Fixture story with invented outlets, read in tab order. The sheet shows the top ${HERO_ROWS} of its ${third.summary.total} paragraphs; the tags, the fade levels and the count are what the engine returned for it.</p>
       </div>
     </div>
   </div>
@@ -344,6 +377,14 @@ export function landingBody(ctx: LandingContext): string {
       <p class="fine">Works on articles and long-form blog posts. Some sites lay out text in ways Old News can’t line up, and there it stays out of the way.</p>
     </div>
   </div>
+  ${
+    ctx.shots
+      ? `<div class="wrap shots" aria-label="Screenshots of the extension">
+    ${shot(ctx, 'onboarding-tabs-dark', 'Useful from the first minute: on install it offers to remember the article tabs you already have open. It reads only the tabs you tick and fetches nothing.')}
+    ${shot(ctx, 'popup-dark', 'The toolbar popup on the third article of the bridge story. Captured from the built extension on the fixture stories, served from a local test server (hence 127.0.0.1).')}
+  </div>`
+      : ''
+  }
 </section>
 
 <section class="band band-end" data-theme="dark" id="source" aria-labelledby="src-h">

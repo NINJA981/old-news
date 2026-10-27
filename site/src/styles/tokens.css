@@ -43,8 +43,10 @@
   --accent-soft: #082c2e;
   --drift: #efbe72;
   --drift-soft: #3a270b;
-  --drift-mark: oklch(0.83 0.11 78 / 0.24);
-  --drift-mark-strong: oklch(0.83 0.11 78 / 0.55);
+  --drift-mark: oklch(0.83 0.11 78 / 0.32);
+  /* Underline under a changed token: a 1 px line at 60% disappears on dark pages (DESIGN.md). */
+  --drift-line-w: 2px;
+  --drift-line-mix: 85%;
   --success: #6fc884;
   --danger: #fc928a;
   --danger-soft: #421c19;
@@ -75,7 +77,8 @@
   --drift: #8d5406;
   --drift-soft: #ffeccd;
   --drift-mark: oklch(0.88 0.11 85 / 0.55);
-  --drift-mark-strong: oklch(0.86 0.12 85 / 0.9);
+  --drift-line-w: 1px;
+  --drift-line-mix: 60%;
   --success: #287c42;
   --danger: #c52c2a;
   --danger-soft: #ffe8e6;
@@ -113,7 +116,8 @@
     --drift: #8d5406;
     --drift-soft: #ffeccd;
     --drift-mark: oklch(0.88 0.11 85 / 0.55);
-    --drift-mark-strong: oklch(0.86 0.12 85 / 0.9);
+    --drift-line-w: 1px;
+    --drift-line-mix: 60%;
     --success: #287c42;
     --danger: #c52c2a;
     --danger-soft: #ffe8e6;

@@ -29,6 +29,7 @@ const gz = (file: string): number => gzipSync(readFileSync(join(DIST, file))).le
 const kb = (n: number): string => `${(n / 1024).toFixed(1)} KB`;
 
 function initial(entryName: string): { js: number; css: number; files: string[] } {
+  // `files` lists the JS and the CSS the entry loads up front.
   const key = Object.keys(manifest).find(
     (k) => manifest[k]?.isEntry && manifest[k]?.name === entryName,
   );
@@ -49,7 +50,7 @@ function initial(entryName: string): { js: number; css: number; files: string[] 
   return {
     js: js.reduce((a, f) => a + gz(f), 0),
     css: [...new Set(css)].reduce((a, f) => a + gz(f), 0),
-    files: js,
+    files: [...js, ...css],
   };
 }
 

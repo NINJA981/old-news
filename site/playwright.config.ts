@@ -8,7 +8,7 @@ import { defineConfig } from '@playwright/test';
  * and `desktop` (1440x900) run the same Stage 4 specs at both sizes: web app flows, axe on every
  * surface, PWA installability and the site smoke test.
  */
-const STAGE4 = /\/(webapp|a11y|pwa|smoke)\.spec\.ts$/;
+const STAGE4 = /\/(webapp|a11y|pwa|smoke|marks)\.spec\.ts$/;
 
 export default defineConfig({
   testDir: 'tests/e2e',

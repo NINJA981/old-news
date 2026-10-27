@@ -19,7 +19,8 @@
     "paths": {
       "@engine": ["../src/core/index.ts"],
       "@adapters/*": ["../src/adapters/*"],
-      "@extract/*": ["../src/extract/*"]
+      "@extract/*": ["../src/extract/*"],
+      "@overlay/*": ["../src/overlay/*"]
     }
   },
   "include": ["src", "scripts", "vite.config.ts", "tests"],

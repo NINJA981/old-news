@@ -299,7 +299,9 @@ body {
 
 @media (min-width: 900px) {
   .stack {
-    height: min(820px, calc(100svh - 104px));
+    /* Fits under the top bar and the hero padding at 1440 x 900, so the pill (the countdown) is on
+       screen without scrolling. */
+    height: min(760px, calc(100svh - 168px));
     min-height: 600px;
     padding-top: 0;
     perspective: 1400px;
@@ -329,12 +331,32 @@ body {
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    padding-right: 160px;
+    padding-right: 176px;
+    /* The sheet is a tab's viewport: the article continues below, so the cut edge fades out. */
+    mask-image: linear-gradient(to bottom, var(--text) calc(100% - var(--s-12)), transparent);
   }
   .sheet-back,
   .sheet-back-1 {
     display: block;
     transform: translate3d(calc(var(--i) * 28px), calc(var(--i) * -44px), calc(var(--i) * -48px));
+  }
+}
+/* First paint for a visitor whose browser will play the dissolve: the opening frame (full ink, no
+   tags, no pill), so nothing flips from the final frame to full ink when the script starts. Without
+   scripting, or with reduced motion, the HTML's final frame shows as is. main.ts removes the class. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .hero-pre .on-p[data-a] {
+    opacity: 1;
+    transition: none;
+  }
+  .hero-pre .on-tag,
+  .hero-pre .on-chip,
+  .hero-pre [data-pill] {
+    opacity: 0;
+  }
+  .hero-pre .on-mark {
+    background: transparent;
+    box-shadow: none;
   }
 }
 @keyframes settle {
@@ -459,7 +481,7 @@ code.inline {
     padding: var(--s-8) var(--s-6) var(--s-16) var(--s-8);
   }
   .demo-sheet .sheet-body {
-    padding-right: 160px;
+    padding-right: 176px;
   }
 }
 .demo-sheet .on-card {
@@ -914,4 +936,37 @@ td {
   min-height: 44px;
   padding-inline: var(--s-2);
   margin-inline: calc(var(--s-2) * -1);
+}
+
+/* Real screenshots of the extension (docs/screenshots, re-encoded by scripts/make-shots.ts). */
+.shots {
+  display: grid;
+  gap: var(--s-10);
+  margin-top: var(--s-16);
+  align-items: start;
+}
+@media (min-width: 900px) {
+  .shots {
+    grid-template-columns: minmax(0, 576fr) minmax(0, 380fr);
+    gap: var(--s-12);
+  }
+}
+.shot {
+  margin: 0;
+  min-width: 0;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: max-content;
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-e4);
+}
+.shot figcaption {
+  max-width: 52ch;
+  margin-top: var(--s-4);
+  color: var(--text-subtle);
+  font-size: 12px;
+  line-height: 18px;
 }

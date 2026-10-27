@@ -4,6 +4,7 @@ import '../styles/product.css';
 import '../styles/landing.css';
 import { createDissolver } from '../shared/dissolve';
 import { attachReader } from '../shared/reader';
+import { watchChips } from '../shared/chips';
 
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
@@ -12,6 +13,12 @@ const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory
 const tier0 = reduced || conn?.saveData === true || (memory !== undefined && memory <= 2);
 
 const $ = <T extends HTMLElement>(sel: string): T | null => document.querySelector<T>(sel);
+
+// Drift chips start above their changed token where the row has room (chips.ts).
+for (const id of ['#hero-rows', '#demo', '#drift-demo']) {
+  const el = document.querySelector<HTMLElement>(id);
+  if (el) watchChips(el);
+}
 
 // Hero: the dissolve plays once when the sheet is in view (after load and idle).
 const heroSheet = $('#hero-sheet');
@@ -24,9 +31,11 @@ if (heroSheet) {
   };
   if (tier0) {
     // Poster only: the final frame is already in the HTML. Offer Play.
+    heroSheet.classList.remove('hero-pre');
     label('play');
   } else {
     d.reset(); // full ink for one beat, as the third tab is when it opens
+    heroSheet.classList.remove('hero-pre'); // same frame as the CSS opening state, so no flash
     let started = false;
     const start = (): void => {
       if (started) return;

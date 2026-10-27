@@ -252,7 +252,7 @@ export function App() {
   );
 
   const onSample = useCallback(
-    (storyId = 'port-alder-fire') => {
+    (storyId = 'harrow-bridge') => {
       const run = (): void =>
         void withBusy(
           'Reading the sample story',
@@ -539,6 +539,13 @@ function EmptyRead({
         <div className="empty-actions">
           <button type="button" className="btn btn-primary" onClick={() => onSample()}>
             Try a sample story
+          </button>
+          <button
+            type="button"
+            className="btn btn-ghost"
+            onClick={() => onSample('port-alder-fire')}
+          >
+            Day-2 update sample
           </button>
           <button
             type="button"

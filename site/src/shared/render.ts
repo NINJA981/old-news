@@ -65,8 +65,9 @@ function chipHtml(d: ViewDrift): string {
   const head = dot === -1 ? plainChip : plainChip.slice(0, dot);
   const tail = dot === -1 ? '' : plainChip.slice(dot);
   return (
-    `<button type="button" class="on-chip" aria-label="${esc(`Changed: ${plainChip}`)}">` +
-    `<b>${esc(head)}</b>${esc(tail)}</button>`
+    // The accessible name is the visible text plus a hidden "Changed:" (never a different label).
+    `<button type="button" class="on-chip"><span class="sr-only">Changed: </span>` +
+    `<b>${esc(head)}</b>${tail ? `<span>${esc(tail)}</span>` : ''}</button>`
   );
 }
 

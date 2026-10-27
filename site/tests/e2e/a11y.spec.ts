@@ -100,7 +100,7 @@ test.describe('axe, WCAG 2.1 A and AA', () => {
       await scan(page, `app composer-over-result ${scheme}`, problems);
 
       await press(info, page.getByRole('link', { name: 'Stories' }));
-      await expect(page.getByText('Fire guts Port Alder').first()).toBeVisible();
+      await expect(page.getByText('Footbridge collapses at Harrow Ford').first()).toBeVisible();
       await scan(page, `app stories ${scheme}`, problems);
 
       await press(info, page.getByRole('link', { name: 'Settings' }));

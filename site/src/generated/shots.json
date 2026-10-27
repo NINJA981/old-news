@@ -1,0 +1,14 @@
+{
+  "popup-dark": {
+    "src": "/shots/popup-dark.webp",
+    "width": 380,
+    "height": 560,
+    "alt": "The Old News toolbar popup on the third article about the bridge collapse: 4 of 23 paragraphs are new to you, with a tier bar of 3 new, 1 changed, 0 similar and 19 seen. Under What changed, the figure 12 became 14. Under Read earlier, Calder Courier. Requests sent: 0."
+  },
+  "onboarding-tabs-dark": {
+    "src": "/shots/onboarding-tabs-dark.webp",
+    "width": 576,
+    "height": 532,
+    "alt": "Old News onboarding, step 2 of 3, Remember open tabs: two open article tabs, from Fenwick Wire and Calder Courier, are ticked, with the buttons Remember these 2 tabs and Skip."
+  }
+}

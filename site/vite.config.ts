@@ -70,6 +70,9 @@ function landing(env: Record<string, string>): Plugin {
           views: read('src/generated/views.json') as LandingContext['views'],
           measured: read('src/generated/measured.json') as LandingContext['measured'],
           alpha: paperAlpha(),
+          shots: existsSync(join(SITE, 'src/generated/shots.json'))
+            ? (read('src/generated/shots.json') as LandingContext['shots'])
+            : undefined,
           repoUrl: env['VITE_REPO_URL'] ?? '',
           storeUrl: env['VITE_STORE_URL'] ?? '',
         };
@@ -208,6 +211,9 @@ export default defineConfig(({ mode }) => {
         '@engine': resolve(ROOT, 'src/core/index.ts'),
         '@adapters': resolve(ROOT, 'src/adapters'),
         '@extract': resolve(ROOT, 'src/extract'),
+        // Pure placement and timing maths of the extension's overlay (no DOM): chip placement,
+        // the dissolve schedule, the pill countdown ticks. Reused, never re-implemented here.
+        '@overlay': resolve(ROOT, 'src/overlay'),
       },
     },
     server: {
