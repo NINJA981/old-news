@@ -16,9 +16,9 @@ function Row({
 }) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-border py-4 first:pt-0 last:border-0 last:pb-0">
-      <div className="min-w-0 max-w-[44ch]">
+      <div className="min-w-0 flex-1 basis-[240px]">
         <p className="text-ui-strong text-fg">{title}</p>
-        <p className="mt-0.5 text-caption text-fg-muted">{hint}</p>
+        <p className="mt-0.5 max-w-[56ch] text-caption text-fg-muted">{hint}</p>
       </div>
       {children}
     </div>
@@ -46,7 +46,16 @@ export function Settings() {
 
   return (
     <>
-      <PageHeader title="Settings">Changes apply to pages as you open them.</PageHeader>
+      <PageHeader
+        title="Settings"
+        actions={
+          <p className="text-caption text-fg-muted" role="status" aria-live="polite">
+            {clock ? `Saved at ${clock}` : ''}
+          </p>
+        }
+      >
+        Changes apply to pages as you open them.
+      </PageHeader>
       <section aria-label="Reading" className="rounded-md bg-surface p-4 shadow-e1">
         <Row
           title="Fade strength"
@@ -93,9 +102,6 @@ export function Settings() {
             ]}
           />
         </Row>
-        <p className="mt-4 h-4 text-caption text-fg-muted" role="status">
-          {clock ? `Saved at ${clock}` : ''}
-        </p>
       </section>
 
       <section aria-label="Engine" className="mt-4 rounded-md bg-surface p-4 shadow-e1">

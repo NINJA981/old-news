@@ -147,6 +147,7 @@ export function Switch({
   description,
   id,
   disabled,
+  shortcut,
 }: {
   checked: boolean;
   onCheckedChange: (v: boolean) => void;
@@ -154,15 +155,27 @@ export function Switch({
   description?: string;
   id?: string;
   disabled?: boolean;
+  /** A single-key shortcut shown as a keycap after the label. */
+  shortcut?: string;
 }) {
   const auto = useId();
   const sid = id ?? auto;
   return (
     <div className="flex items-center justify-between gap-4">
       <label htmlFor={sid} className="min-w-0 flex-1">
-        <span className="block text-ui text-fg">{label}</span>
+        <span className="flex items-center gap-2 text-ui text-fg">
+          {label}
+          {shortcut ? (
+            <Keycap>
+              <span className="sr-only">Shortcut </span>
+              {shortcut}
+            </Keycap>
+          ) : null}
+        </span>
         {description ? (
-          <span className="mt-0.5 block text-caption text-fg-muted">{description}</span>
+          <span className="mt-0.5 block max-w-[56ch] text-caption text-fg-muted">
+            {description}
+          </span>
         ) : null}
       </label>
       <RSwitch.Root
@@ -292,7 +305,7 @@ export const TIER_LABEL = {
   seen: 'Seen',
 } as const;
 
-const TIER_FILL = {
+export const TIER_FILL = {
   new: 'bg-fg',
   changed: 'bg-drift',
   similar: 'bg-fg-subtle',

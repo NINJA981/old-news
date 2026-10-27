@@ -20,6 +20,23 @@ const THEMES = ['light', 'dark'] as const;
 
 test.skip(process.env['OLD_NEWS_SHOTS'] !== '1', 'screenshots run with OLD_NEWS_SHOTS=1');
 test.setTimeout(900_000);
+// Each group runs in its own browser and seeds its own memory. A renderer that runs out of memory on
+// a busy machine fails only its group, and the group is retried.
+test.describe.configure({ retries: 2 });
+
+async function seed(
+  openExtensionPage: (path: string) => Promise<Page>,
+  day2 = false,
+): Promise<void> {
+  const ext = await openExtensionPage('app.html');
+  await remember(ext, 'port-alder-fire', ['wire', 'calder', 'morrow']);
+  await remember(ext, 'harrow-bridge', ['wire', 'calder']);
+  if (day2) {
+    await remember(ext, 'harrow-bridge', ['morrow']);
+    await remember(ext, 'port-alder-fire', ['day2']);
+  }
+  await ext.close();
+}
 
 async function setSettings(worker: Worker, patch: Record<string, unknown>): Promise<void> {
   await worker.evaluate(async (p) => {
@@ -54,14 +71,13 @@ async function setSummary(worker: Worker, tabId: number, url: string, status: un
   );
 }
 
-test('first-run popup, overlay on three page themes, popup states, app screens, onboarding', async ({
+test('first-run popup, overlay on three page themes and overlay states', async ({
   context,
   worker,
   siteUrl,
   openExtensionPage,
 }) => {
-  mkdirSync(join(OUT, 'dissolve'), { recursive: true });
-  mkdirSync(join(OUT, 'dissolve-reduced'), { recursive: true });
+  mkdirSync(OUT, { recursive: true });
   await registerContentScript(worker);
 
   // ---- Popup, first run (empty memory) -------------------------------------------------------
@@ -74,11 +90,7 @@ test('first-run popup, overlay on three page themes, popup states, app screens, 
     await popup.close();
   }
 
-  // ---- Seed memory ----------------------------------------------------------------------------
-  const ext = await openExtensionPage('app.html');
-  await remember(ext, 'port-alder-fire', ['wire', 'calder', 'morrow']);
-  await remember(ext, 'harrow-bridge', ['wire', 'calder']);
-  await ext.close();
+  await seed(openExtensionPage);
 
   // ---- Overlay on light, dark and tinted pages at three widths -------------------------------------
   const pageThemes = [
@@ -136,7 +148,12 @@ test('first-run popup, overlay on three page themes, popup states, app screens, 
     await shot(page, 'overlay-reduced-motion-light-1440');
     await page.close();
   }
+});
 
+test('popup states at real size', async ({ context, worker, siteUrl, openExtensionPage }) => {
+  await registerContentScript(worker);
+  await setSettings(worker, { onboardingDone: true });
+  await seed(openExtensionPage);
   // ---- Popup states, real size, light and dark -----------------------------------------------------
   const page = await context.newPage();
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -202,12 +219,20 @@ test('first-run popup, overlay on three page themes, popup states, app screens, 
     await setSettings(worker, { paused: false });
   }
   await page.close();
+});
 
+test('app screens at three widths, component states, onboarding', async ({
+  context,
+  worker,
+  siteUrl,
+  openExtensionPage,
+}) => {
+  await registerContentScript(worker);
+  await setSettings(worker, { onboardingDone: true });
+  // Read the day-2 articles too, so Stories and Drift have a changed figure to show.
+  await seed(openExtensionPage, true);
   // ---- App screens at three widths in both themes ------------------------------------------------
   const seeded = await openExtensionPage('app.html');
-  // Read the day-2 articles too, so Stories and Drift have a changed figure to show.
-  await remember(seeded, 'harrow-bridge', ['morrow']);
-  await remember(seeded, 'port-alder-fire', ['day2']);
   const overview = await send<{ id: string }[]>(seeded, { type: 'stories/overview' });
   await seeded.close();
   const sid = encodeURIComponent(overview.data[0]?.id ?? '');
@@ -237,38 +262,6 @@ test('first-run popup, overlay on three page themes, popup states, app screens, 
       await app.keyboard.press('Escape');
       await app.close();
     }
-  }
-
-  // ---- Playground, dissolve frame strip (deterministic) --------------------------------------------
-  await setSettings(worker, { theme: 'dark' });
-  {
-    const pg = await openExtensionPage('app.html?capture#/playground');
-    await pg.setViewportSize({ width: 1440, height: 900 });
-    await expect
-      .poll(() => pg.evaluate(() => typeof window.__frame), { timeout: 120_000 })
-      .toBe('function');
-    await pg.waitForTimeout(800);
-    const times = [0, 60, 120, 180, 240, 300, 380, 440, 520, 600, 800, 1020, 1200, 1400, 1700];
-    for (let i = 0; i < times.length; i++) {
-      await pg.evaluate((t) => window.__frame?.(t, 1000), times[i] as number);
-      await pg.waitForTimeout(60);
-      await pg.screenshot({
-        path: join(OUT, 'dissolve', `frame-${String(i).padStart(2, '0')}-${times[i]}ms.png`),
-      });
-    }
-    await pg.close();
-  }
-  await setSettings(worker, { theme: 'light' });
-  for (const size of SIZES) {
-    const pg = await openExtensionPage('app.html?capture#/playground');
-    await pg.setViewportSize({ width: size.w, height: size.h });
-    await expect
-      .poll(() => pg.evaluate(() => typeof window.__frame), { timeout: 120_000 })
-      .toBe('function');
-    await pg.evaluate(() => window.__frame?.(1700, 1000));
-    await pg.waitForTimeout(600);
-    await shot(pg, `app-playground-light-${size.w}`);
-    await pg.close();
   }
 
   // ---- Component states (rest, hover, focus-visible, pressed, disabled, confirm) --------------------
@@ -349,5 +342,70 @@ test('first-run popup, overlay on three page themes, popup states, app screens, 
         await ob.close();
       }
     }
+  }
+});
+
+// The playground runs its own engine and keeps nothing in memory, so its frame strips get a fresh
+// browser: the long pass above holds many pages, and on a busy machine the renderer ran out of memory.
+test('dissolve frame strips (normal and reduced motion) and the playground at three widths', async ({
+  worker,
+  openExtensionPage,
+}) => {
+  mkdirSync(join(OUT, 'dissolve'), { recursive: true });
+  mkdirSync(join(OUT, 'dissolve-reduced'), { recursive: true });
+  // ---- Playground, dissolve frame strip (deterministic) --------------------------------------------
+  await setSettings(worker, { theme: 'dark' });
+  {
+    const pg = await openExtensionPage('app.html?capture#/playground');
+    await pg.setViewportSize({ width: 1440, height: 900 });
+    await expect
+      .poll(() => pg.evaluate(() => typeof window.__frame), { timeout: 120_000 })
+      .toBe('function');
+    await pg.waitForTimeout(800);
+    const times = [0, 60, 120, 180, 240, 300, 380, 440, 520, 600, 800, 1020, 1200, 1400, 1700];
+    for (let i = 0; i < times.length; i++) {
+      await pg.evaluate((t) => window.__frame?.(t, 1000), times[i] as number);
+      await pg.waitForTimeout(60);
+      await pg.screenshot({
+        path: join(OUT, 'dissolve', `frame-${String(i).padStart(2, '0')}-${times[i]}ms.png`),
+      });
+    }
+    await pg.close();
+  }
+  // Reduced motion: the same moment as one 150 ms fade, no pulse, final pill copy at once.
+  {
+    const pg = await openExtensionPage('app.html?capture#/playground');
+    await pg.emulateMedia({ reducedMotion: 'reduce' });
+    await pg.reload();
+    await pg.setViewportSize({ width: 1440, height: 900 });
+    await expect
+      .poll(() => pg.evaluate(() => typeof window.__frame), { timeout: 120_000 })
+      .toBe('function');
+    await pg.waitForTimeout(800);
+    const times = [0, 30, 60, 90, 120, 150, 300, 600, 1020, 1700];
+    for (let i = 0; i < times.length; i++) {
+      await pg.evaluate((t) => window.__frame?.(t, 1000), times[i] as number);
+      await pg.waitForTimeout(60);
+      await pg.screenshot({
+        path: join(
+          OUT,
+          'dissolve-reduced',
+          `frame-${String(i).padStart(2, '0')}-${times[i]}ms.png`,
+        ),
+      });
+    }
+    await pg.close();
+  }
+  await setSettings(worker, { theme: 'light' });
+  for (const size of SIZES) {
+    const pg = await openExtensionPage('app.html?capture#/playground');
+    await pg.setViewportSize({ width: size.w, height: size.h });
+    await expect
+      .poll(() => pg.evaluate(() => typeof window.__frame), { timeout: 120_000 })
+      .toBe('function');
+    await pg.evaluate(() => window.__frame?.(1700, 1000));
+    await pg.waitForTimeout(600);
+    await shot(pg, `app-playground-light-${size.w}`);
+    await pg.close();
   }
 });

@@ -36,7 +36,8 @@ function StoryRow({
             strokeWidth={1.5}
             aria-hidden
             className={cn(
-              'shrink-0 text-fg-muted transition-transform duration-150',
+              // Level with the title's first line (24 px line box), not the row's centre.
+              'shrink-0 self-start mt-1 text-fg-muted transition-transform duration-150',
               open && 'rotate-90',
             )}
           />
@@ -162,7 +163,7 @@ export function Stories() {
               onChange={(e) => setQ(e.target.value)}
               placeholder="Search stories"
               aria-label="Search stories"
-              className="w-[220px] !pl-8"
+              className="w-[220px] !pl-8 text-ui"
             />
           </div>
         }

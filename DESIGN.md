@@ -245,13 +245,13 @@ components:
     textColor: "{colors.drift-dark}"
     typography: "{typography.caption}"
     rounded: "{rounded.xs}"
-    padding: 4px 8px
+    padding: 2px 8px
   drift-chip-light:
     backgroundColor: "{colors.drift-soft}"
     textColor: "{colors.drift}"
     typography: "{typography.caption}"
     rounded: "{rounded.xs}"
-    padding: 4px 8px
+    padding: 2px 8px
   hover-card:
     backgroundColor: "{colors.surface-dark}"
     textColor: "{colors.text-dark}"
@@ -458,7 +458,7 @@ All values were computed from OKLCH to sRGB hex and checked with culori 4.0.2 an
 | `accent-soft` | `oklch(0.27 0.04 200)` | `#082c2e` | text on it 12.10 |
 | `drift` | `oklch(0.83 0.11 78)` | `#efbe72` | 11.25; 8.32 on `drift-soft` |
 | `drift-soft` | `oklch(0.29 0.05 75)` | `#3a270b` | — |
-| `drift-mark` (in-page highlight) | `oklch(0.83 0.11 78 / 0.24)` | over `#121212` → `#473a23` | page ink on it ≥ 9:1 |
+| `drift-mark` (in-page highlight) | `oklch(0.83 0.11 78 / 0.32)` | over `#121212` → `#584a31` | page ink `#e8e8e8` on it 7.0:1, `#d0d0d0` 5.6:1. Raised from 0.24 (QA r1: read as grey-brown on dark pages); the dark underline is 2 px at 85% `drift`. |
 | `success` / `danger` / `info` | `oklch(0.76 0.13 150)` / `oklch(0.77 0.13 25)` / `oklch(0.75 0.11 240)` | `#6fc884` / `#fc928a` / `#68b7ed` | 9.41 / 8.81 / 8.78 |
 | `danger-soft` | `oklch(0.28 0.06 25)` | `#421c19` | — |
 
@@ -698,8 +698,14 @@ Z-index: our pages follow bible §5.4. The overlay host is `2147483647` inside a
 
 **`drift-chip` + highlight.**
 
-- The highlight is `::highlight(on-drift)` with a `drift-mark` background on the changed token(s) only, plus a 1 px underline in `drift` at 60%.
-- The chip is anchored 6 px above the token's first rect, max-width 360, radius 4, padding 4 × 8, background `drift-soft`, a 1 px border in `drift` at 35%.
+- The highlight is `::highlight(on-drift)` with a `drift-mark` background on the changed token(s) only, plus an underline in `drift`: 1 px at 60% on light pages, 2 px at 85% on dark pages (where a 1 px line at 60% disappears).
+- The chip is anchored up to 6 px above the token's first rect, max-width 360, 20 px tall like a tag (padding 2 × 8; was 4 × 8 and 24 px, which did not fit the usual paragraph gap), radius 4, background `drift-soft`, a 1 px border in `drift` at 35%.
+- **A chip never covers text** (QA r1). Placement, first that fits (`geometry.placeChips`, measured from the text boxes around the token):
+  1. above the token, when the gap to the line above holds the 20 px chip plus 3 px clear (lifted 2–6 px);
+  2. the right gutter, level with the token's line (chips stack downwards, 6 px apart);
+  3. below the token, when it is on the last line and the gap below holds the chip;
+  4. hover-only: the highlight carries the change at rest, and the chip appears while the paragraph or the chip has hover or focus (it stays in the Tab order).
+- Tags, dots and chips that would sit under the fixed pill or tray fade out (opacity only) while they are covered.
 - Chip text: `12 → 14` (`caption` 600 tnum, `drift`), then " · Calder Courier said 12, 14 min ago" (`caption` 450, `text` at 90%).
 - For non-numeric kinds:
   - "fled → arrested · Fenwick Wire said fled, yesterday"

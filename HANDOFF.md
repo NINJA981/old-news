@@ -1,7 +1,66 @@
 # HANDOFF: Old News
 
-**Last stage:** Stage 4, Test engineer (2026-10-28)
-**Next stage:** store assets, CI, release (see "Known issues")
+**Last stage:** Stage 3a rerun, product UI fixes for QA round 1 (2026-10-28)
+**Next stage:** QA round 2 (independent critic), then store assets, CI, release (see "Known issues")
+
+## Stage 3a rerun: QA round 1 fixes in the extension (2026-10-28)
+
+Scope: the extension's own surfaces (overlay, popup, app, onboarding). `site/` was not touched (another
+agent owns it), so QA items 2 and 4 (stale `measured.json`, the hero "Add to Chrome" link) and the web
+app's chip stacking at 375 are **still open there**. Screenshots in `docs/screenshots/` are regenerated.
+
+What changed:
+
+1. **Drift chips never cover text** (QA item 1). `geometry.placeChips` measures the free space between
+   the changed token and the nearest text above or below (glyph boxes, not element boxes), and picks the
+   first that fits: above the token, the right gutter level with its line, below it, or hover-only (the
+   highlight carries the change at rest; the chip shows on paragraph hover or focus and stays in the Tab
+   order). The chip is now **20 px tall like a tag** (padding 2 x 8, was 24 px / 4 x 8), which fits the
+   usual paragraph gap, so on the fixtures it sits above the token at 375, 768 and 1440 with clear space
+   to the line above. DESIGN.md updated.
+2. **Dark `drift-mark`** (QA item 3): alpha 0.24 -> 0.32 and a 2 px underline at 85% `drift` on dark pages
+   (light keeps 1 px at 60%). Page ink on it: 7.0:1 for `#e8e8e8`, 5.6:1 for `#d0d0d0`. DESIGN.md,
+   `tokens.css` and `overlay/tokens.ts` updated; `check-tokens` passes.
+3. **Pill is deterministic and never resizes** (QA item 5). Ticks are strictly after their time, so
+   `__frame(0)` reads "23 of 23" with every paragraph in full ink; paragraphs set instantly below the fold
+   tick inside the settle window (`geometry.countTicks`). The capsule is locked to its opening width for
+   the countdown, and the result keeps the countdown's nodes when the copy is the same.
+4. **Reduced-motion frame strip** now exists: `docs/screenshots/dissolve-reduced/` (10 frames, one 150 ms
+   fade, no pulse, final pill copy at once). `?capture` now holds the reduced-motion fade too.
+5. **Tags, dots and chips under the fixed pill or tray fade out** while covered (opacity only; re-checked
+   on scroll and whenever the tray resizes). Before, tag edges peeked out under the tray.
+6. Popup: the P keycap sits on the "On for this site" switch (one row less); "What changed" is listed
+   before the earlier articles; engine error reads "stopped: the model file is missing."; meter values
+   are sentence case like the app ("Today", "None yet").
+7. App: Drift rows on phones lead with `before -> after`, then the context, then an Earlier / Now
+   two-column pair; Settings hints share one 56ch measure and the "Saved at" status moved to the page
+   header (no empty band at the bottom of the card); the Stories search box uses `ui` 13/20 with a
+   `text-muted` placeholder; story chevrons align with the title's first line; the Receipt card (and its
+   PNG) carries the week's tier bar and legend.
+8. Onboarding: steps are labelled ("1 Allow access, 2 Remember open tabs, 3 Done"; phones show only the
+   current name, the others stay in the accessible name) and tab titles wrap to two lines instead of
+   truncating.
+9. `tests/e2e/screenshots.spec.ts` is split into four groups, each in its own browser with its own seed
+   and `retries: 2` (this laptop had ~2 GB free and renderers crashed mid-pass).
+
+Bugs found while doing this:
+
+- A lucide `Check` icon inside the onboarding step button crashed the headless Chromium renderer on the
+  tabs step every time (reproduced in isolation, gone when removed). Completed steps show their number.
+- axe flagged `label-content-name-mismatch` on the new step buttons (an `aria-label` that did not contain
+  the visible text); the name now comes from the content.
+
+Checks at the end of this stage: `pnpm lint`, `pnpm typecheck`, `pnpm check-tokens`, `pnpm test` (589),
+`pnpm build`, `pnpm build:firefox` and `pnpm test:e2e` (24 passed, 4 screenshot tests skipped without
+`OLD_NEWS_SHOTS=1`, axe 0 violations) all pass. `pnpm screenshots` passed; two of its groups needed one
+retry each after a renderer crash or an engine that never answered under memory pressure.
+
+Rubric (bible section 9), **self-scored by the builder, not an independent critic**: identity 9,
+typography 9, colour 9, layout 9, hierarchy 9, component craft 9, states and a11y 9, motion 9, system
+states 9, responsive 9; average 9.0, minimum 9. The QA r1 critic scored 8.2; a second independent pass
+is the real gate. Not done: a screen-reader pass, a video (not stills) review of the dissolve, and the
+shadcn registry search (the `shadcn` MCP server failed to connect again this session, so no primitive
+came from @motion-primitives, @animate-ui or @magicui; the UI keeps Radix, cmdk, Sonner and motion).
 
 ## QA round 1: design critic (2026-10-28), verdict REVISE
 
@@ -229,9 +288,8 @@ Raw numbers: `metrics.json` (`pnpm eval`) and `test-results/engine-perf.json` (e
 
 ## Known issues and open items (most important first)
 
-1. **The chip can touch the previous paragraph.** It is anchored 6 px above the changed token as the
-   spec says; with 20 px paragraph gaps its 24 px height overlaps the last line above (screenshots
-   `overlay-*-1440.png`). Not fixed to keep to DESIGN.md; a spec decision is needed.
+1. **Chip placement is measured on fixtures only.** Fixed (see Stage 3a rerun), but the real-site smoke
+   list does not exist yet, so unusual layouts (floats, sidebars inside the article) are untested.
 2. **Self-scored rubric.** The 9.0 average in this file is the builder's own. No independent critic ran,
    no screen reader was used, and the dissolve was reviewed as 15 still frames, not as video.
 3. **shadcn registry search was not possible**: the `mcp__shadcn__*` tools were not available in this

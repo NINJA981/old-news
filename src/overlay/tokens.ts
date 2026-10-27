@@ -21,6 +21,8 @@ export interface OverlayPalette {
   shadow: string;
   /** `drift-mark`: the highlight behind a changed token. */
   driftMark: string;
+  /** The underline under a changed token: thickness and how much `drift` it carries. */
+  driftLine: { width: string; mix: string };
 }
 
 export const LIGHT: Readonly<OverlayPalette> = {
@@ -39,6 +41,7 @@ export const LIGHT: Readonly<OverlayPalette> = {
   shadow:
     '0 0 0 1px oklch(0.25 0.02 70 / 0.10), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.08), 0 12px 24px -6px oklch(0.25 0.02 70 / 0.18)',
   driftMark: 'oklch(0.88 0.11 85 / 0.55)',
+  driftLine: { width: '1px', mix: '60%' },
 };
 
 export const DARK: Readonly<OverlayPalette> = {
@@ -55,7 +58,8 @@ export const DARK: Readonly<OverlayPalette> = {
   driftSoft: '#3a270b',
   danger: '#fc928a',
   shadow: '0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55)',
-  driftMark: 'oklch(0.83 0.11 78 / 0.24)',
+  driftMark: 'oklch(0.83 0.11 78 / 0.32)',
+  driftLine: { width: '2px', mix: '85%' },
 };
 
 export type OverlayTheme = 'light' | 'dark';

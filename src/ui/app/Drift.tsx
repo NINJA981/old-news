@@ -46,7 +46,7 @@ export function Drift() {
         </EmptyPanel>
       ) : (
         <div className="overflow-hidden rounded-md bg-surface shadow-e1">
-          <table className="w-full border-collapse text-left">
+          <table className="block w-full border-collapse text-left md:table">
             <caption className="sr-only">Changed figures, newest first</caption>
             <thead className="hidden border-b border-border text-caption text-fg-muted md:table-header-group">
               <tr>
@@ -67,21 +67,21 @@ export function Drift() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="block md:table-row-group">
               {res.data.map((d) => (
                 <tr
                   key={d.id}
-                  className="block border-b border-border px-4 py-3 last:border-0 md:table-row md:px-0 md:py-0"
+                  className="grid grid-cols-2 gap-x-4 border-b border-border px-4 py-4 last:border-0 md:table-row md:px-0 md:py-0"
                 >
-                  <td className="block py-0.5 text-ui text-fg-muted md:table-cell md:px-4 md:py-3">
+                  <td className="order-2 col-span-2 mt-1 text-ui text-fg-muted md:table-cell md:px-4 md:py-3">
                     <span className="sr-only md:hidden">Figure: </span>
                     {d.context || 'Changed detail'}
                   </td>
-                  <td className="block py-0.5 text-ui-strong text-drift tnum md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
+                  <td className="order-1 col-span-2 text-ui-strong text-drift tnum md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
                     {d.before || 'not mentioned'} → {d.after || 'not mentioned'}
                   </td>
-                  <td className="block py-0.5 text-caption text-fg md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
-                    <span className="text-fg-muted md:hidden">Earlier: </span>
+                  <td className="order-3 mt-3 text-caption text-fg md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
+                    <span className="block text-fg-muted md:hidden">Earlier</span>
                     {d.oldUrl ? (
                       <a
                         href={d.oldUrl}
@@ -96,8 +96,8 @@ export function Drift() {
                     )}
                     <span className="block text-fg-muted tnum">{relativeTime(d.oldAt, now)}</span>
                   </td>
-                  <td className="block py-0.5 text-caption text-fg md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
-                    <span className="text-fg-muted md:hidden">Now: </span>
+                  <td className="order-3 mt-3 text-caption text-fg md:table-cell md:whitespace-nowrap md:px-4 md:py-3">
+                    <span className="block text-fg-muted md:hidden">Now</span>
                     {d.newUrl ? (
                       <a
                         href={d.newUrl}

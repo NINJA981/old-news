@@ -24,7 +24,6 @@ import {
 import {
   Glyph,
   IconButton,
-  Keycap,
   Notice,
   Skeleton,
   Stat,
@@ -172,7 +171,7 @@ function StatusBody({
       <div role="alert">
         <p className="flex items-start gap-2 text-ui text-danger">
           <CircleAlert size={16} strokeWidth={1.5} className="mt-0.5 shrink-0" />
-          The matching engine stopped: {status.reason}.
+          The matching engine stopped: {lowerFirst(status.reason)}.
         </p>
         <div className="mt-3 flex gap-2">
           <PrimaryButton
@@ -241,6 +240,11 @@ function StatusBody({
   return null;
 }
 
+/** "The model file is missing" reads as one sentence after a colon: "…stopped: the model file…". */
+function lowerFirst(text: string): string {
+  return /^[A-Z][a-z]/.test(text) ? text[0]!.toLowerCase() + text.slice(1) : text;
+}
+
 function SiteRow({
   host,
   origin,
@@ -261,6 +265,7 @@ function SiteRow({
       </p>
       <Switch
         label="On for this site"
+        shortcut="P"
         checked={!pausedHere && !globalPaused}
         disabled={globalPaused}
         onCheckedChange={onToggle}
@@ -283,6 +288,22 @@ function StoryPanel({ story, now }: { story: StoryCard | null | undefined; now: 
   return (
     <div className="py-2">
       <h2 className="px-1 font-read text-read-title text-fg on-clamp-2">{story.label}</h2>
+      {story.changed.length > 0 ? (
+        <>
+          <h3 className="mt-3 px-1 text-caption font-semibold text-fg-muted">What changed</h3>
+          <ul className="mt-1">
+            {story.changed.map((c, i) => (
+              <li key={i} className="flex items-baseline justify-between gap-3 px-1 py-1.5">
+                <span className="min-w-0 truncate text-ui text-fg-muted">{c.context}</span>
+                <span className="shrink-0 text-ui-strong text-drift tnum">
+                  {c.before || 'not mentioned'} → {c.after || 'not mentioned'}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : null}
+      <h3 className="mt-3 px-1 text-caption font-semibold text-fg-muted">Read earlier</h3>
       <ul className="mt-1">
         {story.articles.map((a, i) => (
           <li key={`${a.url}-${i}`} className="rounded-sm px-1 py-2 hover:bg-surface-2">
@@ -305,21 +326,6 @@ function StoryPanel({ story, now }: { story: StoryCard | null | undefined; now: 
           </li>
         ))}
       </ul>
-      {story.changed.length > 0 ? (
-        <>
-          <h3 className="mt-3 px-1 text-caption font-semibold text-fg-muted">What changed</h3>
-          <ul className="mt-1">
-            {story.changed.map((c, i) => (
-              <li key={i} className="flex items-baseline justify-between gap-3 px-1 py-1.5">
-                <span className="min-w-0 truncate text-ui text-fg-muted">{c.context}</span>
-                <span className="shrink-0 text-ui-strong text-drift tnum">
-                  {c.before || 'not mentioned'} → {c.after || 'not mentioned'}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : null}
     </div>
   );
 }
@@ -522,11 +528,6 @@ function Popup() {
                   onToggle={toggleSite}
                 />
               ) : null}
-              {tab?.origin && !settings.paused ? (
-                <p className="mt-2 flex items-center gap-1 text-caption text-fg-subtle">
-                  Pause this site <Keycap>P</Keycap>
-                </p>
-              ) : null}
             </section>
 
             <Tabs
@@ -561,13 +562,13 @@ function Popup() {
             value={
               stats
                 ? stats.oldestReadAt === null
-                  ? 'none yet'
+                  ? 'None yet'
                   : (() => {
                       const d = Math.max(
                         0,
                         Math.round((stats.asOf - stats.oldestReadAt) / 86_400_000),
                       );
-                      return d === 0 ? 'today' : `${d} ${d === 1 ? 'day' : 'days'}`;
+                      return d === 0 ? 'Today' : `${d} ${d === 1 ? 'day' : 'days'}`;
                     })()
                 : '…'
             }

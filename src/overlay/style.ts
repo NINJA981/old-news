@@ -28,7 +28,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-off
 .tag{position:absolute;z-index:1;display:block;height:20px;max-width:280px;padding:2px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
 border-radius:4px;background:color-mix(in srgb,var(--surface) 96%,transparent);box-shadow:0 0 0 1px var(--border);
 color:var(--text-muted);font:500 11px/16px var(--ui);letter-spacing:.01em;font-variant-numeric:tabular-nums;pointer-events:auto;opacity:0;
-transition:color 100ms var(--ease)}
+transition:color 100ms var(--ease),opacity 100ms var(--ease)}
 .tag:hover{color:var(--text)}
 .tag.on{opacity:1}
 .tag.off{pointer-events:none}
@@ -37,8 +37,8 @@ transition:color 100ms var(--ease)}
 .dot::after{content:'';position:absolute;inset:-8px}
 .rule{position:absolute;width:1px;background:var(--border-strong);pointer-events:none}
 
-.pulse{position:absolute;border-radius:2px;background:var(--drift-mark);opacity:0;pointer-events:none}
-.chip{position:absolute;z-index:2;display:flex;align-items:baseline;gap:4px;max-width:360px;height:24px;padding:4px 8px;border-radius:4px;
+.pulse{position:absolute;border-radius:4px;background:var(--drift-mark);opacity:0;pointer-events:none}
+.chip{position:absolute;z-index:2;display:flex;align-items:baseline;gap:4px;max-width:360px;height:20px;padding:2px 8px;border-radius:4px;
 background:var(--drift-soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--drift) 35%,transparent);
 color:color-mix(in srgb,var(--text) 90%,transparent);font:450 12px/16px var(--ui);white-space:nowrap;pointer-events:auto;opacity:0;
 transition:box-shadow 100ms var(--ease)}
@@ -46,10 +46,14 @@ transition:box-shadow 100ms var(--ease)}
 .chip:hover,.chip:focus-visible{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--drift) 35%,transparent),var(--shadow)}
 .chip b{flex:none;font-weight:600;color:var(--drift);font-variant-numeric:tabular-nums}
 .chip span{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.more{position:absolute;display:block;height:24px;padding:4px 6px;border-radius:4px;color:var(--text-muted);font:600 12px/16px var(--ui);pointer-events:none;opacity:0}
+.more{position:absolute;display:block;height:20px;padding:2px 6px;border-radius:4px;color:var(--text-muted);font:600 12px/16px var(--ui);pointer-events:none;opacity:0}
 .more.on{opacity:1}
+.chip[data-mode=hover],.more[data-mode=hover]{transition:opacity 100ms var(--ease),box-shadow 100ms var(--ease)}
+.chip[data-mode=hover].on:not(.show):not(:focus-visible):not(:hover),.more[data-mode=hover]:not(.show){opacity:0}
+.chip[data-mode=hover]{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--drift) 35%,transparent),var(--shadow)}
+.tag.under,.dot.under,.chip.under,.more.under{opacity:0 !important;pointer-events:none}
 
-.marker{position:absolute;width:2px;border-radius:1px;background:var(--accent);pointer-events:none}
+.marker{position:absolute;width:2px;background:var(--accent);pointer-events:none}
 .fold{position:absolute;display:block;height:24px;background:none;pointer-events:auto}
 .fold span{position:absolute;left:0;top:50%;transform:translateY(-50%);padding:2px 6px;border-radius:4px;background:var(--surface);
 box-shadow:0 0 0 1px var(--border);color:var(--text-muted);font:450 12px/16px var(--ui);opacity:0;transition:opacity 100ms var(--ease)}
@@ -128,5 +132,5 @@ box-shadow:var(--shadow);pointer-events:auto;overflow:hidden}
 
 /** The page-level highlight rule for `CSS.highlights` (a document stylesheet, outside the shadow root). */
 export function highlightCss(p: Readonly<OverlayPalette>): string {
-  return `::highlight(on-drift){background-color:${p.driftMark};text-decoration:underline;text-decoration-thickness:1px;text-decoration-color:color-mix(in srgb,${p.drift} 60%,transparent);text-underline-offset:2px}`;
+  return `::highlight(on-drift){background-color:${p.driftMark};text-decoration:underline;text-decoration-thickness:${p.driftLine.width};text-decoration-color:color-mix(in srgb,${p.drift} ${p.driftLine.mix},transparent);text-underline-offset:2px}`;
 }

@@ -145,9 +145,15 @@ export class PillView {
         this.pill.classList.remove('on');
         return;
       }
-      this.onlyEl = null;
-      const nodes = withNumbers(this.doc, copy);
-      this.setText(nodes, copy);
+      // The dissolve already left this exact copy in place: keep its nodes, so the pill's width
+      // does not jump when the countdown hands over to the result.
+      if (this.text.textContent !== copy || !this.onlyEl) {
+        this.onlyEl = null;
+        this.pill.style.minWidth = '';
+        this.setText(withNumbers(this.doc, copy), copy);
+      } else {
+        this.sr.textContent = copy;
+      }
       this.sub.hidden = !degraded;
       this.sub.textContent = degraded ? 'Similar-wording matching is off' : '';
       this.reveal();
@@ -171,6 +177,10 @@ export class PillView {
       ' paragraphs are new to you',
     );
     this.reveal();
+    // The opening frame is the widest the countdown gets ("Only" already holds its space and the
+    // number only loses digits), so the capsule is locked to it and never resizes while counting.
+    this.pill.style.minWidth = '';
+    this.pill.style.minWidth = `${this.pill.offsetWidth}px`;
   }
 
   setCountdown(n: number): void {

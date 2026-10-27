@@ -14,6 +14,16 @@ const INK = '#1e1a16';
 const MUTED = '#5c5751';
 const BORDER = '#dedad4';
 const DRIFT = '#8d5406';
+const SUBTLE = '#76706a';
+const STRONG = '#847f78';
+const TRACK = '#e6e2dd';
+// Tier bar: the same order and fills as the app's TierBar (DESIGN.md "Tier bar").
+const TIERS = [
+  ['new', 'New', INK],
+  ['changed', 'Changed', DRIFT],
+  ['similar', 'Similar', SUBTLE],
+  ['seen', 'Seen', STRONG],
+] as const;
 
 function wrap(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string[] {
   const lines: string[] = [];
@@ -62,6 +72,43 @@ export async function renderReceiptPng(r: WeeklyReceipt): Promise<Blob> {
   ctx.font = '500 56px "Newsreader Variable", Georgia, serif';
   const lines = wrap(ctx, receiptSentence(r), W - pad * 2);
   lines.forEach((l, i) => ctx.fillText(l, pad, pad + 56 + i * 64));
+
+  // Tier bar of the week's paragraphs, 1 px gaps, radius 4 at the outer ends, then its legend.
+  const barY = H - 300;
+  const barW = W - pad * 2;
+  const counts = r.paragraphs;
+  const sum = counts.new + counts.changed + counts.similar + counts.seen;
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(pad, barY, barW, 8, 4);
+  ctx.clip();
+  ctx.fillStyle = TRACK;
+  ctx.fillRect(pad, barY, barW, 8);
+  let bx = pad;
+  for (const [key, , fill] of TIERS) {
+    const n = counts[key];
+    if (sum === 0 || n === 0) continue;
+    const w = (n / sum) * barW;
+    ctx.fillStyle = fill;
+    ctx.fillRect(bx, barY, Math.max(0, w - 1), 8);
+    bx += w;
+  }
+  ctx.restore();
+  let lx = pad;
+  ctx.font = '450 20px "Hanken Grotesk Variable", system-ui, sans-serif';
+  for (const [key, label, fill] of TIERS) {
+    ctx.fillStyle = fill;
+    ctx.fillRect(lx, barY + 30, 8, 8);
+    ctx.fillStyle = MUTED;
+    ctx.fillText(label, lx + 16, barY + 40);
+    lx += 16 + ctx.measureText(label).width + 8;
+    ctx.fillStyle = INK;
+    ctx.font = '600 20px "Hanken Grotesk Variable", system-ui, sans-serif';
+    const v = String(counts[key]);
+    ctx.fillText(v, lx, barY + 40);
+    lx += ctx.measureText(v).width + 32;
+    ctx.font = '450 20px "Hanken Grotesk Variable", system-ui, sans-serif';
+  }
 
   const gridY = H - 200;
   ctx.strokeStyle = BORDER;

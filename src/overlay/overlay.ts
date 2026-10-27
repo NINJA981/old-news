@@ -15,8 +15,18 @@ import type { Tier } from '../engine/tiers';
 import { OVERLAY_ATTR } from '../extract/map';
 import type { FadeStrength } from '../paint/contrastFloor';
 import { EASE_IN_OUT, EASE_OUT, EASE_OUT_SOFT, h, isEditable, svgOf } from './dom';
-import { DISSOLVE, clampX, placeTag, planDissolve, pulseFrames, shouldDissolve } from './geometry';
-import type { TagMode } from './geometry';
+import {
+  DISSOLVE,
+  clampX,
+  countTicks,
+  overlaps,
+  placeChips,
+  placeTag,
+  planDissolve,
+  pulseFrames,
+  shouldDissolve,
+} from './geometry';
+import type { Box, ChipMode, TagMode } from './geometry';
 import { ICON } from './icons';
 import { fadeFor, themeOf } from './ink';
 import { findToken } from './locate';
@@ -61,6 +71,8 @@ interface Chip {
   range: Range | null;
   pulses: HTMLElement[];
   text: string;
+  /** Where the chip sits (geometry.placeChips); 'hover' chips show only with hover or focus. */
+  mode: ChipMode;
 }
 
 interface Item {
@@ -189,7 +201,14 @@ export class Overlay {
     const queue = (): void => this.queueLayout();
     this.win.addEventListener('resize', queue, opts);
     this.win.addEventListener('load', queue, opts);
-    this.win.addEventListener('scroll', () => this.updateActive(), { ...opts, passive: true });
+    this.win.addEventListener(
+      'scroll',
+      () => {
+        this.updateActive();
+        this.queueOcclusion();
+      },
+      { ...opts, passive: true },
+    );
     this.doc.addEventListener('keydown', (e) => this.onKey(e), { ...opts, capture: true });
     const finish = (): void => this.timeline?.finish();
     for (const type of ['wheel', 'pointerdown', 'touchstart', 'keydown'] as const) {
@@ -199,7 +218,14 @@ export class Overlay {
     if (typeof ResizeObserver !== 'undefined') {
       const ro = new ResizeObserver(queue);
       ro.observe(this.doc.documentElement);
-      this.ac.signal.addEventListener('abort', () => ro.disconnect());
+      // The tray opens and resizes on its own; marks it now covers step aside as it grows.
+      const cover = new ResizeObserver(() => this.queueOcclusion());
+      cover.observe(this.pill.tray);
+      cover.observe(this.pill.pill);
+      this.ac.signal.addEventListener('abort', () => {
+        ro.disconnect();
+        cover.disconnect();
+      });
     }
   }
 
@@ -422,8 +448,9 @@ export class Overlay {
       for (const c of it.chips) this.revealChip(c, tl, 0, DISSOLVE.reduced, false);
     this.timeline = tl;
     tl.onEnd(() => this.finalizeHighlights(items));
-    tl.play();
     if (tl.duration === 0) tl.finish();
+    // Capture holds this one too, so the reduced-motion frame strip is as deterministic as the dissolve.
+    else if (!this.settings.capture) tl.play();
   }
 
   private runDissolve(
@@ -437,6 +464,7 @@ export class Overlay {
     const tl = new Timeline();
     const steps = planDissolve(faded.map((it, index) => ({ index, inRange: !!inRange.get(it) })));
     const starts = steps.map((s) => s.start);
+    const ticks = countTicks(steps);
     faded.forEach((it, i) => {
       const step = steps[i];
       if (!step) return;
@@ -456,7 +484,7 @@ export class Overlay {
       }
       this.revealTag(it, tl, step.start + DISSOLVE.tagLead, DISSOLVE.tagFade);
     });
-    tl.countdown(total, starts, (n) => {
+    tl.countdown(total, ticks, (n) => {
       this.pill.setCountdown(Math.max(n, lit));
     });
     // "Only" fades into the pill as the last paragraph settles.
@@ -526,7 +554,8 @@ export class Overlay {
     rise: boolean,
   ): void {
     const show = (): void => c.el.classList.add('on');
-    if (!tl) return show();
+    // A hover-only chip has no room at rest, so it never animates in over the text.
+    if (!tl || c.mode === 'hover') return show();
     const a = this.animate(
       c.el,
       rise
@@ -599,7 +628,7 @@ export class Overlay {
       });
       el.append(h(this.doc, 'b', {}, head), h(this.doc, 'span', {}, rest));
       const range = f.after ? findToken(it.el, f.after, it.res.drift.indexOf(f) / 4) : null;
-      const chip: Chip = { el, range, pulses: [], text: full };
+      const chip: Chip = { el, range, pulses: [], text: full, mode: 'above' };
       el.addEventListener('click', () => this.openCard(it, el, true));
       el.addEventListener('focus', () => this.openCard(it, el, false));
       el.addEventListener('pointerenter', () => this.scheduleCard(it, el));
@@ -617,6 +646,18 @@ export class Overlay {
   private attachHover(items: readonly Item[]): void {
     const opts = { signal: this.ac.signal };
     for (const it of items) {
+      if (it.tier === 'changed' && it.chips.length > 0) {
+        const show = (on: boolean): void => {
+          it.hover = on;
+          for (const c of it.chips) c.el.classList.toggle('show', on);
+          it.more?.classList.toggle('show', on);
+        };
+        it.el.addEventListener('pointerenter', () => show(true), opts);
+        it.el.addEventListener('pointerleave', () => show(false), opts);
+        it.el.addEventListener('focusin', () => show(true), opts);
+        it.el.addEventListener('focusout', () => show(false), opts);
+        continue;
+      }
       if (it.tier !== 'seen' && it.tier !== 'similar') continue;
       const to = (on: boolean): void => {
         it.hover = on;
@@ -881,6 +922,7 @@ export class Overlay {
     this.placeMarker(o);
     if (this.cardItem && this.card?.classList.contains('open'))
       this.placeCard(this.cardItem.anchor);
+    this.occlude();
   }
 
   private placeTagFor(it: Item, r: DOMRect, vw: number, o: DOMRect): void {
@@ -940,12 +982,13 @@ export class Overlay {
   }
 
   private placeChips(it: Item, o: DOMRect, vw: number, visible: boolean): void {
-    let cursor = -Infinity;
+    if (it.chips.length === 0) return;
+    for (const c of it.chips) c.el.hidden = !visible;
+    if (it.more) it.more.hidden = !visible;
+    if (!visible) return;
+    const para = it.el.getBoundingClientRect();
     for (const c of it.chips) {
-      c.el.hidden = !visible;
-      if (!visible) continue;
       const rects = c.range ? [...c.range.getClientRects()] : [];
-      const anchorRect = rects[0] ?? it.el.getBoundingClientRect();
       // Pulse rectangles over the token itself.
       if (c.pulses.length !== rects.length) {
         for (const p of c.pulses) p.remove();
@@ -963,19 +1006,118 @@ export class Overlay {
         p.style.width = `${rect.width + 2}px`;
         p.style.height = `${rect.height + 2}px`;
       });
-      const width = Math.min(360, c.el.offsetWidth || 240);
-      const left = Math.max(cursor + 6, clampX(anchorRect.left, width, 8, vw - 8));
-      c.el.style.left = `${left - o.left}px`;
-      c.el.style.top = `${anchorRect.top - 6 - 24 - o.top}px`;
-      cursor = left + width;
     }
-    if (it.more) {
-      it.more.hidden = !visible;
-      it.more.classList.toggle('on', visible);
-      it.more.style.left = `${cursor + 6 - o.left}px`;
-      const top = it.chips[0]?.el.style.top;
-      if (top) it.more.style.top = top;
+    // The group is anchored on the first chip's token; every chip in it shares one placement.
+    const first = it.chips[0] as Chip;
+    const tokenRect = (first.range ? first.range.getClientRects()[0] : null) ?? para;
+    const token: Box = {
+      left: tokenRect.left,
+      right: tokenRect.right,
+      top: tokenRect.top,
+      bottom: tokenRect.bottom,
+    };
+    const widths = it.chips.map((c) => Math.min(360, c.el.offsetWidth || 240));
+    const moreW = it.more ? it.more.offsetWidth || 28 : 0;
+    if (it.more) widths.push(moreW);
+    const place = placeChips(
+      token,
+      { left: para.left, right: para.right, top: para.top, bottom: para.bottom },
+      widths,
+      this.textSpace(it.el, token),
+      vw,
+      (x, w) => this.isFree(x, token.top + 10, w),
+    );
+    const els = [...it.chips.map((c) => c.el), ...(it.more ? [it.more] : [])];
+    els.forEach((el, i) => {
+      const box = place.boxes[i];
+      if (!box) return;
+      el.dataset['mode'] = place.mode;
+      el.style.left = `${box.x - o.left}px`;
+      el.style.top = `${box.y - o.top}px`;
+    });
+    for (const c of it.chips) c.mode = place.mode;
+  }
+
+  /**
+   * Free px above and below a token before the nearest text: the lines of its own paragraph
+   * first, then the neighbouring content. Read from text boxes, so line leading counts as free.
+   */
+  private textSpace(el: HTMLElement, token: Box): { above: number; below: number } {
+    let above = -Infinity;
+    let below = Infinity;
+    for (const r of textRects(this.doc, el)) {
+      if (r.bottom <= token.top + 1 && r.top < token.top - 2) above = Math.max(above, r.bottom);
+      if (r.top >= token.bottom - 1 && r.bottom > token.bottom + 2) below = Math.min(below, r.top);
     }
+    if (above === -Infinity) above = this.neighbourEdge(el, -1);
+    if (below === Infinity) below = this.neighbourEdge(el, 1);
+    return { above: token.top - above, below: below - token.bottom };
+  }
+
+  /** Bottom of the nearest content before `el` (dir -1), or top of the nearest after it (dir 1). */
+  private neighbourEdge(el: Element, dir: -1 | 1): number {
+    const none = dir < 0 ? -Infinity : Infinity;
+    let n: Element | null = el;
+    for (let depth = 0; n && n !== this.doc.body && depth < 8; depth++) {
+      let sib: Element | null = dir < 0 ? n.previousElementSibling : n.nextElementSibling;
+      for (let hops = 0; sib && hops < 12; hops++) {
+        if (!sib.hasAttribute(OVERLAY_ATTR)) {
+          const box = sib.getBoundingClientRect();
+          if (box.width > 0 && box.height > 0) {
+            const rects = textRects(this.doc, sib);
+            if (rects.length === 0) return dir < 0 ? box.bottom : box.top;
+            return dir < 0
+              ? Math.max(...rects.map((r) => r.bottom))
+              : Math.min(...rects.map((r) => r.top));
+          }
+        }
+        sib = dir < 0 ? sib.previousElementSibling : sib.nextElementSibling;
+      }
+      n = n.parentElement;
+    }
+    return none;
+  }
+
+  // ---- Marks under the pill and tray -----------------------------------------------------------
+
+  private occlusionQueued = false;
+
+  private queueOcclusion(): void {
+    if (this.occlusionQueued) return;
+    this.occlusionQueued = true;
+    requestAnimationFrame(() => {
+      this.occlusionQueued = false;
+      this.occlude();
+    });
+  }
+
+  /** Tags, dots and chips that would sit under the fixed pill or tray step aside (opacity only). */
+  private occlude(): void {
+    if (!this.host) return;
+    const covers: Box[] = [];
+    for (const el of [this.pill.pill, this.pill.tray]) {
+      if (el.hidden) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width > 0)
+        covers.push({ left: r.left - 8, right: r.right + 8, top: r.top - 8, bottom: r.bottom + 8 });
+    }
+    const marks: HTMLElement[] = [];
+    for (const s of this.sections) {
+      for (const it of s.items) {
+        if (it.tag) marks.push(it.tag);
+        if (it.dot) marks.push(it.dot);
+        for (const c of it.chips) marks.push(c.el);
+        if (it.more) marks.push(it.more);
+      }
+    }
+    const vh = this.win.innerHeight;
+    const under = marks.map((m) => {
+      if (m.hidden || covers.length === 0) return false;
+      const r = m.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return false;
+      return covers.some((c) => overlaps(r, c));
+    });
+    marks.forEach((m, i) => m.classList.toggle('under', !!under[i]));
   }
 
   // ---- Keyboard: N, J, K, Esc ----------------------------------------------------------------
@@ -1183,6 +1325,19 @@ export class Overlay {
   get shadowRoot(): ShadowRoot | null {
     return E2E ? this.shadow : null;
   }
+}
+
+/** Client rects of the text inside `el` (line boxes of its glyphs, not the element's box). */
+function textRects(doc: Document, el: Element): DOMRect[] {
+  const out: DOMRect[] = [];
+  const walker = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const range = doc.createRange();
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!(n.textContent ?? '').trim()) continue;
+    range.selectNodeContents(n);
+    for (const r of range.getClientRects()) if (r.width > 0 && r.height > 0) out.push(r);
+  }
+  return out;
 }
 
 function hostnameOf(url: string, fallback: string): string {

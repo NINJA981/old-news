@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CHIP_H,
   countAt,
+  countTicks,
   DISSOLVE,
+  overlaps,
+  placeChips,
   placeTag,
   planDissolve,
   pulseFrames,
@@ -74,9 +78,32 @@ describe('dissolve schedule (DESIGN.md frame table)', () => {
   it('counts the pill down by one at each paragraph start', () => {
     const starts = [0, 8, 16];
     expect(countAt(-1, 23, starts)).toBe(23);
-    expect(countAt(0, 23, starts)).toBe(22);
+    // Frame 0 is the full-ink page: nothing has ticked yet.
+    expect(countAt(0, 23, starts)).toBe(23);
+    expect(countAt(1, 23, starts)).toBe(22);
     expect(countAt(9, 23, starts)).toBe(21);
     expect(countAt(Infinity, 23, starts)).toBe(20);
+  });
+
+  it('ticks instantly-set paragraphs inside the settle window, after the last animated start', () => {
+    const steps = planDissolve([
+      { index: 0, inRange: true },
+      { index: 1, inRange: true },
+      { index: 2, inRange: true },
+      { index: 3, inRange: false },
+      { index: 4, inRange: false },
+    ]);
+    const ticks = countTicks(steps);
+    expect(ticks).toHaveLength(5);
+    expect(ticks.slice(0, 3)).toEqual([0, 16, 32]);
+    for (const t of ticks.slice(3)) {
+      expect(t).toBeGreaterThan(32);
+      expect(t).toBeLessThan(DISSOLVE.settle);
+    }
+    // Deterministic: the same plan gives the same ticks.
+    expect(countTicks(steps)).toEqual(ticks);
+    expect(countAt(0, 23, ticks)).toBe(23);
+    expect(countAt(DISSOLVE.settle, 23, ticks)).toBe(18);
   });
 
   it('pulses twice in 1.2 s: 0.9, 0.35, 0.9, then rest', () => {
@@ -85,5 +112,46 @@ describe('dissolve schedule (DESIGN.md frame table)', () => {
     const f = pulseFrames(0);
     expect(f.map(([, o]) => o)).toEqual([0, 0.9, 0.35, 0.9, 0]);
     expect(f.map(([t]) => Math.round(t * len))).toEqual([0, 180, 600, 780, 1200]);
+  });
+});
+
+describe('drift chip placement (never over text)', () => {
+  const token = { left: 460, right: 480, top: 338, bottom: 360 };
+  const p = { left: 380, right: 1060, top: 334, bottom: 420 };
+
+  it('sits above the token when the gap to the line above holds it, lifted at most 6 px', () => {
+    const r = placeChips(token, p, [240], { above: 40, below: 0 }, 1440);
+    expect(r.mode).toBe('above');
+    expect(r.boxes[0]).toEqual({ x: 460, y: 338 - 6 - CHIP_H });
+    // A tighter gap lifts it less, keeping CHIP_CLEAR px from the text above.
+    const tight = placeChips(token, p, [240], { above: 26, below: 0 }, 1440);
+    expect(tight.mode).toBe('above');
+    expect(tight.boxes[0]?.y).toBe(338 - 3 - CHIP_H);
+  });
+
+  it('moves to the right gutter, level with the token line, when the line above is too close', () => {
+    const r = placeChips(token, p, [240, 200], { above: 7, below: 7 }, 1440);
+    expect(r.mode).toBe('right');
+    expect(r.boxes[0]).toEqual({ x: 1072, y: 339 });
+    expect(r.boxes[1]).toEqual({ x: 1072, y: 339 + CHIP_H + 6 });
+  });
+
+  it('uses the gap below, then hover-only, when there is no gutter', () => {
+    const narrow = { left: 24, right: 351, top: 334, bottom: 420 };
+    const t = { left: 100, right: 120, top: 396, bottom: 418 };
+    expect(placeChips(t, narrow, [240], { above: 7, below: 40 }, 375).mode).toBe('below');
+    expect(placeChips(t, narrow, [240], { above: 7, below: 7 }, 375).mode).toBe('hover');
+  });
+
+  it('keeps a chip row inside the viewport', () => {
+    const t = { left: 300, right: 320, top: 338, bottom: 360 };
+    const r = placeChips(t, p, [240], { above: 40, below: 0 }, 375);
+    expect(r.boxes[0]?.x).toBe(375 - 8 - 240);
+  });
+
+  it('detects overlap with the pill', () => {
+    const pill = { left: 1100, right: 1424, top: 848, bottom: 884 };
+    expect(overlaps({ left: 1072, right: 1200, top: 850, bottom: 870 }, pill)).toBe(true);
+    expect(overlaps({ left: 1072, right: 1200, top: 800, bottom: 820 }, pill)).toBe(false);
   });
 });

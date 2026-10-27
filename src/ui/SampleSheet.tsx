@@ -23,7 +23,7 @@ export function SampleSheet() {
           </span>
           <p className="relative mt-2">
             <span className="mt-0 mb-1 block">
-              <span className="inline-block rounded-xs bg-drift-soft px-2 py-1 font-ui text-caption text-fg shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--drift)_35%,transparent)]">
+              <span className="inline-block rounded-xs bg-drift-soft px-2 py-0.5 font-ui text-caption text-fg shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--drift)_35%,transparent)]">
                 <b className="font-semibold text-drift tnum">Twelve → 14</b> · Fenwick Wire said
                 Twelve, 14 min ago
               </span>

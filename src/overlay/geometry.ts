@@ -106,11 +106,106 @@ export function shouldDissolve(inRangeFaded: number, enabled: boolean, reduced: 
   return enabled && !reduced && inRangeFaded >= 3;
 }
 
-/** Pill number at time t: counts down from total, one per faded paragraph that has started. */
-export function countAt(t: number, total: number, starts: readonly number[]): number {
+/**
+ * Pill number at time t: counts down from total, one per tick that has passed. Strictly after the
+ * tick, so frame 0 always reads "23 of 23" while every paragraph is still in full ink.
+ */
+export function countAt(t: number, total: number, ticks: readonly number[]): number {
   let n = total;
-  for (const s of starts) if (s <= t) n--;
+  for (const s of ticks) if (s < t) n--;
   return n;
+}
+
+/**
+ * When the pill's number ticks down, one tick per faded paragraph. An animated paragraph ticks as
+ * its fade starts. Paragraphs set instantly (below the viewport plus one screen) cannot be seen, so
+ * their ticks are spread evenly over the settle window after the last animated start, and the
+ * countdown still reaches the real count before "Only" arrives. Deterministic for a given plan.
+ */
+export function countTicks(steps: readonly DissolveStep[]): number[] {
+  const animated = steps.filter((s) => s.animate).map((s) => s.start);
+  const instant = steps.length - animated.length;
+  const from = Math.max(0, ...animated);
+  const to = Math.max(from, DISSOLVE.settle - 20);
+  const extra = Array.from(
+    { length: instant },
+    (_, k) => from + ((k + 1) * (to - from)) / (instant + 1),
+  );
+  return [...animated, ...extra];
+}
+
+// ---- Drift chips ------------------------------------------------------------------------------
+
+/** Drift chip height: caption 12/16 plus 2 px padding, the same 20 px as a provenance tag. */
+export const CHIP_H = 20;
+/** Gap kept between a chip and the text it must not touch. */
+export const CHIP_CLEAR = 3;
+
+export type ChipMode = 'above' | 'right' | 'below' | 'hover';
+
+export interface ChipSpace {
+  /** Free px between the token's top and the nearest text above it. */
+  above: number;
+  /** Free px between the token's bottom and the nearest text below it. */
+  below: number;
+}
+
+export interface ChipPlacement {
+  mode: ChipMode;
+  /** Viewport position of each chip, in order. */
+  boxes: { x: number; y: number }[];
+}
+
+/**
+ * Where a paragraph's drift chips go, first that fits, so a chip never covers text:
+ *  1. above the token (DESIGN.md: 6 px above it), when the gap to the line above holds a chip;
+ *  2. the right gutter, level with the token's line, chips stacked downwards;
+ *  3. below the token, when it sits on the last line and the gap below holds a chip;
+ *  4. hover: positioned as in 1 but shown only while the paragraph or the chip has hover or focus.
+ * `widths` are the measured chip widths; `free(x, w)` says whether the gutter is clear of page content.
+ */
+export function placeChips(
+  token: Box,
+  para: Box,
+  widths: readonly number[],
+  space: ChipSpace,
+  viewportWidth: number,
+  free: (x: number, width: number) => boolean = () => true,
+): ChipPlacement {
+  const gap = 6;
+  const row = widths.reduce((a, w) => a + w, 0) + gap * Math.max(0, widths.length - 1);
+  const across = (y: number): { x: number; y: number }[] => {
+    let x = clampX(token.left, row, 8, viewportWidth - 8);
+    return widths.map((w) => {
+      const box = { x, y };
+      x += w + gap;
+      return box;
+    });
+  };
+  const need = CHIP_H + 2 + CHIP_CLEAR;
+  if (space.above >= need && row <= viewportWidth - 16) {
+    const lift = Math.min(6, space.above - CHIP_H - CHIP_CLEAR);
+    return { mode: 'above', boxes: across(token.top - lift - CHIP_H) };
+  }
+  const rightX = para.right + TAG_GAP;
+  const widest = Math.max(0, ...widths);
+  if (viewportWidth - EDGE - rightX >= widest && free(rightX, widest)) {
+    const top = token.top + (token.bottom - token.top - CHIP_H) / 2;
+    return {
+      mode: 'right',
+      boxes: widths.map((_, i) => ({ x: rightX, y: top + i * (CHIP_H + gap) })),
+    };
+  }
+  if (space.below >= need && row <= viewportWidth - 16) {
+    const drop = Math.min(6, space.below - CHIP_H - CHIP_CLEAR);
+    return { mode: 'below', boxes: across(token.bottom + drop) };
+  }
+  return { mode: 'hover', boxes: across(token.top - 6 - CHIP_H) };
+}
+
+/** True when two viewport rectangles overlap (used to hide marks under the pill and tray). */
+export function overlaps(a: Box, b: Box): boolean {
+  return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
 }
 
 /**

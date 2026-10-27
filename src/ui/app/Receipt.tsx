@@ -5,7 +5,7 @@ import { receiptSentence } from '../../engine/present';
 import type { WeeklyReceipt } from '../../engine/receipt';
 import { PrimaryButton, SecondaryButton } from '../components/Button';
 import { useDelayed, useReceipt } from '../hooks';
-import { Glyph, Notice, Skeleton } from '../kit';
+import { Glyph, Notice, Skeleton, TIER_FILL, TIER_LABEL, TierBar } from '../kit';
 import { toast } from '../toast';
 import { useApp } from './context';
 import { EmptyPanel, ErrorPanel, PageHeader } from './parts';
@@ -35,6 +35,22 @@ function Card({ r }: { r: WeeklyReceipt }) {
           {receiptSentence(r)}
         </p>
         <div>
+          <div className="mb-5">
+            <TierBar counts={r.paragraphs} />
+            <ul
+              className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-fg-muted"
+              style={{ fontSize: 'max(12px, calc(100cqw * 15 / 1200))' }}
+              aria-label="Paragraphs this week"
+            >
+              {(['new', 'changed', 'similar', 'seen'] as const).map((t) => (
+                <li key={t} className="flex items-center gap-2">
+                  <span aria-hidden className={`size-1.5 rounded-[2px] ${TIER_FILL[t]}`} />
+                  {TIER_LABEL[t]}
+                  <span className="font-semibold text-fg tnum">{r.paragraphs[t]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
           <dl
             className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-border pt-4 sm:grid-cols-4"
             style={{ fontSize: 'max(12px, calc(100cqw * 16 / 1200))' }}

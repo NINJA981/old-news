@@ -39,21 +39,38 @@ function Steps({ step, go }: { step: Step; go: (s: Step) => void }) {
   const labels = ['Allow access', 'Remember open tabs', 'Done'];
   return (
     <nav aria-label="Setup steps" className="mb-8">
-      <ol className="flex items-center gap-4">
+      <ol className="flex items-center gap-2">
         {([1, 2, 3] as const).map((n) => (
-          <li key={n}>
+          <li key={n} className="flex items-center gap-2">
+            {n > 1 ? <span aria-hidden className="h-px w-4 bg-border-strong sm:w-6" /> : null}
             <button
               type="button"
               onClick={() => n < step && go(n)}
               aria-current={n === step ? 'step' : undefined}
-              aria-label={`Step ${n} of 3: ${labels[n - 1]}`}
               disabled={n > step}
               className={cn(
-                'flex size-6 items-center justify-center rounded-full text-ui-strong tnum transition-colors duration-100',
-                n === step ? 'bg-surface-3 text-fg' : n < step ? 'text-fg-muted' : 'text-fg-subtle',
+                'flex h-6 items-center gap-2 rounded-sm pr-2 text-ui-strong transition-colors duration-100',
+                n === step
+                  ? 'text-fg'
+                  : n < step
+                    ? 'text-fg-muted hover:text-fg'
+                    : 'text-fg-subtle',
               )}
             >
-              {n}
+              <span className="sr-only">Step </span>
+              <span
+                className={cn(
+                  'flex size-6 items-center justify-center rounded-full tnum',
+                  n === step ? 'bg-surface-3' : 'shadow-[inset_0_0_0_1px_var(--border)]',
+                )}
+              >
+                {n}
+              </span>
+              <span className="sr-only"> of 3: </span>
+              {/* Phones show only the current step's name; the others stay in the accessible name. */}
+              <span className={cn(n === step ? 'inline' : 'sr-only sm:not-sr-only')}>
+                {labels[n - 1]}
+              </span>
             </button>
           </li>
         ))}
@@ -228,7 +245,7 @@ function TabsStep({ next }: { next: () => void }) {
                       <span className="block text-caption font-semibold text-fg-muted">
                         {c.siteName}
                       </span>
-                      <span className="block truncate font-read text-read-title text-fg">
+                      <span className="on-clamp-2 font-read text-read-title text-fg">
                         {c.title}
                       </span>
                       {st.kind !== 'idle' ? (
