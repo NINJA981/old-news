@@ -80,3 +80,5 @@ export { LiveBlogTracker, findLiveBlogPosts } from './liveblog';
 export { mapParagraphs } from './map';
 export type { MappedBlock, MapResult, RejectReason } from './map';
 export type { PageInfo } from './signals';
+export { analyseSubtree, longParagraphCount } from './subtree';
+export type { SubtreeAnalysis } from './subtree';

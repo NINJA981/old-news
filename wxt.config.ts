@@ -18,6 +18,8 @@ export default defineConfig({
     },
   },
   vite: () => ({
+    // The e2e build opens the overlay's shadow root so tests can read it; releases keep it closed.
+    define: { __OLD_NEWS_E2E__: JSON.stringify(E2E) },
     plugins: [
       tailwindcss(),
       {

@@ -5,7 +5,8 @@
  */
 import type { AnalyseResponse } from '../host/engineHost';
 import type { PageAnalysis } from '../extract';
-import type { PageStatus } from '../messaging/protocol';
+import type { PageStatus, StoryCard } from '../messaging/protocol';
+import type { PreviouslyOnCard } from '../engine/story';
 import { badgeText } from '../engine/present';
 import type { Settings } from './settings';
 import { pauseScope } from './settings';
@@ -47,6 +48,31 @@ export function statusFromAnalysis(a: PageAnalysis): PageStatus | null {
   }
 }
 
+const clip = (s: string, n: number): string => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
+
+/** The "Previously on" card in the trimmed shape that travels in a page status. */
+export function storyCardOf(card: PreviouslyOnCard | null): StoryCard | null {
+  if (!card) return null;
+  const site = new Map(card.articles.map((a) => [a.articleId, a.siteName]));
+  return {
+    label: clip(card.label, 300),
+    articles: card.articles.slice(0, 12).map((a) => ({
+      siteName: clip(a.siteName, 300),
+      title: clip(a.title, 300),
+      url: a.url.length > 4096 ? '' : a.url,
+      readAt: a.readAt,
+    })),
+    changed: card.changedFigures.slice(0, 12).map((d) => ({
+      kind: d.kind,
+      before: clip(d.before, 80),
+      after: clip(d.after, 80),
+      context: clip(d.context, 80),
+      siteName: clip(site.get(d.oldArticleId) ?? 'an earlier article', 300),
+      readAt: d.detectedAt,
+    })),
+  };
+}
+
 export function statusFromResult(r: AnalyseResponse): PageStatus {
   const s = r.summary;
   return {
@@ -58,6 +84,7 @@ export function statusFromResult(r: AnalyseResponse): PageStatus {
     changed: s.changed,
     degraded: r.degraded,
     storyId: r.storyId,
+    story: storyCardOf(r.previouslyOn),
   };
 }
 

@@ -6,6 +6,13 @@ import type { Fact, FactKind } from './facts';
 
 export type ArticleKind = 'news' | 'blog' | 'liveblog';
 
+export interface TierCounts {
+  new: number;
+  seen: number;
+  similar: number;
+  changed: number;
+}
+
 export interface ArticleRecord {
   /** SHA-256 of the canonical URL. */
   id: string;
@@ -24,6 +31,8 @@ export interface ArticleRecord {
   centroid: Int8Array | null;
   centroidScale: number;
   storyId: string | null;
+  /** Tier counts of the paragraphs the reader read (for the Stories tier bar). Absent on old records. */
+  tiers?: TierCounts;
   expiresAt: number;
 }
 

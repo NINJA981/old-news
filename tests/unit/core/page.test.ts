@@ -103,6 +103,7 @@ describe('statusFromResult and badge', () => {
       changed: 1,
       degraded: false,
       storyId: null,
+      story: null,
     });
   });
 

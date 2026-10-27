@@ -11,6 +11,8 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import type { BrowserContext, Page, Worker } from '@playwright/test';
 import { chromium, test as base } from '@playwright/test';
+import type { PageTheme } from '../fixtures/story-page';
+import { loadStoryArticle, renderInfinitePage, renderStoryPage } from '../fixtures/story-page';
 
 export const EXTENSION_DIR = resolve(process.cwd(), '.output-e2e', 'chrome-mv3');
 const LAYOUTS = resolve(process.cwd(), 'tests', 'fixtures', 'layouts');
@@ -41,7 +43,26 @@ const isLocal = (url: string, siteOrigin: string): boolean =>
 function startServer(): Promise<{ server: Server; origin: string }> {
   return new Promise((done) => {
     const server = createServer((req, res) => {
-      const name = (req.url ?? '/').split('?')[0]?.replace(/^\//, '') ?? '';
+      const url = new URL(req.url ?? '/', 'http://127.0.0.1');
+      const name = url.pathname.replace(/^\//, '');
+      // /story/<story>/<article>.html?theme=light|dark|tint renders an authored story article.
+      const story = /^story\/([\w-]+)\/(\w+)\.html$/.exec(name);
+      // /infinite/<storyA>/<a>/<storyB>/<b>.html: article A, then __loadNext() appends article B.
+      const inf = /^infinite\/([\w-]+)\/(\w+)\/([\w-]+)\/(\w+)\.html$/.exec(name);
+      if (inf) {
+        const a = loadStoryArticle(inf[1] as string, inf[2] as string);
+        const b = loadStoryArticle(inf[3] as string, inf[4] as string);
+        if (!a || !b) return void res.writeHead(404).end('not found');
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+        return void res.end(renderInfinitePage(a, b, 'light'));
+      }
+      if (story) {
+        const article = loadStoryArticle(story[1] as string, story[2] as string);
+        if (!article) return void res.writeHead(404).end('not found');
+        const theme = (url.searchParams.get('theme') ?? 'light') as PageTheme;
+        res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+        return void res.end(renderStoryPage(article, theme));
+      }
       try {
         const body = readFileSync(join(LAYOUTS, name.replace(/[^a-zA-Z0-9_.-]/g, '')));
         res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });

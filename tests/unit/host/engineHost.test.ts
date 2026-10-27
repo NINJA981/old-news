@@ -44,6 +44,19 @@ describe('EngineHost', () => {
     expect(counts.articles).toBe(0);
   });
 
+  it('lists a changed figure on the card as soon as the page is analysed, without storing it', async () => {
+    const h = host();
+    await h.ingest(meta('wire'), paras('wire'));
+    await h.ingest(meta('calder'), paras('calder'));
+    clock += 60_000;
+    const r = await h.analyse(meta('day2'), paras('day2'));
+    expect(r.summary.changed).toBeGreaterThan(0);
+    const shown = r.previouslyOn?.changedFigures ?? [];
+    expect(shown.length).toBe(r.paragraphs.flatMap((p) => p.drift).length);
+    expect(shown.some((d) => d.after === '14')).toBe(true);
+    expect((await storeCounts(db)).drift).toBe(0);
+  });
+
   it('remembers read paragraphs, then fades them on a rewrite with provenance', async () => {
     const h = host();
     await h.ingest(meta('wire'), paras('wire'));

@@ -65,6 +65,7 @@
   --danger: #c52c2a;
   --danger-soft: #ffe8e6;
   --info: #0d70a4;
+  --drift-mark: oklch(0.88 0.11 85 / 0.55);
   --shadow-e1: 0 0 0 1px var(--border), 0 1px 2px oklch(0.25 0.02 70 / 0.04);
   --shadow-e3:
     0 0 0 1px oklch(0.25 0.02 70 / 0.06), 0 2px 4px -1px oklch(0.25 0.02 70 / 0.06),
@@ -97,6 +98,7 @@
   --danger: #fc928a;
   --danger-soft: #421c19;
   --info: #68b7ed;
+  --drift-mark: oklch(0.83 0.11 78 / 0.24);
   --shadow-e1: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
   --shadow-e3: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
   --shadow-overlay: 0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55);
@@ -130,6 +132,27 @@
     --shadow-e3: 0 0 0 1px var(--border), inset 0 1px 0 oklch(1 0 0 / 0.05);
     --shadow-overlay: 0 0 0 1px oklch(1 0 0 / 0.08), 0 12px 28px -6px rgb(0 0 0 / 0.55);
   }
+}
+
+/* The paper sheet stays light in every theme (DESIGN.md `paper-sheet`, the receipt card, the playground). */
+.paper {
+  color-scheme: light;
+  --surface: #fefdfc;
+  --surface-2: #f0ece8;
+  --surface-3: #e6e2dd;
+  --border: #dedad4;
+  --border-strong: #847f78;
+  --text: #1e1a16;
+  --text-muted: #5c5751;
+  --text-subtle: #76706a;
+  --accent: #1d7779;
+  --accent-text: #12676a;
+  --drift: #8d5406;
+  --drift-soft: #ffeccd;
+  --drift-mark: oklch(0.88 0.11 85 / 0.55);
+  --shadow-e1: 0 0 0 1px var(--border), 0 1px 2px oklch(0.25 0.02 70 / 0.04);
+  background: var(--surface);
+  color: var(--text);
 }
 
 @theme inline {
@@ -190,6 +213,10 @@
   --text-ui--line-height: 20px;
   --text-ui--letter-spacing: 0em;
   --text-ui--font-weight: 450;
+  --text-ui-strong: 13px;
+  --text-ui-strong--line-height: 20px;
+  --text-ui-strong--letter-spacing: 0em;
+  --text-ui-strong--font-weight: 600;
   --text-button: 14px;
   --text-button--line-height: 20px;
   --text-button--letter-spacing: -0.005em;
@@ -275,5 +302,62 @@
   }
   p {
     text-wrap: pretty;
+  }
+}
+
+/* Motion: skeletons pulse, spinners turn; both settle under reduced motion. */
+@layer utilities {
+  .on-skeleton {
+    animation: on-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes on-pulse {
+    50% {
+      opacity: 0.55;
+    }
+  }
+  .on-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .on-skeleton {
+    animation: none;
+  }
+  .animate-spin {
+    animation-duration: 2.4s;
+  }
+}
+
+@layer base {
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']),
+  [role='switch'],
+  [role='radio'],
+  [role='tab'] {
+    cursor: pointer;
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  input:not([type='checkbox']):not([type='radio']) {
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    padding: 6px 10px;
+    color: var(--text);
+    transition:
+      border-color 100ms,
+      box-shadow 100ms;
+  }
+  input:not([type='checkbox']):not([type='radio']):focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 25%, transparent);
   }
 }

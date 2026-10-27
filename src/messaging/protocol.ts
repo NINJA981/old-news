@@ -23,6 +23,29 @@ export type PageMeta = v.InferOutput<typeof PageMetaSchema>;
 
 export const ParagraphInputSchema = v.object({ ordinal: Int, text: Str(MAX_TEXT) });
 
+/** The "Previously on" card, trimmed for chrome.storage.session (popup, This story tab). */
+export const StoryCardSchema = v.object({
+  label: Str(300),
+  articles: v.pipe(
+    v.array(v.object({ siteName: Str(300), title: Str(300), url: Str(4096), readAt: v.number() })),
+    v.maxLength(12),
+  ),
+  changed: v.pipe(
+    v.array(
+      v.object({
+        kind: Str(20),
+        before: Str(80),
+        after: Str(80),
+        context: Str(80),
+        siteName: Str(300),
+        readAt: v.number(),
+      }),
+    ),
+    v.maxLength(12),
+  ),
+});
+export type StoryCard = v.InferOutput<typeof StoryCardSchema>;
+
 export const PageStatusSchema = v.variant('status', [
   v.object({ status: v.literal('not-article') }),
   v.object({ status: v.literal('non-english') }),
@@ -38,6 +61,7 @@ export const PageStatusSchema = v.variant('status', [
     changed: Int,
     degraded: v.boolean(),
     storyId: v.nullable(Str(200)),
+    story: v.optional(v.nullable(StoryCardSchema)),
   }),
   v.object({ status: v.literal('error'), reason: Str(500) }),
 ]);
@@ -48,6 +72,8 @@ export const MessageSchema = v.variant('type', [
     type: v.literal('page/analyse'),
     page: PageMetaSchema,
     paragraphs: v.pipe(v.array(ParagraphInputSchema), v.maxLength(MAX_PARAGRAPHS)),
+    /** Add to the article's session instead of replacing it (live-blog posts). */
+    append: v.optional(v.boolean()),
   }),
   v.object({
     // Install-time ingest (SPEC F13): analyse and remember every mapped paragraph as read.
@@ -77,6 +103,10 @@ export const MessageSchema = v.variant('type', [
   v.object({ type: v.literal('memory/wipe') }),
   v.object({ type: v.literal('memory/sweep') }),
   v.object({ type: v.literal('drift/list'), storyId: v.optional(Str(200)) }),
+  v.object({ type: v.literal('drift/overview'), storyId: v.optional(Str(200)) }),
+  v.object({ type: v.literal('stories/overview') }),
+  // Content script -> background: open the app page at a hash route (a page cannot open it itself).
+  v.object({ type: v.literal('app/open'), route: Str(200) }),
   v.object({ type: v.literal('stories/list') }),
   v.object({ type: v.literal('receipt/week') }),
   v.object({ type: v.literal('font/get'), family: v.picklist(['newsreader', 'hanken']) }),
@@ -101,6 +131,8 @@ export const ENGINE_MESSAGE_TYPES: ReadonlySet<MessageType> = new Set([
   'memory/wipe',
   'memory/sweep',
   'drift/list',
+  'drift/overview',
+  'stories/overview',
   'stories/list',
   'receipt/week',
 ]);
@@ -130,6 +162,7 @@ export const CONTENT_MESSAGE_TYPES: ReadonlySet<MessageType> = new Set([
   'page/status',
   'page/feedback',
   'font/get',
+  'app/open',
 ]);
 
 export function isContentMessage(m: Message): boolean {

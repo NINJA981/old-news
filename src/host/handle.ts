@@ -8,7 +8,10 @@ export async function handleEngineMessage(host: EngineHost, msg: Message): Promi
   try {
     switch (msg.type) {
       case 'page/analyse':
-        return { ok: true, data: await host.analyse(msg.page, msg.paragraphs) };
+        return {
+          ok: true,
+          data: await host.analyse(msg.page, msg.paragraphs, { append: msg.append }),
+        };
       case 'page/ingest':
         return { ok: true, data: await host.ingest(msg.page, msg.paragraphs) };
       case 'page/read':
@@ -24,6 +27,10 @@ export async function handleEngineMessage(host: EngineHost, msg: Message): Promi
         return { ok: true, data: await host.sweep() };
       case 'drift/list':
         return { ok: true, data: await host.listDrift(msg.storyId) };
+      case 'stories/overview':
+        return { ok: true, data: await host.storiesOverview() };
+      case 'drift/overview':
+        return { ok: true, data: await host.driftOverview(msg.storyId) };
       case 'stories/list':
         return { ok: true, data: await host.listStories() };
       case 'receipt/week':

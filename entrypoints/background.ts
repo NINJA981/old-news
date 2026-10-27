@@ -196,6 +196,9 @@ export default defineBackground(() => {
         return font(msg.family);
       case 'settings/changed':
         return ok();
+      case 'app/open':
+        await browser.tabs.create({ url: browser.runtime.getURL('/app.html') + msg.route });
+        return ok();
       case 'ingest/candidates':
         return candidates();
       case 'ingest/tabs':

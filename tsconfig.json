@@ -7,7 +7,9 @@
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
     "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "jsx": "react-jsx",
     "types": ["chrome", "node"]
-  }
+  },
+  "exclude": ["site", "node_modules", ".output", ".output-e2e"]
 }

@@ -36,14 +36,14 @@ The model loads lazily on the first article and is released after 5 minutes idle
 ## Measured accuracy (small corpus, read the caveats)
 
 `pnpm eval` runs the real model over an authored corpus and writes `metrics.json`. Latest run:
-3 stories, 55 labelled paragraphs, 166 changed-meaning pairs, 0 negatives.
+4 stories, 118 labelled paragraphs, 166 changed-meaning pairs, 0 negatives.
 
 | Metric | Value |
 |---|---|
 | Seen (full fade) precision | 1.00 |
 | Changed-meaning pairs fully faded | 0 of 141 |
 | Changed-meaning recall (kept lit **and** flagged) | 0.82 (115 of 141) |
-| Wire/re-paste recall | 0.95 (18 of 19) |
+| Wire/re-paste recall | 0.98 (50 of 51) |
 | Paraphrase recall | 0.50 (1 of 2, not meaningful) |
 
 The corpus is far smaller than the planned 12 stories and 30 negatives, and the thresholds are the

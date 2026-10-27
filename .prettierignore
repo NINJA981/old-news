@@ -16,3 +16,6 @@ public/fonts
 metrics.json
 scripts/size-baseline.json
 scripts/model-manifest.json
+
+# The landing site is built by another stage with its own tooling.
+site

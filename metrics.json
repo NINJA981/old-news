@@ -1,12 +1,12 @@
 {
-  "measuredAt": "2026-10-27T14:46:57.623Z",
+  "measuredAt": "2026-10-27T16:39:02.104Z",
   "corpus": {
-    "stories": 3,
-    "articles": 9,
-    "labelledParagraphs": 55,
+    "stories": 4,
+    "articles": 12,
+    "labelledParagraphs": 118,
     "changedMeaningPairs": 166,
     "negativesWikinews": 0,
-    "sha256": "98a3a2270b81c662ba6d3073c9c78f22fd1bd0a3d69a456c52c7811360280b66"
+    "sha256": "b890ca2f621e8fcda4cfc16111996dd946514e5997a256621c682ae68e5f55e9"
   },
   "model": {
     "id": "Xenova/all-MiniLM-L6-v2 (q8)",
@@ -24,7 +24,7 @@
   "metrics": {
     "seenPrecision": 1,
     "fadePrecision": 1,
-    "wireRecall": 0.947,
+    "wireRecall": 0.98,
     "paraphraseRecall": 0.5,
     "paraphraseAsFullFade": 0,
     "changedLabelledStillLit": 1,
@@ -35,11 +35,11 @@
     "quietControlsFaded": "25/25"
   },
   "counts": {
-    "newLabelled": 29,
-    "predSeen": 18,
-    "predSeenOk": 18,
-    "wireTotal": 19,
-    "wireHit": 18,
+    "newLabelled": 59,
+    "predSeen": 50,
+    "predSeenOk": 50,
+    "wireTotal": 51,
+    "wireHit": 50,
     "paraTotal": 2,
     "paraHit": 1,
     "firesTotal": 141,

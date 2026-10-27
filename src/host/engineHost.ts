@@ -30,7 +30,13 @@ import type { PreviouslyOnCard } from '../engine/story';
 import { linkStory, previouslyOn } from '../engine/story';
 import { DAY_MS, STORY_WINDOW_DAYS, TTL_DAYS } from '../engine/thresholds';
 import type { Tier } from '../engine/tiers';
-import type { ArticleRecord, DriftRecord, ParagraphRecord, StoryRecord } from '../engine/types';
+import type {
+  ArticleRecord,
+  DriftRecord,
+  ParagraphRecord,
+  StoryRecord,
+  TierCounts,
+} from '../engine/types';
 import { canonicalizeUrl, originOf } from '../engine/url';
 import type { PageMeta } from '../messaging/protocol';
 import type { Db } from '../store/db';
@@ -68,6 +74,47 @@ export interface AnalyseResponse {
   storyId: string | null;
   previouslyOn: PreviouslyOnCard | null;
   timingMs: number;
+}
+
+export interface ArticleSummary {
+  id: string;
+  siteName: string;
+  title: string;
+  url: string;
+  kind: ArticleRecord['kind'];
+  firstReadAt: number;
+  lastReadAt: number;
+  paragraphCount: number;
+  readCount: number;
+  /** Tier counts of the paragraphs read, null for articles remembered before counts existed. */
+  tiers: TierCounts | null;
+}
+
+export interface StoryOverview {
+  id: string;
+  label: string;
+  createdAt: number;
+  updatedAt: number;
+  driftCount: number;
+  articles: ArticleSummary[];
+}
+
+export interface DriftRow {
+  id: string;
+  kind: DriftRecord['kind'];
+  before: string;
+  after: string;
+  context: string;
+  storyId: string | null;
+  storyLabel: string | null;
+  oldSite: string;
+  oldTitle: string;
+  oldUrl: string;
+  oldAt: number;
+  newSite: string;
+  newTitle: string;
+  newUrl: string;
+  newAt: number;
 }
 
 export interface ReadResponse {
@@ -149,7 +196,16 @@ export class EngineHost {
     }
   }
 
-  async analyse(page: PageMeta, paragraphs: readonly InputParagraph[]): Promise<AnalyseResponse> {
+  /**
+   * Matches an article's paragraphs. With `append`, the paragraphs are added to the article's
+   * existing session (live-blog posts, SPEC F3) instead of replacing it: the response lists only
+   * the new paragraphs while `summary` covers everything analysed so far.
+   */
+  async analyse(
+    page: PageMeta,
+    paragraphs: readonly InputParagraph[],
+    opts: { append?: boolean } = {},
+  ): Promise<AnalyseResponse> {
     const started = this.now();
     await this.ready();
     const canonical = canonicalizeUrl(page.canonicalUrl || page.url);
@@ -162,25 +218,80 @@ export class EngineHost {
       hasFeedback: (k) => this.feedback.has(k),
     });
 
-    this.remember({
+    const prior = this.sessions.get(articleId);
+    const merged = opts.append && prior ? prior : undefined;
+    const session: ArticleSession = {
       articleId,
       meta: { ...page, canonicalUrl: canonical },
-      prepared: new Map(prepared.map((p) => [p.ordinal, p])),
-      matches: new Map(matches.map((m) => [m.ordinal, m])),
-      read: this.sessions.get(articleId)?.read ?? new Set(),
-    });
+      prepared: new Map([
+        ...(merged?.prepared ?? []),
+        ...prepared.map((p): [number, PreparedParagraph] => [p.ordinal, p]),
+      ]),
+      matches: new Map([
+        ...(merged?.matches ?? []),
+        ...matches.map((m): [number, ParagraphMatch] => [m.ordinal, m]),
+      ]),
+      read: prior?.read ?? new Set(),
+    };
+    this.remember(session);
 
     const results = await this.withProvenance(prepared, matches);
-    const { storyId, card } = await this.storyFor(articleId, prepared, matches);
+    const { storyId, card } = await this.storyFor(
+      articleId,
+      [...session.prepared.values()],
+      [...session.matches.values()],
+    );
+    if (card) await this.addPageDrift(card, articleId, session);
     return {
       articleId,
       paragraphs: results,
-      summary: summarize(matches),
+      summary: summarize([...session.matches.values()]),
       degraded: !embedded,
       storyId,
       previouslyOn: card,
       timingMs: this.now() - started,
     };
+  }
+
+  /**
+   * Figures that differ on the page being read count as "changed" on the Previously-on card right
+   * away, even before any paragraph is dwelled on. These are not stored (nothing is remembered
+   * until it is read); stored records of the same change are not listed twice.
+   */
+  private async addPageDrift(
+    card: PreviouslyOnCard,
+    articleId: string,
+    session: ArticleSession,
+  ): Promise<void> {
+    const key = (d: { oldParagraphId: string; kind: string; before: string; after: string }) =>
+      `${d.oldParagraphId}|${d.kind}|${d.before}|${d.after}`;
+    const have = new Set(card.changedFigures.map(key));
+    const now = this.now();
+    const found: DriftRecord[] = [];
+    for (const m of session.matches.values()) {
+      const p = session.prepared.get(m.ordinal);
+      if (!p || m.tier !== 'changed' || !m.matchId || !m.matchArticleId) continue;
+      for (const f of m.drift) {
+        const rec: DriftRecord = {
+          id: await sha256Hex(`page|${articleId}|${p.ordinal}|${m.matchId}|${f.kind}|${f.after}`),
+          storyId: card.storyId,
+          newParagraphId: '',
+          oldParagraphId: m.matchId,
+          kind: f.kind,
+          before: f.before,
+          after: f.after,
+          context: driftContext(p.text, f),
+          oldArticleId: m.matchArticleId,
+          newArticleId: articleId,
+          detectedAt: now,
+          expiresAt: now,
+        };
+        if (have.has(key(rec))) continue;
+        have.add(key(rec));
+        found.push(rec);
+      }
+    }
+    card.changedFigures = [...found, ...card.changedFigures];
   }
 
   private async withProvenance(
@@ -342,6 +453,7 @@ export class EngineHost {
       centroid: cvec ?? prev?.centroid ?? null,
       centroidScale: 0,
       storyId: prev?.storyId ?? null,
+      tiers: tierCounts([...session.read].map((o) => session.matches.get(o)?.tier ?? 'new')),
       expiresAt,
     };
 
@@ -520,6 +632,70 @@ export class EngineHost {
     return repo.listStories(this.db);
   }
 
+  /** Stories with their articles and drift counts, newest first (app page, SPEC F15). */
+  async storiesOverview(): Promise<StoryOverview[]> {
+    const stories = (await repo.listStories(this.db)).sort((a, b) => b.updatedAt - a.updatedAt);
+    const drift = await repo.listDrift(this.db);
+    const out: StoryOverview[] = [];
+    for (const s of stories) {
+      const articles = await repo.getArticles(this.db, s.articleIds);
+      out.push({
+        id: s.id,
+        label: s.label,
+        createdAt: s.createdAt,
+        updatedAt: s.updatedAt,
+        driftCount: drift.filter((d) => d.storyId === s.id).length,
+        articles: articles
+          .sort((a, b) => b.lastReadAt - a.lastReadAt)
+          .map((a) => ({
+            id: a.id,
+            siteName: a.siteName,
+            title: a.title,
+            url: a.url,
+            kind: a.kind,
+            firstReadAt: a.firstReadAt,
+            lastReadAt: a.lastReadAt,
+            paragraphCount: a.paragraphCount,
+            readCount: a.readCount,
+            tiers: a.tiers ?? null,
+          })),
+      });
+    }
+    return out;
+  }
+
+  /** Drift records joined with the two sources, newest first (SPEC F15). */
+  async driftOverview(storyId?: string): Promise<DriftRow[]> {
+    const records = await repo.listDrift(this.db, storyId);
+    const articleIds = [...new Set(records.flatMap((d) => [d.oldArticleId, d.newArticleId]))];
+    const articles = new Map((await repo.getArticles(this.db, articleIds)).map((a) => [a.id, a]));
+    const stories = new Map((await repo.listStories(this.db)).map((s) => [s.id, s.label]));
+    const rows: DriftRow[] = [];
+    for (const d of records) {
+      const oldPara = await repo.getParagraph(this.db, d.oldParagraphId);
+      const oldA = articles.get(d.oldArticleId);
+      const newA = articles.get(d.newArticleId);
+      rows.push({
+        id: d.id,
+        kind: d.kind,
+        before: d.before,
+        after: d.after,
+        context: d.context,
+        storyId: d.storyId,
+        storyLabel: (d.storyId ? stories.get(d.storyId) : undefined) ?? null,
+        oldSite: oldA?.siteName ?? 'an earlier article',
+        oldTitle: oldA?.title ?? '',
+        oldUrl: oldA?.url ?? '',
+        oldAt: oldPara?.readAt ?? oldA?.lastReadAt ?? d.detectedAt,
+        newSite: newA?.siteName ?? 'this article',
+        newTitle: newA?.title ?? '',
+        newUrl: newA?.url ?? '',
+        newAt: d.detectedAt,
+      });
+    }
+    return rows;
+  }
+
   async receipt(): Promise<WeeklyReceipt | null> {
     return weeklyReceipt(await repo.listDaily(this.db), this.now());
   }
@@ -529,6 +705,12 @@ export class EngineHost {
     this.embedder = embedder;
     this.embedderFailed = false;
   }
+}
+
+function tierCounts(tiers: readonly Tier[]): TierCounts {
+  const out: TierCounts = { new: 0, seen: 0, similar: 0, changed: 0 };
+  for (const t of tiers) out[t]++;
+  return out;
 }
 
 /** At most 60 characters of context around the changed token (SPEC §7 drift.context). */
