@@ -6,7 +6,7 @@
 
 **Content rules:**
 
-- **Every number on this page is measured or comes from the reader's own data.** Corpus metrics, package size and latency are written as `{measured: …}` placeholders. Stage 3b or Stage 6 fills them from `metrics.json` and the build report. If a value isn't available, the line is cut; it is never estimated.
+- **Every number on this page is measured or comes from the reader's own data.** Corpus metrics, package size and latency are written as `{measured: …}` placeholders. Stage 3b or Stage 6 fills them from `metrics.json` and the build report. If a value isn't available, the line is cut; it is never estimated. (This file is the brief, so the placeholders stay. The shipped page reads every number from `site/src/generated/measured.json`, and `site/tests/unit/freshness.test.ts` fails when that file drifts from `metrics.json` or the size baseline.)
 - No testimonials, star counts or "trusted by" rows. There are none yet.
 - Fixture articles use invented outlets ("Fenwick Wire", "Calder Courier", "Morrow Daily") and an invented town ("Port Alder"), labelled "Fixture story".
 
@@ -73,7 +73,7 @@ Each is a 4–6 s loop with one line of copy. No 3D.
 
 ### 3a: Fact drift (graphite band)
 
-- **Loop:** a day-2 update. One paragraph stays lit; "14" glows; the chip rises: "12 → 14 · Calder Courier said 12, 14 min ago".
+- **Loop:** a day-2 update. One paragraph stays lit; "14" glows; the chip rises: "12 → 14 · Calder Courier said 12, 16 min ago".
 - **Heading:** The one number that changed.
 - **Body:** When a paragraph matches one you've read but a number, date, name or outcome is different ("fled" became "arrested"), Old News refuses to fade it and marks what changed. Everything it compares stays on your machine.
 - **Proof line:** the corpus metric, written as `{measured: changed-meaning recall}` of changed paragraphs caught, and `{measured: 0}` changed paragraphs fully faded, in {measured: N} test pairs. Links to `metrics.json` in the repo.

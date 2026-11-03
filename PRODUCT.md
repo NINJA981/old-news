@@ -20,7 +20,7 @@ The council was explicit that this audience is real but narrow. Mobile Chrome ha
 
 ## Product Purpose
 
-Old News remembers every paragraph you have read, across sites, on your own machine. On the next article about the same story, paragraphs you already read fade and are tagged with where you read them. New paragraphs stay in full ink. A paragraph that matches one you read but carries a different number, date, name or outcome stays lit and glows amber ("12 → 14, Calder Courier said 12, 14 min ago").
+Old News remembers every paragraph you have read, across sites, on your own machine. On the next article about the same story, paragraphs you already read fade and are tagged with where you read them. New paragraphs stay in full ink. A paragraph that matches one you read but carries a different number, date, name or outcome stays lit and glows amber ("12 → 14, Calder Courier said 12, 16 min ago").
 
 Success is the morning moment: the third tab on a story reads "Only 4 of 23 paragraphs are new to you", and the reader trusts that nothing load-bearing was faded.
 

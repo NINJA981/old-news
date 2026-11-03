@@ -37,7 +37,7 @@ Readers scroll 1,500 words to find the 2 paragraphs that are new to them, and th
 
 Old News works passively, so there is nothing to start.
 
-1. **Morning tabs.** By the second article on a story, the page is mostly greyed out with "Fenwick Wire · 14 min ago" tags, and the toolbar badge reads `4`. The pill reads "Only 4 of 23 paragraphs are new to you."
+1. **Morning tabs.** By the second article on a story, the page is mostly greyed out with "Fenwick Wire · 30 min ago" tags, and the toolbar badge reads `4`. The pill reads "Only 4 of 23 paragraphs are new to you."
 2. **Next-day return.** A "Previously on this story" card at the top of the article lists what you read and which figures changed since.
 3. **Day 1 (cold start).** At install, Old News offers to remember the article tabs already open, so the first fade can happen within minutes.
 4. **Weekly.** A reading receipt: "You read 41,200 words this week. 63% was stuff you'd already read." This is computed only from the reader's own local counters, and the numbers here are illustrative copy, not data.
@@ -54,8 +54,8 @@ Old News works passively, so there is nothing to start.
 | F6 | **Three-tier matching** | **Seen**: a MinHash/shingle match (wire copy, re-pasted background) gets the full fade. **Similar**: an embedding-only match gets a lighter fade, labelled "similar to". **Changed**: a match whose load-bearing tokens differ stays lit and glows amber. |
 | F7 | **Fact-drift guard** | Fires on any number, date, money or named-entity difference, or any negation, modal or outcome-verb difference (arrested / fled / charged / released / died / injured / denied / confirmed / resigned / delayed / cancelled …). A guarded paragraph is **never faded**. |
 | F8 | **Fade, never hide** | Faded text lands at a contrast floor: 4.6:1 for seen, 7:1 for similar, against the page's own background. Hover, focus or J/K restores full ink. Nothing is removed from the page. |
-| F9 | **Provenance tag + hover card** | Tag: "Fenwick Wire · 6 min ago" (or "Similar to Calder Courier · yesterday"). The hover card shows the outlet, article title, when you read it, the 140-character snippet, **Open original**, and **Not old news** (local feedback). |
-| F10 | **Drift chip** | Amber chip on the changed token: "12 → 14 · Calder Courier said 12, 14 min ago". The chip is keyboard-reachable. |
+| F9 | **Provenance tag + hover card** | Tag: "Fenwick Wire · 30 min ago" (or "Similar to Calder Courier · yesterday"). The hover card shows the outlet, article title, when you read it, the 140-character snippet, **Open original**, and **Not old news** (local feedback). |
+| F10 | **Drift chip** | Amber chip on the changed token: "12 → 14 · Calder Courier said 12, 16 min ago". The chip is keyboard-reachable. |
 | F11 | **Badge + pill** | Toolbar badge shows the new-paragraph count (≤ 4 characters). The in-page pill reads "Only 4 of 23 paragraphs are new to you". |
 | F12 | **Keyboard** | **N** folds old paragraphs to hairlines (and unfolds them). **J/K** jump between new paragraphs. Active only when no input is focused and only on pages Old News acted on. Can be turned off. |
 | F13 | **Install-time ingest** | The onboarding page lists open tabs that look like articles, all pre-checked, with a "Remember these 6 tabs" action. It reads only the already-loaded DOM of those tabs and never fetches anything. |
@@ -285,8 +285,8 @@ Recorded on the extension playground (fixture story, invented outlets), at 1440�
 |---|---|---|
 | 0.0–1.5 | **Tab 1 read** | "Fenwick Wire" article, scrolled at reading pace. The toolbar icon is plain. Lower third: "Tab 1 of 3: read normally." |
 | 1.5–2.5 | **Tab switch** | Ctrl+3 to the third tab, the "Morrow Daily" version. The page is in full ink for one beat (≈ 300 ms). |
-| 2.5–2.9 | **The dissolve** | Top to bottom in ≈ 400 ms, 19 paragraphs drop to pencil grey, each with a "Fenwick Wire · 6 min ago" tag fading in at its right edge. 4 stay in full ink. The pill counts down 23 → 4. |
-| 2.9–4.4 | **Drift pulse** | One sentence pulses amber twice. The chip "12 → 14 · Calder Courier said 12, 14 min ago" rises above "14". The camera crops in 1.4×. |
+| 2.5–2.9 | **The dissolve** | Top to bottom in ≈ 400 ms, 19 paragraphs drop to pencil grey, each with a "Fenwick Wire · 30 min ago" tag fading in at its right edge. 4 stay in full ink. The pill counts down 23 → 4. |
+| 2.9–4.4 | **Drift pulse** | One sentence pulses amber twice. The chip "12 → 14 · Calder Courier said 12, 16 min ago" rises above "14". The camera crops in 1.4×. |
 | 4.4–5.6 | **The pill** | Hold on "Only 4 of 23 paragraphs are new to you". Badge: `4`. |
 | 5.6–6.8 | **Proof** | Pan to the DevTools Network panel: **0 requests**. The privacy meter shows "0 requests sent". |
 | 6.8–8.4 | **Fold** | Press N. The 19 old paragraphs collapse to hairlines instantly, leaving the 4 new paragraphs and the amber one. Press J twice: focus jumps between them. |

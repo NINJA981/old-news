@@ -19,13 +19,13 @@ export function SampleSheet() {
             towns, and the blaze took 6 hours to bring under control.
           </p>
           <span className="mt-1 mb-4 inline-block rounded-xs border border-border bg-surface px-1.5 font-ui text-micro text-fg-muted">
-            Fenwick Wire · 6 min ago
+            Fenwick Wire · 16 min ago
           </span>
           <p className="relative mt-2">
             <span className="mt-0 mb-1 block">
               <span className="inline-block rounded-xs bg-drift-soft px-2 py-0.5 font-ui text-caption text-fg shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--drift)_35%,transparent)]">
                 <b className="font-semibold text-drift tnum">Twelve → 14</b> · Fenwick Wire said
-                Twelve, 14 min ago
+                Twelve, 16 min ago
               </span>
             </span>
             <mark className="rounded-[2px] bg-[var(--drift-mark)] px-0.5 text-inherit underline decoration-[color:var(--drift)] decoration-1 underline-offset-2 [text-decoration-color:color-mix(in_srgb,var(--drift)_60%,transparent)]">

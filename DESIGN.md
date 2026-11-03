@@ -667,7 +667,7 @@ Z-index: our pages follow bible §5.4. The overlay host is `2147483647` inside a
 
 **`provenance-tag`.**
 
-- Content: `micro` text, "Fenwick Wire · 6 min ago" or "Similar to Calder Courier · yesterday". This is the one sanctioned middle-dot string in the system, because picks.json specifies it.
+- Content: `micro` text, "Fenwick Wire · 30 min ago" or "Similar to Calder Courier · yesterday". This is the one sanctioned middle-dot string in the system, because picks.json specifies it.
 - Style: `surface` at 96% opacity, 1 px `border`, radius 4, padding 2 × 6, `text-muted`, `e-overlay` without the drop layers (ring only).
 - Placement, first that fits:
   1. Right gutter: ≥ 140 px between the paragraph's right edge and the container or viewport edge. Top-aligned to the first line box.
@@ -706,7 +706,7 @@ Z-index: our pages follow bible §5.4. The overlay host is `2147483647` inside a
   3. below the token, when it is on the last line and the gap below holds the chip;
   4. hover-only: the highlight carries the change at rest, and the chip appears while the paragraph or the chip has hover or focus (it stays in the Tab order).
 - Tags, dots and chips that would sit under the fixed pill or tray fade out (opacity only) while they are covered.
-- Chip text: `12 → 14` (`caption` 600 tnum, `drift`), then " · Calder Courier said 12, 14 min ago" (`caption` 450, `text` at 90%).
+- Chip text: `12 → 14` (`caption` 600 tnum, `drift`), then " · Calder Courier said 12, 16 min ago" (`caption` 450, `text` at 90%).
 - For non-numeric kinds:
   - "fled → arrested · Fenwick Wire said fled, yesterday"
   - "will → will not · …"
