@@ -77,6 +77,13 @@ function CountBlock({ r }: { r: Result }) {
             All {r.total} paragraphs are new to you.
           </span>
         </p>
+      ) : lit === 0 ? (
+        <p className="flex flex-col gap-1">
+          <span className="text-count text-fg">Nothing new here.</span>
+          <span className="text-ui text-fg-muted">
+            All <span className="tnum">{r.total}</span> paragraphs are old news.
+          </span>
+        </p>
       ) : (
         <p className="flex items-baseline gap-2">
           <span className="text-count text-fg tnum">

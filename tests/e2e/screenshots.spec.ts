@@ -1,5 +1,5 @@
 /**
- * Screenshot pass (DESIGN_BIBLE §9.1): every surface at 375, 768 and 1440 in light and dark, the
+ * Screenshot pass: every surface at 375, 768 and 1440 in light and dark, the
  * popup at its real size in every state, the overlay on light, dark and tinted pages, the dissolve
  * as a frame strip, and reduced motion. Gated by OLD_NEWS_SHOTS=1 (`pnpm screenshots`); the PNGs
  * land in docs/screenshots/ and are looked at, not just generated.
@@ -176,6 +176,20 @@ test('popup states at real size', async ({ context, worker, siteUrl, openExtensi
         new: 23,
         seen: 0,
         similar: 0,
+        changed: 0,
+        degraded: false,
+        storyId: null,
+        story: null,
+      },
+    ],
+    [
+      'nothing-new',
+      {
+        status: 'result',
+        total: 23,
+        new: 0,
+        seen: 21,
+        similar: 2,
         changed: 0,
         degraded: false,
         storyId: null,
