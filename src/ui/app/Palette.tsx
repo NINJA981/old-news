@@ -76,10 +76,10 @@ export function Palette({
         onValueChange={setSearch}
         placeholder={
           page === 'root'
-            ? 'Search commands'
+            ? 'Search commands…'
             : page === 'pause'
-              ? 'Pick a site to pause'
-              : 'Pick a site to resume'
+              ? 'Pick a site to pause…'
+              : 'Pick a site to resume…'
         }
         className="h-12 w-full border-0 border-b border-border bg-transparent px-4 text-lead text-fg outline-none placeholder:text-fg-subtle"
         style={{ borderRadius: 0, height: 48, boxShadow: 'none' }}

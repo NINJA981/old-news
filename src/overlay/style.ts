@@ -76,7 +76,7 @@ letter-spacing:0;cursor:pointer;transition:background-color 100ms var(--ease),co
 @keyframes swap{from{opacity:0}to{opacity:1}}
 
 .pill{position:fixed;z-index:6;right:16px;bottom:16px;display:flex;flex-wrap:wrap;align-items:center;column-gap:8px;min-height:36px;
-max-width:min(520px,calc(100vw - 32px));padding:0 6px 0 12px;border-radius:18px;background:var(--surface);box-shadow:var(--shadow);
+max-width:min(520px,calc(100vw - 32px));padding:0 6px 0 12px;border-radius:9999px;background:var(--surface);box-shadow:var(--shadow);
 font:450 13px/20px var(--ui);letter-spacing:0;color:var(--text);pointer-events:auto;opacity:0;transform:translateY(8px)}
 .pill.on{opacity:1;transform:none}
 .pill[hidden]{display:none}

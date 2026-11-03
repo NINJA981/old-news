@@ -161,7 +161,9 @@ export function Stories() {
               type="search"
               value={q}
               onChange={(e) => setQ(e.target.value)}
-              placeholder="Search stories"
+              placeholder="Search stories…"
+              autoComplete="off"
+              spellCheck={false}
               aria-label="Search stories"
               className="w-[220px] !pl-8 text-ui"
             />
