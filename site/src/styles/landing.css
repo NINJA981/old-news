@@ -35,7 +35,7 @@ body {
     padding-block: var(--s-24);
   }
 }
-/* Below the fold: skip style, layout and paint until a band nears the viewport (LCP budget, bible 11.3). */
+/* Below the fold: skip style, layout and paint until a band nears the viewport (LCP budget). */
 .band:not(.hero) {
   content-visibility: auto;
   contain-intrinsic-size: auto 900px;

@@ -9,7 +9,7 @@ import { watchChips } from '../shared/chips';
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
 const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory;
-/** Motion tiers (bible 11.4, CSS only): tier 0 = no autoplay (reduced motion, Save-Data, a phone with 2 GB or less). */
+/** Motion tiers (CSS only): tier 0 = no autoplay (reduced motion, Save-Data, a phone with 2 GB or less). */
 const tier0 = reduced || conn?.saveData === true || (memory !== undefined && memory <= 2);
 
 const $ = <T extends HTMLElement>(sel: string): T | null => document.querySelector<T>(sel);

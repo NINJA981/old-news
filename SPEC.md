@@ -1,6 +1,6 @@
 # Old News: product specification (v0.1)
 
-**Status:** Stage 1 (architect), 2026-10-20. **Scope authority:** `_studio/picks.json` → `old-news` (`refined_scope`, `signature_moment`, `risks`). Where this document adds emphasis (the weakness fix in §5), picks.json wins on conflict.
+**Status:** written 2026-10-20 before the build; kept current. Where a criterion is not met, README "Limitations" and HANDOFF.md say so.
 
 **One line:** a browser extension that remembers every paragraph you've read, across sites, and on the next article about the same story fades what you already know, names where you read it, and lights up only what's new, including the one number that changed. On-device, 0 network requests.
 
@@ -31,7 +31,7 @@ Readers scroll 1,500 words to find the 2 paragraphs that are new to them, and th
 | **Story follower** (desktop) | Returns to a developing story on day 2 and day 3 | "What changed since I last read about this?" |
 | **Long-form researcher** (desktop) | Health, purchase or how-to research across several blog posts that repeat each other | Skip the repeated background and find the distinct advice |
 
-**Honest limits** (from the council): this is a desktop minority habit. Mobile Chrome has no extensions. Most casual readers read one source per story. v0.1 targets the people above and does not pretend otherwise.
+**Honest limits:** this is a desktop minority habit. Mobile Chrome has no extensions. Most casual readers read one source per story. v0.1 targets the people above and does not pretend otherwise.
 
 ## 3. Daily trigger
 
@@ -66,7 +66,7 @@ Old News works passively, so there is nothing to start.
 | F18 | **Playground** | Extension page that runs 3 fixture articles (one invented story, three invented outlets) through the same engine. The landing site embeds the same engine with build-time-precomputed fixture embeddings (§9). |
 | F19 | **CI fixture corpus** | Publishes **fade precision** and **changed-meaning recall** (plus wire and paraphrase recall) to `metrics.json` and the README on every CI run. |
 
-## 5. Weakness fix (council scores: utility 5, feasibility 6)
+## 5. Weakness fix (utility and feasibility were the weakest scores in review)
 
 ### 5.1 Raising utility
 
@@ -266,7 +266,7 @@ Test levels are **U** (Vitest unit), **F** (fixture/corpus), **E** (Playwright e
 - AC19.1 (CI): `pnpm eval` writes `metrics.json` (precision and recall per tier, changed-meaning recall, corpus size, model hash). CI fails if full-fade precision < 0.98 or any changed-meaning pair is fully faded.
 
 **Design**
-- AC-D1 (M/E): every surface follows DESIGN.md tokens. The bible §9 rubric average is ≥ 9.0 with no criterion < 8.
+- AC-D1 (M/E): every surface follows DESIGN.md tokens. The ten-criterion design rubric (identity, typography, colour, layout, hierarchy, component craft, states and a11y, motion, system states, responsive) averages ≥ 9.0 with no criterion < 8.
 
 ## 11. Fixture corpus (summary; details in the ADR §8)
 
@@ -294,7 +294,7 @@ Recorded on the extension playground (fixture story, invented outlets), at 1440�
 
 The same timeline drives the deterministic capture for the README GIF and LinkedIn MP4 (DESIGN.md §Landing).
 
-## 13. Risks (from picks.json, with mitigations)
+## 13. Risks (from the product brief, with mitigations)
 
 | Risk | Mitigation |
 |---|---|

@@ -1,5 +1,5 @@
 /**
- * Reports and gates the built site against the budgets (bible 8.2 and 11.3, DESIGN.md landing plan):
+ * Reports and gates the built site against the budgets (DESIGN.md landing plan):
  *   landing initial JS  <= 120 KB gzipped, no 3D chunk (0 KB)
  *   web app first route <= 170 KB gzipped JS
  * "Initial" means the entry chunk plus the static imports it needs, read from the Vite manifest.

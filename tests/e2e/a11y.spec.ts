@@ -1,5 +1,5 @@
 /**
- * Accessibility pass (DESIGN_BIBLE §9.1 item 6): axe-core on every surface in light and dark, plus
+ * Accessibility pass: axe-core on every surface in light and dark, plus
  * the overlay on a fixture article (the e2e build opens the shadow root so axe can see inside).
  * Rules: WCAG 2.0/2.1 A and AA, including colour contrast. Zero violations is the gate.
  */

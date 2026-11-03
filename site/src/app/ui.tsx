@@ -120,7 +120,7 @@ export function Notice({
   );
 }
 
-/** Skeleton rows that mirror the reading column (bible: skeletons mirror final content). */
+/** Skeleton rows that mirror the reading column (skeletons mirror final content). */
 export function ReaderSkeleton({ rows = 5 }: { rows?: number }) {
   return (
     <div className="on-sheet reader skeleton" aria-hidden="true">

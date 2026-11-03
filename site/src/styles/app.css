@@ -1,6 +1,6 @@
 /*
  * Web app shell. Mobile first at 375, then a 56 px icon rail at 768 and a 240 px sidebar at 1440
- * (DESIGN.md "Surface 3: app page", bible 8.1). Role tokens only; touch targets are 44 px.
+ * (DESIGN.md "Surface 3: app page"). Role tokens only; touch targets are 44 px.
  */
 
 :root {

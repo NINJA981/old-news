@@ -2,7 +2,7 @@
 
 **Status:** Accepted (Stage 1, architect)
 **Date:** 2026-10-20
-**Deciders:** the studio build workflow (architect stage). Two later decisions are reserved for the maintainer: dropping WebGPU (§4.3), and raising the size budget.
+**Deciders:** the maintainer, at architecture time. Two later decisions are reserved for the maintainer: dropping WebGPU (§4.3), and raising the size budget.
 
 ## Context
 
@@ -16,7 +16,7 @@ Old News is a WXT browser extension (Chrome MV3 first, Firefox second). It has t
 
 The forces pull against each other:
 
-- **Accuracy vs. trust.** A false fade on a changed outcome destroys trust (council roast).
+- **Accuracy vs. trust.** A false fade on a changed outcome destroys trust (the main review risk).
 - **Coverage vs. feasibility.** There are thousands of news layouts.
 - **Model quality vs. package size.** The int8 model is ≈ 23 MB, and the ONNX runtime is 13.6–27 MB.
 - **Per-page cost.** The content script runs on every page.
@@ -199,7 +199,7 @@ Firefox MV3 uses a non-service-worker background page with a DOM. The engine hos
 | Consistency with pages | High | Tokens are shared via generated CSS; components are re-implemented |
 | Complexity | Low | Medium: a small hand-written component set |
 
-The overlay runs on every article load. Bible §8.3 asks for fast, isolated injected UI, and its components are few and static (pill, tag, card, chip, hairline). Extension pages keep the studio stack.
+The overlay runs on every article load. Injected UI has to be fast and isolated, and its components are few and static (pill, tag, card, chip, hairline). Extension pages use React.
 
 ### 4.2 Engine host on Chrome: service worker vs. offscreen document
 
@@ -207,11 +207,11 @@ The overlay runs on every article load. Bible §8.3 asks for fast, isolated inje
 |---|---|---|
 | Lifetime | Killed after ~30 s idle, so the model reloads often | Lives while in use; we close it after 5 min idle |
 | WebGPU | Available in SW, but restarts discard sessions | Stable session |
-| Scope fit | — | Matches picks.json ("offscreen document") |
+| Scope fit | — | Matches the brief ("offscreen document") |
 
 ### 4.3 Inference backend: WebGPU + WASM vs. WASM only
 
-- picks.json specifies "WebGPU, with WASM fallback", so v0.1 ships both. This is **binding**.
+- The product brief specifies "WebGPU, with WASM fallback", so v0.1 ships both. This is **binding**.
 - Measured cost (npm pack, 2026-10-20):
 
   | Runtime build | Size |

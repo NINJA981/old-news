@@ -121,7 +121,7 @@ unregistered and the caches cleared first), production build over `vite preview`
 
 | Item                                                                                                            | Result                                                                                               | Budget                     | Verdict    |
 | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------- | ---------- |
-| Landing LCP                                                                                                     | 0.57 to 0.60 s over three traces; the element is the hero lead paragraph (`p.lead`)                  | <= 2.0 s (bible 11.3)      | met        |
+| Landing LCP                                                                                                     | 0.57 to 0.60 s over three traces; the element is the hero lead paragraph (`p.lead`)                  | <= 2.0 s      | met        |
 | Landing CLS                                                                                                     | 0.00                                                                                                 | 0                          | met        |
 | Landing forced reflow                                                                                           | 77 ms on the first trace (chip alignment); none after moving the reads into ResizeObserver callbacks |                            | fixed      |
 | Web app LCP (cold)                                                                                              | 0.88 s                                                                                               | <= 2.0 s                   | met        |
@@ -132,13 +132,13 @@ unregistered and the caches cleared first), production build over `vite preview`
 | Lighthouse: landing mobile and desktop, app mobile (empty and result state): Accessibility, Best Practices, SEO | 100 each                                                                                             |                            | met        |
 | Lighthouse Agentic Browsing                                                                                     | 75 (67 in snapshot mode): only `ard-schema` (no `ai-catalog.json`)                                   | not a requirement          | left as is |
 
-The bible asks for "the H1 or the poster" as the LCP element. Here it is the lead paragraph directly
+The plan wanted the H1 or the poster as the LCP element. Here it is the lead paragraph directly
 under the H1, because it has more text area at 375 px. It is static HTML painted in the same first frame
 as the H1 and the sheet stack's poster frame, so it waits on no script or image.
 
 ## Decisions worth knowing
 
-- **No WebGL.** The bible allows 3D only within the 11.3 budget and requires GPU tiers and fallbacks. The
+- **No WebGL.** 3D was allowed only within the LCP budget, with GPU tiers and fallbacks. The
   hero uses CSS `perspective` and `translateZ` instead, so there is nothing to tier or fall back from.
   Motion tier 0 (reduced motion, Save-Data, 2 GB or less of device memory) skips autoplay and shows the
   final frame with a Play button.

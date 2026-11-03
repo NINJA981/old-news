@@ -2,7 +2,7 @@
 
 **Surface:** `site/` (Stage 3b). **Mode:** Persuade. The visitor should understand in one viewport what Old News does, believe it is private, and either add it to Chrome or try the playground.
 
-**Structure:** the 5 beats from 3D_INSPIRATION §3.1, in ≤ 7 viewports at 1440 × 900. Visual rules come from `DESIGN.md` (landing components and the CSS-only immersive plan).
+**Structure:** five beats, in ≤ 7 viewports at 1440 × 900. Visual rules come from `DESIGN.md` (landing components and the CSS-only immersive plan).
 
 **Content rules:**
 
@@ -94,7 +94,7 @@ Each is a 4–6 s loop with one line of copy. No 3D.
 
 An inline SVG diagram drawn with 1 px `border-strong` strokes. All labels are DOM text. The diagram shows: *article page → paragraphs → [ fingerprints (MinHash) · meaning (MiniLM, on-device) · fact guard ] → IndexedDB on your computer*. A crossed-out cloud with the label "Nothing leaves this box" sits outside the boundary.
 
-Told with the 3D_INSPIRATION §3.7 template, with a number in each step:
+Told in three steps, with a number in each step:
 
 1. **The decision.** Remember paragraphs, not pages, and never send them anywhere.
 2. **The naive version.** One similarity score fades "police said the suspect fled" when the new article says "was arrested". The two sentences are near-identical to an embedding model.
@@ -162,7 +162,7 @@ The box ends with a **Forget everything** caption that explains the one-click wi
    - Readability (Apache-2.0)
    - Wikinews fixtures (CC BY 2.5)
 
-## LinkedIn hook (from picks.json, with "a browser" corrected to "a browser extension")
+## LinkedIn hook
 
 > I read three articles on the same story this morning. 19 of the 23 paragraphs in the third one were things I'd already read. So I built a browser extension that greys them out and highlights the one number that changed.
 

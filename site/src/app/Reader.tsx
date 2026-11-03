@@ -49,7 +49,7 @@ export function ArticleReader({
     return root ? watchChips(root) : undefined;
   }, [html]);
 
-  // The dissolve, once, the first time a matched article is shown (bible P7: rationed).
+  // The dissolve, once, the first time a matched article is shown (rationed).
   useLayoutEffect(() => {
     const root = rootRef.current;
     if (!root) return;

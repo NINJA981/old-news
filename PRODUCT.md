@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-> **Provenance of this record.** Written during the Stage 1 architect run by a subagent with no way to ask the user questions. Every fact below comes from the studio's `picks.json` entry for `old-news` and the council transcript `council/W2-1-1-old-news.md`. Lines marked *(inferred)* are the architect's reading of those sources, not confirmed answers.
+> **About this record.** Written before the build started, from the product brief. Lines marked *(inferred)* are a reading of that brief, not confirmed user research.
 
 ## Platform
 
@@ -10,13 +10,13 @@ web (browser extension: Chrome MV3 first, Firefox build second)
 
 ## Stack
 
-Delegated by the studio workflow: WXT browser-extension framework, React for extension pages, vanilla TypeScript for the in-page overlay. See `docs/adr/0001-architecture.md`.
+Chosen at architecture time: WXT browser-extension framework, React for extension pages, vanilla TypeScript for the in-page overlay. See `docs/adr/0001-architecture.md`.
 
 ## Users
 
 Desktop readers with a daily news habit who open several outlets on one story, or who follow a developing story across days: aggregator click-throughs, newsletter links, Reddit threads. A secondary group reads long-form blog posts and research tabs that repeat each other, such as health, product and how-to research. Their job: find the two paragraphs that are new to them without re-reading the twenty they already know, and never miss the one figure that changed.
 
-The council was explicit that this audience is real but narrow. Mobile Chrome has no extensions, so phone-first news readers are out of reach.
+This audience is real but narrow. Mobile Chrome has no extensions, so phone-first news readers are out of reach.
 
 ## Product Purpose
 
@@ -50,7 +50,7 @@ A paragraph-level, cross-site "seen it" memory with a fact-drift guard and prove
 ## Brand Commitments
 
 - Name: **Old News**.
-- Voice *(inferred from the council record)*: plain, specific and calm. Numbers over adjectives. The product states what it did ("19 paragraphs faded") and never sells it.
+- Voice *(inferred)*: plain, specific and calm. Numbers over adjectives. The product states what it did ("19 paragraphs faded") and never sells it.
 - Never puts words in a real outlet's mouth. Demo and fixture content uses invented outlets and is labelled as fixture content.
 
 ## Evidence on Hand

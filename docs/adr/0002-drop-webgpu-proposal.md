@@ -1,6 +1,6 @@
 # ADR-0002 (PROPOSAL): drop the WebGPU backend, ship WASM only
 
-**Status:** Proposed. **Not applied.** picks.json names "WebGPU, with WASM fallback", so changing it
+**Status:** Proposed. **Not applied.** The product brief names "WebGPU, with WASM fallback", so changing it
 needs maintainer sign-off (ADR-0001 §4.3). Nothing in the code has been removed.
 
 ## Context

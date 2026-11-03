@@ -392,7 +392,7 @@ components:
 
 # Old News: design system
 
-> Assigned direction **D2 OXIDE** (verdigris on warm graphite, dark-first) and pairing **T4** (Newsreader + Hanken Grotesk). These are fixed by the studio so the five projects stay distinct. The brand blend is **notion + apple + claude (radius only)**, per DESIGN_BIBLE §10. Every value below is a token; components consume role tokens only.
+> Assigned direction **D2 OXIDE** (verdigris on warm graphite, dark-first) and pairing **T4** (Newsreader + Hanken Grotesk). They were chosen so this project stays visually distinct from its sibling projects. The brand blend is **notion + apple + claude (radius only)**. Every value below is a token; components consume role tokens only.
 
 ## Overview
 
@@ -420,7 +420,7 @@ Old News has two homes, and the design is built around the difference.
 - **Rectangular sober geometry** with the claude-derived radius grammar of 4 / 8 / 12 / 16. CTAs are rectangles (8 px). Only the in-page status pill is a capsule, because it is a status, not an action.
 - **Elevation from surface steps and hairlines** on our pages. Shadows only on things that float over third-party content.
 
-### Blend notes (bible §10.2: borrow mechanisms, not surfaces)
+### Blend notes (borrow mechanisms, not surfaces)
 
 | From | We took | We rejected | Our version differs by |
 |---|---|---|---|
@@ -428,10 +428,10 @@ Old News has two homes, and the design is built around the difference.
 | **apple** | A single accent for everything interactive. Reading pace from a larger body (Apple 17 px → our reading column 18/29 Newsreader). Press feedback by scale. **Exactly one shadow philosophy**: shadow only where an object floats over something it doesn't own. Colour change as section divider on the landing page (graphite band ↔ paper band). | Pill CTAs, SF Pro, Action Blue, frosted-glass sub-nav, photography-first tiles, and weight 300 | Our accent is verdigris (ΔE_OK 0.152 from Apple blue). Press scale is 0.97 (0.95 only on 24 px icon buttons). The floating-shadow rule is applied to the in-page overlay, not product photos. |
 | **claude** (radius only) | The hierarchical radius grammar: 4 for tags, badges and keycaps; 8 for buttons, inputs and chips-as-controls; 12 for cards, popovers and the hover card; 16 for the tray, dialogs and hero containers. | Everything else: cream canvas, coral accent, serif-plus-coral pairing, spike mark, illustrations | Our canvas is warm graphite and our accent is verdigris. The serif is used as reading type, not as a brand flourish. |
 
-**Deviation from D2 recorded (bible: "a project may deviate only by writing down the reason"):**
+**Deviation from D2 recorded (a deviation is allowed only with its reason written down):**
 
 - D2's default radius personality is *Sharp* (2/3/4/6). The assigned blend explicitly takes claude's radius grammar, and Old News is a calm consumer reading tool (archetype A2/A9), not a dev tool. So the radius scale is **4 / 8 / 12 / 16**.
-- Distinctness check across the studio: no other project uses this exact scale *together with* rect CTAs and a dark default.
+- Distinctness check across the sibling projects: no other project uses this exact scale *together with* rect CTAs and a dark default.
 
 ## Colors
 
@@ -485,7 +485,7 @@ All values were computed from OKLCH to sRGB hex and checked with culori 4.0.2 an
 | `success` / `danger` / `info` | `oklch(0.52 0.12 150)` / `oklch(0.54 0.19 27)` / `oklch(0.52 0.115 240)` | `#287c42` / `#c52c2a` / `#0d70a4` | 4.80 / 5.17 / 5.03 |
 | `danger-soft` | `oklch(0.95 0.026 25)` | `#ffe8e6` | — |
 
-### Brand-distance check (bible §4.4, ΔE_OK ≥ 0.06)
+### Brand-distance check (ΔE_OK ≥ 0.06 from well-known brands)
 
 | Colour | Hex | Nearest brand | ΔE_OK |
 |---|---|---|---|
@@ -494,7 +494,7 @@ All values were computed from OKLCH to sRGB hex and checked with culori 4.0.2 an
 | drift dark | `#efbe72` | PostHog | 0.074 |
 | drift light | `#8d5406` | Oura gold | 0.110 |
 
-The bible's stock warning-dark `oklch(0.82 0.13 80)` measured **0.054** from PostHog `#f7a501`, so drift-dark was moved to `oklch(0.83 0.11 78)`.
+The stock warning-dark `oklch(0.82 0.13 80)` measured **0.054** from PostHog `#f7a501`, so drift-dark was moved to `oklch(0.83 0.11 78)`.
 
 ### Tier ink (in-page, computed per paragraph, not a fixed colour)
 
@@ -563,7 +563,7 @@ The bible's stock warning-dark `oklch(0.82 0.13 80)` measured **0.054** from Pos
 | `caption` | Hanken | 12/16 | +0.005em | 450 (600 for chip numbers) | Meta, times, drift chip |
 | `ui` | Hanken | **13/20** | 0 | 450 | Default UI text (popup, app chrome, pill) |
 | `ui-strong` | Hanken | 13/20 | 0 | 600 | Tabs, labels, nav items |
-| `button` | Hanken | 14/20 | −0.005em | 600 | All button labels (bible §4.3: dark filled buttons ≥ 14/600; on-accent on accent measures Lc 70) |
+| `button` | Hanken | 14/20 | −0.005em | 600 | All button labels (dark filled buttons ≥ 14/600; on-accent on accent measures Lc 70) |
 | `body` | Hanken | 14/22 | −0.005em | 400 | Help text, settings descriptions (≤ 56ch) |
 | `lead` | Hanken | 16/24 | −0.01em | 450 | Onboarding intros |
 | `label-h3` | Hanken | 18/24 | −0.012em | 550 | Panel titles |
@@ -574,7 +574,7 @@ The bible's stock warning-dark `oklch(0.82 0.13 80)` measured **0.054** from Pos
 | `h2` | Newsreader | 22/28 | −0.015em | 500 | Page titles (app) |
 | `h1` | Newsreader | 28/32 | −0.02em | 500 | Onboarding headline |
 | `display` | Newsreader | 44/46 | −0.025em | 500 | Receipt card sentence, README |
-| `hero-display` | Newsreader | `clamp(3.5rem, 2rem + 6vw, 7.5rem)` / 0.92 | −0.035em | 500 | Landing H1 only (3D_INSPIRATION §3.3) |
+| `hero-display` | Newsreader | `clamp(3.5rem, 2rem + 6vw, 7.5rem)` / 0.92 | −0.035em | 500 | Landing H1 only |
 
 Overlay type is set in **px inside the shadow root**, so it is immune to the host page's root font size.
 
@@ -588,7 +588,7 @@ Overlay type is set in **px inside the shadow root**, so it is immune to the hos
 | Overlay | Compact | Pill height 36. Tags 20 tall. Hover card 320 wide. Tray 340 wide. All offsets 16 from the viewport edge. |
 | App page | Compact chrome, comfortable reading | Sidebar 240 (desktop) → icon rail 56 (768) → top bar + sheet (375). Content max-width 960. Reading 64–68ch. Gutters 32 / 24 / 16. |
 | Onboarding | Comfortable | Single column, max-width 560, left-aligned. Steps are a real sequence (numbered 1–3). |
-| Landing | Marketing | Sections 96 desktop / 64 mobile. Content max 1200. Gutters per bible §8.1. |
+| Landing | Marketing | Sections 96 desktop / 64 mobile. Content max 1200. Gutters 16 phone, 32 tablet, 48 desktop. |
 
 Alignment is **left-aligned everywhere**. Nothing is centred except the popup's empty-state glyph.
 
@@ -605,7 +605,7 @@ Alignment is **left-aligned everywhere**. Nothing is centred except the popup's 
 
 `e-overlay` is the one deliberate exception to "no shadows on dark". Our layer floats over pages we don't control, and without separation it would read as part of the article.
 
-Z-index: our pages follow bible §5.4. The overlay host is `2147483647` inside a closed shadow root.
+Z-index: our pages use a small fixed scale (base, sticky, popover, toast). The overlay host is `2147483647` inside a closed shadow root.
 
 ## Shapes
 
@@ -667,7 +667,7 @@ Z-index: our pages follow bible §5.4. The overlay host is `2147483647` inside a
 
 **`provenance-tag`.**
 
-- Content: `micro` text, "Fenwick Wire · 30 min ago" or "Similar to Calder Courier · yesterday". This is the one sanctioned middle-dot string in the system, because picks.json specifies it.
+- Content: `micro` text, "Fenwick Wire · 30 min ago" or "Similar to Calder Courier · yesterday". This is the one sanctioned middle-dot string in the system, because the product brief specifies it.
 - Style: `surface` at 96% opacity, 1 px `border`, radius 4, padding 2 × 6, `text-muted`, `e-overlay` without the drop layers (ring only).
 - Placement, first that fits:
   1. Right gutter: ≥ 140 px between the paragraph's right edge and the container or viewport edge. Top-aligned to the first line box.
@@ -865,7 +865,7 @@ See `docs/LANDING.md` for the narrative and copy.
 - Two pulses in 1.2 s is 1.7 flashes per second, under WCAG 2.3.1.
 - Any scroll, key or click during the sequence **finishes it instantly**: every animation jumps to its end state, so input always wins (P6).
 - **Reduced motion:** all faded paragraphs transition together in 150 ms. Tags appear with them. There is no pulse; the highlight and chip appear with a 150 ms fade. The pill shows the final copy immediately.
-- **Capture:** the sequence is a WAAPI timeline. `?capture` on the playground and landing exposes `window.__frame(i, fps)`, which sets every animation's `currentTime`. Frames are deterministic for the README GIF and LinkedIn MP4 (bible §11.7).
+- **Capture:** the sequence is a WAAPI timeline. `?capture` on the playground and landing exposes `window.__frame(i, fps)`, which sets every animation's `currentTime`. Frames are deterministic for the README GIF and LinkedIn MP4.
 
 ## Motion tokens
 
@@ -884,7 +884,7 @@ See `docs/LANDING.md` for the narrative and copy.
 --ease-scene: cubic-bezier(0.65, 0.05, 0, 1);  /* landing sheet-stack settle only */
 ```
 
-- Springs on extension pages: `SPRING.snappy` (tabs, switches, segmented control) and `SPRING.ui` (tray, popovers), from bible §5.5.
+- Springs on extension pages: `SPRING.snappy` (tabs, switches, segmented control) and `SPRING.ui` (tray, popovers).
 - Exits run at about 75% of the enter duration.
 - Transitions are CSS, never `transition: all`.
 - Only `opacity` and `transform` animate, plus the tray's `grid-template-rows`.
@@ -917,9 +917,9 @@ In-page keys are active only when no input or contenteditable has focus, only on
 - **Settings:** Fade strength: Standard / Light; Dissolve animation on/off; In-page keys on/off; Theme: System / Light / Dark.
 - **Danger:** Forget everything… (opens the inline confirm).
 
-## Landing 3D / immersive plan (bible §11): a reasoned CSS/SVG-only choice
+## Landing 3D / immersive plan: a reasoned CSS/SVG-only choice
 
-**Decision: no WebGL.** Bible §11.2(1) asks for the sentence the 3D says. Ours would be "old pages turn translucent and the new line stays in ink", and that is *typography*, which the DOM renders exactly and accessibly.
+**Decision: no WebGL.** 3D has to say one sentence. Ours would be "old pages turn translucent and the new line stays in ink", and that is *typography*, which the DOM renders exactly and accessibly.
 
 - A WebGL scene would put the product's own words inside a canvas (banned X18) or duplicate them.
 - It would cost ≈ 242 KB gz (R3F path) for no explanatory gain (3P2).
@@ -936,7 +936,7 @@ In-page keys are active only when no input or contenteditable has focus, only on
 
 ## Do's and Don'ts
 
-### We never (bible P8: three explicit constraints)
+### We never (three explicit constraints)
 
 1. **We never fade through the floor.** Old text stays ≥ 4.5:1 against the page's own background. "Fade, never hide" is measurable.
 2. **We never put anything into a page's flow.** Every Old News mark is opacity, a highlight, or a floating layer. No inserted elements and no layout shift, except the reader's own N fold.
@@ -975,13 +975,13 @@ No horizontal scroll at 375. Hit targets are ≥ 24 px on desktop (extended with
 3. Every new component gets all nine states before it ships, screenshotted in light and dark.
 4. Treat the signature moment's timings as a contract. Change them here first.
 
-## Appendix B pre-flight checklist (bible), ticked
+## Pre-flight checklist, ticked
 
 - [x] **Archetype and blend notes, with what was rejected:** A2 calm consumer daily-use, with the A9 reading lens and A6 for the popup. Blend notes for notion, apple and claude (radius only) are in Overview.
-- [x] **Direction with adjustments, re-checked against §4.4:**
+- [x] **Direction with adjustments, re-checked against the brand-distance rule:**
   - D2 OXIDE as assigned.
   - Added `surface-3`, `drift`/`drift-soft`/`drift-mark`, `accent-text` (light) and `danger-soft`.
-  - Moved drift-dark off the bible's stock warning colour (ΔE 0.054 → 0.074 from PostHog).
+  - Moved drift-dark off the stock warning colour (ΔE 0.054 → 0.074 from PostHog).
   - Radius deviation recorded.
 - [x] **Pairing, scale and font features:** T4 (Newsreader + Hanken Grotesk). Compact scale for UI, comfortable reading tokens. Lane rule. `opsz` auto, `tnum`, `font-synthesis: none`.
 - [x] **Radius, CTA grammar and theme default:** radius 4/8/12/16 (claude grammar); rect CTAs; dark default (System-follow with dark as the designed primary). The overlay follows the page.

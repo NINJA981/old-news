@@ -1,7 +1,7 @@
 /**
  * Behaviour for the rows drawn by render.ts: the hover card, N (fold), J/K (jump between what is
  * new). Plain DOM, shared by the landing demo and the web app. High-frequency actions (N, J, K)
- * run with zero animation (bible P1); the hover card is the only thing that animates.
+ * run with zero animation; the hover card is the only thing that animates.
  */
 import { GLYPH, hostOf } from './render';
 
