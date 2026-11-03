@@ -5,6 +5,14 @@
   "private": true,
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NINJA981/old-news.git"
+  },
+  "homepage": "https://github.com/NINJA981/old-news#readme",
+  "bugs": {
+    "url": "https://github.com/NINJA981/old-news/issues"
+  },
   "engines": {
     "node": ">=22"
   },
@@ -17,6 +25,7 @@
     "build": "pnpm assets && wxt build",
     "build:firefox": "pnpm assets && wxt build -b firefox --mv3",
     "zip": "pnpm assets && wxt zip",
+    "zip:firefox": "pnpm assets && wxt zip -b firefox --mv3",
     "fetch-model": "tsx scripts/fetch-model.ts",
     "eval": "tsx scripts/eval-corpus.ts",
     "size": "pnpm zip && tsx scripts/size-report.ts",

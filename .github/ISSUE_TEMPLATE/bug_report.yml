@@ -1,0 +1,59 @@
+name: Bug report
+description: Something did not work as described.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please do not paste full articles from real sites; a short,
+        fictionalised copy of the markup is enough. Security or privacy problems go through
+        the Security tab instead (see SECURITY.md).
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Edge or another Chromium browser
+        - Firefox
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Browser version and Old News version
+      placeholder: Chrome 131, Old News 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where
+      options:
+        - In-page overlay (fades, tags, drift chip, pill)
+        - Toolbar popup
+        - App page (Stories, Drift, Receipt, Memory, Settings)
+        - Onboarding
+        - Web app or landing page (site/)
+        - Building from source
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Read article A on a fixture or test page
+        2. Open article B on the same story
+        3. ...
+  - type: textarea
+    id: popup
+    attributes:
+      label: What the popup says on that page
+      description: The popup names the reason when a page is skipped (not an article, not English, paragraphs did not line up).

@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Lint, types, unit tests, builds
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      # The model (23 MB, Apache-2.0) is not committed. This is the only step that touches the
+      # network: a pinned Hugging Face revision, each file checked against scripts/model-manifest.json.
+      - name: Cache model
+        uses: actions/cache@v4
+        with:
+          path: public/models
+          key: model-${{ hashFiles('scripts/model-manifest.json') }}
+      - run: pnpm fetch-model
+
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm check-tokens
+      - run: pnpm test
+      # Fails on full-fade precision < 0.98 or any changed-meaning pair fully faded (SPEC AC19.1).
+      - run: pnpm eval
+      - run: pnpm build
+      - run: pnpm build:firefox
+      - run: pnpm zip && pnpm zip:firefox
+      - uses: actions/upload-artifact@v4
+        with:
+          name: old-news-builds
+          path: .output/*.zip
+          if-no-files-found: error
+
+  e2e:
+    name: Extension e2e (Chromium, real model, no-network assertion)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # global-setup also builds the web app in site/, for the parity test.
+      - run: pnpm install --frozen-lockfile
+        working-directory: site
+      - name: Cache model
+        uses: actions/cache@v4
+        with:
+          path: public/models
+          key: model-${{ hashFiles('scripts/model-manifest.json') }}
+      - run: pnpm fetch-model
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e --workers=1
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-results
+          path: test-results/

@@ -1,0 +1,24 @@
+name: Idea or feature request
+description: Suggest a change. It has to work on-device, with no network.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The reading problem
+      description: What were you doing, and what got in the way?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you would like Old News to do
+    validations:
+      required: true
+  - type: checkboxes
+    id: local
+    attributes:
+      label: Local-first
+      options:
+        - label: This works without sending anything off the machine.
+          required: true
