@@ -72,3 +72,10 @@ per pull request. Fill in the pull request template; a reviewer will run the com
 
 By contributing you agree that your work is released under the MIT licence in `LICENSE`, and you
 agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Tool config in the repo
+
+`.impeccable/config.json` is shared settings for the Impeccable design linter used during
+development. It only tells the font detector to ignore Georgia and Arial, which appear in the
+fixture pages under `tests/fixtures/layouts/` (they imitate real CMS markup). Local overrides go in
+`.impeccable/config.local.json`, which is gitignored.
