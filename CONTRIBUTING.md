@@ -28,7 +28,7 @@ pnpm fetch-model     # once: the 23 MB model from a pinned Hugging Face revision
 pnpm build           # .output/chrome-mv3
 ```
 
-Load `.output/chrome-mv3` unpacked (see the README), then click **Allow on websites** on the
+Load `.output/chrome-mv3` unpacked (see the README), then click **Allow on article pages** on the
 onboarding page that opens.
 
 `pnpm dev` gives you hot reload in a fresh Chrome profile. `site/` (landing page and web app) is a
