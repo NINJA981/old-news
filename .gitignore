@@ -17,3 +17,6 @@ public/ort/
 .impeccable/config.local.json
 .output-e2e/
 public/fonts/
+public/licenses/
+public/LICENSE.txt
+public/THIRD_PARTY.md

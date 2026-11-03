@@ -51,7 +51,6 @@ export default defineConfig({
       'scripting',
       'tabs',
       'alarms',
-      'activeTab',
       ...(browser === 'firefox' ? [] : ['offscreen']),
     ],
     optional_host_permissions: ['https://*/*', 'http://*/*'],

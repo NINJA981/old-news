@@ -47,4 +47,24 @@ await png(join(PUBLIC, 'app-icons', 'icon-512.png'), glyph(512, 0.52, INK, BG, 9
 await png(join(PUBLIC, 'app-icons', 'icon-maskable-512.png'), glyph(512, 0.4, INK, BG));
 // Monochrome (themed icons on Android): glyph only, transparent background.
 await png(join(PUBLIC, 'app-icons', 'icon-monochrome-512.png'), glyph(512, 0.4, '#000000', null));
-console.log('icons written to public/');
+// Extension toolbar and store icons (../public/icon, committed; WXT adds them to the manifest).
+// 16 and 32 fill the square so the strokes stay legible in the toolbar. 48 and 128 follow the Chrome
+// Web Store rule: 96 px of art inside a 128 px canvas, the rest transparent.
+const EXT = join(SITE, '..', 'public', 'icon');
+mkdirSync(EXT, { recursive: true });
+await png(join(EXT, '16.png'), glyph(16, 0.72, INK, BG, 3));
+await png(join(EXT, '32.png'), glyph(32, 0.64, INK, BG, 7));
+for (const size of [48, 128]) {
+  const inner = Math.round(size * 0.75);
+  const pad = (size - inner) / 2;
+  const tile = await sharp(Buffer.from(glyph(inner, 0.56, INK, BG, Math.round(inner * 0.22))))
+    .png()
+    .toBuffer();
+  await sharp({
+    create: { width: size, height: size, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } },
+  })
+    .composite([{ input: tile, left: pad, top: pad }])
+    .png()
+    .toFile(join(EXT, `${size}.png`));
+}
+console.log('icons written to public/ and ../public/icon/');
