@@ -15,7 +15,14 @@ export async function handleEngineMessage(host: EngineHost, msg: Message): Promi
       case 'page/ingest':
         return { ok: true, data: await host.ingest(msg.page, msg.paragraphs) };
       case 'page/read':
-        return { ok: true, data: await host.markRead(msg.canonicalUrl, msg.ordinals) };
+        return {
+          ok: true,
+          data: await host.markRead(
+            msg.canonicalUrl,
+            msg.ordinals,
+            msg.page && msg.paragraphs ? { page: msg.page, paragraphs: msg.paragraphs } : undefined,
+          ),
+        };
       case 'page/feedback':
         await host.addFeedback(msg.fingerprint, msg.oldParagraphId);
         return { ok: true, data: null };

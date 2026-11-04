@@ -34,6 +34,7 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "screenshots": "tsx scripts/screenshots.ts",
+    "launch-assets": "tsx scripts/launch-assets.ts",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit"

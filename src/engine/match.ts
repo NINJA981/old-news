@@ -4,7 +4,7 @@
  */
 import type { Embedder } from './embedder';
 import type { Fact } from './facts';
-import { extractFacts } from './facts';
+import { capFacts, extractFacts } from './facts';
 import type { DriftFinding } from './guard';
 import { guard } from './guard';
 import { hash32 } from './hash';
@@ -58,7 +58,9 @@ export function prepareParagraph(p: InputParagraph): PreparedParagraph {
     skip,
     minhash: sig,
     bands: bandKeys(sig),
-    facts: skip ? [] : extractFacts(text),
+    // Capped like stored facts, so the guard compares like with like: an extra fact past the
+    // cap on one side only would be a leftover and could pair into a false change.
+    facts: skip ? [] : capFacts(extractFacts(text)),
     vec: null,
   };
 }

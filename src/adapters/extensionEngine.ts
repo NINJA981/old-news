@@ -17,7 +17,7 @@ import { chooseBackend, warmupTexts, webgpuUsable } from '../embed/backend';
 import type { DisposableEmbedder } from '../embed/lazyEmbedder';
 import { LazyEmbedder } from '../embed/lazyEmbedder';
 import { createTransformersEmbedder } from '../embed/transformersEmbedder';
-import { parseEngineEnvelope } from '../messaging/protocol';
+import { isTrustedEngineSender, parseEngineEnvelope } from '../messaging/protocol';
 import { openOldNewsDb } from '../store/db';
 import { getMeta, setMeta } from '../store/repo';
 import type { Db } from '../store/db';
@@ -95,10 +95,6 @@ export async function createBestEmbedder(db: Db): Promise<DisposableEmbedder> {
   return winner;
 }
 
-export async function readModelInfo(db: Db): Promise<ModelInfo | undefined> {
-  return getMeta<ModelInfo>(db, MODEL_INFO_KEY);
-}
-
 /**
  * Creates the engine and answers `{target:'engine', message}` envelopes from the background.
  * Returns the engine so a Firefox background page can also call it directly.
@@ -107,9 +103,10 @@ export async function startExtensionEngine(): Promise<Engine> {
   const db = await openOldNewsDb();
   const embedder = new LazyEmbedder({ create: () => createBestEmbedder(db) });
   const engine = await createEngine({ db, embedder });
-  browser.runtime.onMessage.addListener((raw, _sender, sendResponse) => {
+  const origin = browser.runtime.getURL('/');
+  browser.runtime.onMessage.addListener((raw, sender, sendResponse) => {
     const envelope = parseEngineEnvelope(raw);
-    if (!envelope) return undefined;
+    if (!envelope || !isTrustedEngineSender(sender, browser.runtime.id, origin)) return undefined;
     void engine.handle(envelope.message).then(sendResponse);
     return true;
   });

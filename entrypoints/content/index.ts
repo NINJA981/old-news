@@ -14,6 +14,7 @@ import type { Settings } from '../../src/core/settings';
 import { pauseScope } from '../../src/core/settings';
 import { wordCount } from '../../src/engine/normalize';
 import type { MappedBlock } from '../../src/extract';
+import { createBatcher } from '../../src/extract/batcher';
 import {
   analyseDocument,
   analyseSubtree,
@@ -23,13 +24,18 @@ import {
 } from '../../src/extract';
 import type { AnalyseResponse } from '../../src/host/engineHost';
 import type { PageStatus } from '../../src/messaging/protocol';
+import { fitPage, fitParagraphs } from '../../src/messaging/protocol';
 import type { Counts, OverlaySettings } from '../../src/overlay/overlay';
 import { Overlay } from '../../src/overlay/overlay';
 
 const STARTED = Symbol.for('old-news.content.started');
 const FLUSH_MS = 5000;
 const TICK_MS = 500;
-const MUTATION_DEBOUNCE_MS = 150;
+const MUTATION_BATCH_MS = 150;
+/** The protocol's paragraph limit for one message. */
+const MAX_READ = 600;
+/** Mutation records kept per batch; only their added nodes are read. */
+const MAX_MUTATION_RECORDS = 500;
 const HIDDEN_KEY = 'hiddenStories';
 
 type Mapped = Extract<ReturnType<typeof analyseDocument>, { status: 'mapped' }>;
@@ -57,8 +63,10 @@ interface Dwell {
   stop(): void;
 }
 
-function trackDwell(initial: readonly MappedBlock[], canonicalUrl: string): Dwell {
+function trackDwell(initial: readonly MappedBlock[], page: ReturnType<typeof pageMeta>): Dwell {
+  const canonicalUrl = page.canonicalUrl;
   const byElement = new Map<Element, number>();
+  const texts = new Map<number, string>();
   const isActive = (): boolean => document.visibilityState === 'visible' && document.hasFocus();
   const tracker = new DwellTracker(new Map(), performance.now(), isActive());
   let pending: number[] = [];
@@ -76,6 +84,7 @@ function trackDwell(initial: readonly MappedBlock[], canonicalUrl: string): Dwel
   const add = (blocks: readonly MappedBlock[]): void => {
     for (const b of blocks) {
       tracker.add(b.ordinal, wordCount(b.text));
+      texts.set(b.ordinal, b.text);
       byElement.set(b.element, b.ordinal);
       observer.observe(b.element);
     }
@@ -87,7 +96,19 @@ function trackDwell(initial: readonly MappedBlock[], canonicalUrl: string): Dwel
     if (pending.length === 0) return;
     const ordinals = pending;
     pending = [];
-    request({ type: 'page/read', canonicalUrl, ordinals }).catch(() => undefined);
+    // The text travels with the read so an engine that was recycled meanwhile can rebuild the
+    // article's session (same channel and content as page/analyse; nothing is stored beyond it).
+    const paragraphs = ordinals.flatMap((ordinal) => {
+      const text = texts.get(ordinal);
+      return text === undefined ? [] : [{ ordinal, text }];
+    });
+    request({
+      type: 'page/read',
+      canonicalUrl,
+      ordinals: ordinals.slice(0, MAX_READ),
+      page: fitPage(page),
+      paragraphs: fitParagraphs(paragraphs),
+    }).catch(() => undefined);
   };
   const sync = (): void => tracker.setActive(isActive(), performance.now());
 
@@ -172,11 +193,14 @@ function statusFromCounts(
 class Session {
   private overlay: Overlay | null = null;
   private observer: MutationObserver | null = null;
-  private timer = 0;
   private url = location.href;
   private blogUrl = '';
   private liveblog: LiveBlogTracker | null = null;
-  private records: MutationRecord[] = [];
+  private readonly mutations = createBatcher<MutationRecord>(
+    MUTATION_BATCH_MS,
+    MAX_MUTATION_RECORDS,
+    (records) => void this.onMutations(records),
+  );
   private stopped = false;
   private base: Mapped | null = null;
   private readonly dwellByUrl = new Map<string, Dwell>();
@@ -231,7 +255,8 @@ class Session {
       overlay.onChange = (c) => report(statusFromCounts(c, data));
       await overlay.addSection(canonicalUrl, blocks, data);
       report(statusFromCounts(overlay.counts(), data));
-      this.dwellByUrl.set(canonicalUrl, trackDwell(blocks, canonicalUrl));
+      this.dwellByUrl.get(canonicalUrl)?.stop();
+      this.dwellByUrl.set(canonicalUrl, trackDwell(blocks, pageMeta(analysis)));
       this.watch();
     } catch (err) {
       // The message never carries page text; only the reason string is reported.
@@ -255,8 +280,8 @@ class Session {
   ): Promise<AnalyseResponse> {
     return request<AnalyseResponse>({
       type: 'page/analyse',
-      page,
-      paragraphs: blocks.map((b) => ({ ordinal: b.ordinal, text: b.text })),
+      page: fitPage(page),
+      paragraphs: fitParagraphs(blocks),
       append,
     });
   }
@@ -264,17 +289,11 @@ class Session {
   // ---- Live blogs and infinite scroll ----------------------------------------------------------
 
   private watch(): void {
-    this.observer = new MutationObserver((records) => {
-      this.records.push(...records);
-      window.clearTimeout(this.timer);
-      this.timer = window.setTimeout(() => void this.onMutations(), MUTATION_DEBOUNCE_MS);
-    });
+    this.observer = new MutationObserver((records) => this.mutations.push(records));
     this.observer.observe(document.body, { childList: true, subtree: true });
   }
 
-  private async onMutations(): Promise<void> {
-    const records = this.records;
-    this.records = [];
+  private async onMutations(records: readonly MutationRecord[]): Promise<void> {
     if (this.stopped || !this.overlay || !this.base) return;
     try {
       if (this.liveblog) await this.appendPosts(this.liveblog);
@@ -319,7 +338,11 @@ class Session {
     const data = await this.analyse(pageMeta({ page: sub.page, kind: 'news' }), sub.blocks, false);
     if (this.stopped) return;
     await overlay.addSection(sub.page.canonicalUrl, sub.blocks, data);
-    this.dwellByUrl.set(sub.page.canonicalUrl, trackDwell(sub.blocks, sub.page.canonicalUrl));
+    this.dwellByUrl.get(sub.page.canonicalUrl)?.stop();
+    this.dwellByUrl.set(
+      sub.page.canonicalUrl,
+      trackDwell(sub.blocks, pageMeta({ page: sub.page, kind: 'news' })),
+    );
     report(statusFromCounts(overlay.counts(), data));
   }
 
@@ -329,7 +352,7 @@ class Session {
 
   stop(): void {
     this.stopped = true;
-    window.clearTimeout(this.timer);
+    this.mutations.cancel();
     this.observer?.disconnect();
     for (const d of this.dwellByUrl.values()) d.stop();
     this.overlay?.destroy();
@@ -382,8 +405,8 @@ function answerIngest(message: unknown, sendResponse: (r: unknown) => void): boo
   }
   request<{ remembered: number }>({
     type: 'page/ingest',
-    page: pageMeta(analysis),
-    paragraphs: analysis.blocks.map((b) => ({ ordinal: b.ordinal, text: b.text })),
+    page: fitPage(pageMeta(analysis)),
+    paragraphs: fitParagraphs(analysis.blocks),
   }).then(
     (r) => sendResponse({ remembered: r.remembered }),
     () => sendResponse({ remembered: 0 }),

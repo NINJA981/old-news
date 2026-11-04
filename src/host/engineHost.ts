@@ -123,6 +123,9 @@ export interface ReadResponse {
   driftRecorded: number;
 }
 
+/** A failed model load or embed is retried after this long; pages run degraded meanwhile. */
+export const EMBED_RETRY_MS = 60_000;
+
 export interface EngineHostOptions {
   db: Db;
   embedder: Embedder | null;
@@ -151,7 +154,8 @@ export class EngineHost {
   private readonly sessions = new Map<string, ArticleSession>();
   private feedback = new Set<string>();
   private loaded: Promise<void> | null = null;
-  private embedderFailed = false;
+  /** When the model last failed; it is tried again after EMBED_RETRY_MS (degraded until then). */
+  private embedderFailedAt: number | null = null;
 
   constructor(opts: EngineHostOptions) {
     this.db = opts.db;
@@ -176,14 +180,18 @@ export class EngineHost {
   }
 
   get modelAvailable(): boolean {
-    return this.embedder !== null && !this.embedderFailed;
+    return this.embedder !== null && !this.embedderCoolingDown();
   }
 
   private async embed(prepared: PreparedParagraph[]): Promise<boolean> {
-    if (!this.embedder || this.embedderFailed) return false;
+    if (!this.embedder || this.embedderCoolingDown()) return false;
     const ok = await embedPrepared(prepared, this.embedder);
-    if (!ok) this.embedderFailed = true;
+    this.embedderFailedAt = ok ? null : this.now();
     return ok;
+  }
+
+  private embedderCoolingDown(): boolean {
+    return this.embedderFailedAt !== null && this.now() - this.embedderFailedAt < EMBED_RETRY_MS;
   }
 
   private remember(session: ArticleSession): void {
@@ -208,32 +216,11 @@ export class EngineHost {
   ): Promise<AnalyseResponse> {
     const started = this.now();
     await this.ready();
-    const canonical = canonicalizeUrl(page.canonicalUrl || page.url);
-    const articleId = await sha256Hex(canonical);
-    const prepared = paragraphs.map(prepareParagraph);
-    const embedded = await this.embed(prepared);
-    const sessionStart = this.sessionStart;
-    const matches = matchPrepared(prepared, this.index, {
-      keep: (e) => !(e.articleId === articleId && e.readAt >= sessionStart),
-      hasFeedback: (k) => this.feedback.has(k),
-    });
-
-    const prior = this.sessions.get(articleId);
-    const merged = opts.append && prior ? prior : undefined;
-    const session: ArticleSession = {
-      articleId,
-      meta: { ...page, canonicalUrl: canonical },
-      prepared: new Map([
-        ...(merged?.prepared ?? []),
-        ...prepared.map((p): [number, PreparedParagraph] => [p.ordinal, p]),
-      ]),
-      matches: new Map([
-        ...(merged?.matches ?? []),
-        ...matches.map((m): [number, ParagraphMatch] => [m.ordinal, m]),
-      ]),
-      read: prior?.read ?? new Set(),
-    };
-    this.remember(session);
+    const { articleId, session, prepared, matches, embedded } = await this.openSession(
+      page,
+      paragraphs,
+      opts.append === true,
+    );
 
     const results = await this.withProvenance(prepared, matches);
     const { storyId, card } = await this.storyFor(
@@ -251,6 +238,49 @@ export class EngineHost {
       previouslyOn: card,
       timingMs: this.now() - started,
     };
+  }
+
+  /** Prepares, embeds and matches paragraphs, and stores the result as the article's session. */
+  private async openSession(
+    page: PageMeta,
+    paragraphs: readonly InputParagraph[],
+    append: boolean,
+  ): Promise<{
+    articleId: string;
+    session: ArticleSession;
+    prepared: PreparedParagraph[];
+    matches: ParagraphMatch[];
+    embedded: boolean;
+  }> {
+    const canonical = canonicalizeUrl(page.canonicalUrl || page.url);
+    const articleId = await sha256Hex(canonical);
+    const prepared = paragraphs.map(prepareParagraph);
+    const embedded = await this.embed(prepared);
+    const sessionStart = this.sessionStart;
+    const now = this.now();
+    const matches = matchPrepared(prepared, this.index, {
+      // Expired paragraphs never match, even before the daily sweep has removed them.
+      keep: (e) => e.expiresAt > now && !(e.articleId === articleId && e.readAt >= sessionStart),
+      hasFeedback: (k) => this.feedback.has(k),
+    });
+
+    const prior = this.sessions.get(articleId);
+    const merged = append && prior ? prior : undefined;
+    const session: ArticleSession = {
+      articleId,
+      meta: { ...page, canonicalUrl: canonical },
+      prepared: new Map([
+        ...(merged?.prepared ?? []),
+        ...prepared.map((p): [number, PreparedParagraph] => [p.ordinal, p]),
+      ]),
+      matches: new Map([
+        ...(merged?.matches ?? []),
+        ...matches.map((m): [number, ParagraphMatch] => [m.ordinal, m]),
+      ]),
+      read: prior?.read ?? new Set(),
+    };
+    this.remember(session);
+    return { articleId, session, prepared, matches, embedded };
   }
 
   /**
@@ -395,12 +425,27 @@ export class EngineHost {
     return { storyId: story.id || null, card: previouslyOn(articleId, story, articles, drift) };
   }
 
-  /** Remember the given ordinals of an analysed article as read. */
-  async markRead(canonicalUrl: string, ordinals: readonly number[]): Promise<ReadResponse> {
+  /**
+   * Remember the given ordinals of an analysed article as read. The session that `analyse` built
+   * lives in memory only, and the engine host can be recycled (idle unload, or more than
+   * `maxSessions` open articles) while a tab stays open. `restore` carries the page and the read
+   * paragraphs' text so a lost session is rebuilt instead of the read being dropped.
+   */
+  async markRead(
+    canonicalUrl: string,
+    ordinals: readonly number[],
+    restore?: { page: PageMeta; paragraphs: readonly InputParagraph[] },
+  ): Promise<ReadResponse> {
     await this.ready();
     const articleId = await sha256Hex(canonicalizeUrl(canonicalUrl));
-    const session = this.sessions.get(articleId);
-    if (!session) return { remembered: 0, storyId: null, driftRecorded: 0 };
+    let found = this.sessions.get(articleId);
+    const missing = (s: ArticleSession) => ordinals.some((o) => !s.prepared.has(o));
+    if (restore && restore.paragraphs.length > 0 && (!found || missing(found))) {
+      found = (await this.openSession(restore.page, restore.paragraphs, found !== undefined))
+        .session;
+    }
+    if (!found) return { remembered: 0, storyId: null, driftRecorded: 0 };
+    const session = found;
     const now = this.now();
     const expiresAt = now + TTL_DAYS * DAY_MS;
 
@@ -408,6 +453,10 @@ export class EngineHost {
       (o) => !session.read.has(o) && session.prepared.get(o) && !session.prepared.get(o)!.skip,
     );
     if (fresh.length === 0) return { remembered: 0, storyId: null, driftRecorded: 0 };
+    // Claim the ordinals before any await, so a second read of the same article (another tab, or
+    // a flush racing pagehide) cannot store them twice.
+    const firstReadThisSession = session.read.size === 0;
+    for (const o of fresh) session.read.add(o);
 
     const records: ParagraphRecord[] = await Promise.all(
       fresh.map(async (o) => {
@@ -432,8 +481,6 @@ export class EngineHost {
 
     // Article record: create or refresh; centroid over everything read so far.
     const prev = await repo.getArticle(this.db, articleId);
-    const firstReadThisSession = session.read.size === 0;
-    for (const o of fresh) session.read.add(o);
     const readPrepared = [...session.read]
       .map((o) => session.prepared.get(o))
       .filter((p): p is PreparedParagraph => !!p);
@@ -448,7 +495,7 @@ export class EngineHost {
       kind: session.meta.kind,
       firstReadAt: prev?.firstReadAt ?? now,
       lastReadAt: now,
-      paragraphCount: session.prepared.size,
+      paragraphCount: Math.max(session.prepared.size, prev?.paragraphCount ?? 0),
       readCount: (prev?.readCount ?? 0) + (firstReadThisSession ? 1 : 0),
       centroid: cvec ?? prev?.centroid ?? null,
       centroidScale: 0,
@@ -703,7 +750,7 @@ export class EngineHost {
   /** Releases the model (idle unload); matching continues degraded until a new embedder is set. */
   setEmbedder(embedder: Embedder | null): void {
     this.embedder = embedder;
-    this.embedderFailed = false;
+    this.embedderFailedAt = null;
   }
 }
 

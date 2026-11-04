@@ -23,6 +23,30 @@ export type PageMeta = v.InferOutput<typeof PageMetaSchema>;
 
 export const ParagraphInputSchema = v.object({ ordinal: Int, text: Str(MAX_TEXT) });
 
+/**
+ * Trims a page to the message limits before it is sent. Validation rejects a whole message that
+ * is over a limit, so without this one huge post or a long site name would leave the page
+ * unanalysed. Only the first MAX_PARAGRAPHS blocks are sent (a live blog lists its newest first);
+ * blocks without a result are left as they are on the page.
+ */
+export function fitPage<P extends PageMeta>(page: P): P {
+  return {
+    ...page,
+    url: page.url.slice(0, 4096),
+    canonicalUrl: page.canonicalUrl.slice(0, 4096),
+    siteName: page.siteName.slice(0, 300),
+    title: page.title.slice(0, 1000),
+  };
+}
+
+export function fitParagraphs(
+  paragraphs: readonly { ordinal: number; text: string }[],
+): { ordinal: number; text: string }[] {
+  return paragraphs
+    .slice(0, MAX_PARAGRAPHS)
+    .map((p) => ({ ordinal: p.ordinal, text: p.text.slice(0, MAX_TEXT) }));
+}
+
 /** The "Previously on" card, trimmed for chrome.storage.session (popup, This story tab). */
 export const StoryCardSchema = v.object({
   label: Str(300),
@@ -88,6 +112,9 @@ export const MessageSchema = v.variant('type', [
     type: v.literal('page/read'),
     canonicalUrl: Str(4096),
     ordinals: v.pipe(v.array(Int), v.maxLength(MAX_PARAGRAPHS)),
+    /** The page and the read paragraphs' text, so the engine can rebuild a session it lost. */
+    page: v.optional(PageMetaSchema),
+    paragraphs: v.optional(v.pipe(v.array(ParagraphInputSchema), v.maxLength(MAX_PARAGRAPHS))),
   }),
   v.object({ type: v.literal('page/status'), url: Str(4096), status: PageStatusSchema }),
   v.object({
@@ -167,4 +194,27 @@ export const CONTENT_MESSAGE_TYPES: ReadonlySet<MessageType> = new Set([
 
 export function isContentMessage(m: Message): boolean {
   return CONTENT_MESSAGE_TYPES.has(m.type);
+}
+
+/** The parts of `runtime.MessageSender` the engine checks. */
+export interface SenderInfo {
+  id?: string;
+  url?: string;
+  tab?: unknown;
+}
+
+/**
+ * Engine envelopes are only accepted from the extension's own background context: same extension
+ * id, no tab (content scripts always have one), and a URL inside the extension. Without this a
+ * content script could send `{target:'engine'}` straight to the offscreen document and skip the
+ * background's content-message allowlist (wipe memory, read the story list).
+ */
+export function isTrustedEngineSender(
+  sender: SenderInfo,
+  extensionId: string,
+  extensionOrigin: string,
+): boolean {
+  if (sender.id !== extensionId || sender.tab !== undefined) return false;
+  const origin = extensionOrigin.endsWith('/') ? extensionOrigin : `${extensionOrigin}/`;
+  return typeof sender.url === 'string' && sender.url.startsWith(origin);
 }

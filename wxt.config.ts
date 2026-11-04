@@ -49,7 +49,9 @@ export default defineConfig({
       'storage',
       'unlimitedStorage',
       'scripting',
-      'tabs',
+      // Not `tabs`: it shows a "read your browsing history" warning. Tab URLs come from the
+      // granted host access, and activeTab gives the popup the current tab before that.
+      'activeTab',
       'alarms',
       ...(browser === 'firefox' ? [] : ['offscreen']),
     ],

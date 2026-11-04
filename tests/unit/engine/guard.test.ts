@@ -197,3 +197,64 @@ describe('guard: order and offsets', () => {
     ).toEqual(['number', 'date']);
   });
 });
+
+describe('guard: units, swapped figures and years', () => {
+  it.each([
+    ['The route is 90 km long.', 'The route is 90 miles long.'],
+    ['Support rose to 40% in the poll.', 'Support rose to 40 percent among men in the poll.'],
+    ['The tank holds 500 litres of fuel.', 'The tank holds 500 gallons of fuel.'],
+  ])('the same figure in a different unit fires: %s -> %s', (a, b) => {
+    const out = diff(a, b);
+    if (b.includes('percent')) {
+      // "40%" and "40 percent" are the same unit.
+      expect(out).toEqual([]);
+    } else {
+      expect(out.map((f) => f.kind)).toEqual(['number']);
+    }
+  });
+
+  it('a unit of measure against a plain word fires, and the chip shows both units', () => {
+    expect(pairs('Support was 40% in March.', 'Support was 40 people in March.')).toEqual([
+      ['number', '40%', '40 people'],
+    ]);
+  });
+
+  it('a plain next word that changed is not a unit change ("12 were" vs "12 people")', () => {
+    expect(
+      diff('Officials said 12 were injured.', 'Officials said 12 people were injured.'),
+    ).toEqual([]);
+  });
+
+  it('swapped figures fire for both slots', () => {
+    const out = pairs(
+      'The crash left 14 dead and 12 injured, police said.',
+      'The crash left 12 dead and 14 injured, police said.',
+    );
+    expect(out).toHaveLength(2);
+    expect(out).toContainEqual(['number', '14', '12']);
+    expect(out).toContainEqual(['number', '12', '14']);
+  });
+
+  it('the same figures in a different order still do not fire', () => {
+    expect(
+      diff(
+        'The crash left 14 dead and 12 injured, police said.',
+        'Police said 12 were injured and 14 were dead after the crash.',
+      ).filter((f) => f.kind === 'number'),
+    ).toEqual([]);
+  });
+
+  it('ISO dates keep their year', () => {
+    expect(
+      pairs('The hearing is set for 2025-03-14.', 'The hearing is set for 2026-03-14.'),
+    ).toEqual([['date', '2025-03-14', '2026-03-14']]);
+  });
+
+  it('an ISO date and the same day written out are the same date', () => {
+    expect(
+      diff('The hearing is set for 2026-03-14.', 'The hearing is set for March 14.').filter(
+        (f) => f.kind === 'date',
+      ),
+    ).toEqual([]);
+  });
+});

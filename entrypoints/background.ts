@@ -7,7 +7,7 @@
 import { browser } from 'wxt/browser';
 import { chromeSettingsStore } from '../src/adapters/chromeSettings';
 import { startExtensionEngine } from '../src/adapters/extensionEngine';
-import { clearAllSummaries, saveSummary } from '../src/adapters/messaging';
+import { clearAllSummaries, clearSummary, saveSummary } from '../src/adapters/messaging';
 import type { Engine } from '../src/core/engine';
 import { badgeFor } from '../src/core/page';
 import type { EngineReply } from '../src/host/handle';
@@ -130,7 +130,8 @@ export default defineBackground(() => {
     tabId: number | undefined,
   ) {
     if (tabId === undefined) return ok();
-    await saveSummary(tabId, msg.url, msg.status);
+    // A full storage.session quota must not stop the badge.
+    await saveSummary(tabId, msg.url, msg.status).catch(() => undefined);
     const text = badgeFor(msg.status);
     await browser.action.setBadgeText({ tabId, text });
     if (text) {
@@ -228,8 +229,17 @@ export default defineBackground(() => {
 
   // ---- Lifecycle -----------------------------------------------------------------------------
 
+  // Alarms are not guaranteed to survive a browser restart (Firefox clears them), so the daily
+  // sweep is re-created whenever the background starts and finds it missing.
+  const ensureSweepAlarm = async (): Promise<void> => {
+    if (!(await browser.alarms.get(SWEEP_ALARM))) {
+      await browser.alarms.create(SWEEP_ALARM, { periodInMinutes: 24 * 60 });
+    }
+  };
+  void ensureSweepAlarm();
+
   browser.runtime.onInstalled.addListener(({ reason }) => {
-    void browser.alarms.create(SWEEP_ALARM, { periodInMinutes: 24 * 60 });
+    void ensureSweepAlarm();
     void syncContentScript();
     if (reason === 'install') {
       void browser.tabs.create({ url: browser.runtime.getURL('/onboarding.html') });
@@ -237,9 +247,13 @@ export default defineBackground(() => {
   });
 
   browser.runtime.onStartup.addListener(() => {
+    void ensureSweepAlarm();
     void syncContentScript();
     void callEngine({ type: 'memory/sweep' });
   });
+
+  // A closed tab's status summary (which holds its URL) is dropped with it.
+  browser.tabs.onRemoved.addListener((tabId) => void clearSummary(tabId).catch(() => undefined));
 
   browser.permissions.onAdded.addListener(() => void syncContentScript());
   browser.permissions.onRemoved.addListener(() => void syncContentScript());

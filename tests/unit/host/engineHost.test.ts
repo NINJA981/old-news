@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { FakeEmbedder } from '../../../src/engine/fakeEmbedder';
-import { EngineHost, driftContext } from '../../../src/host/engineHost';
+import { EMBED_RETRY_MS, EngineHost, driftContext } from '../../../src/host/engineHost';
 import { handleEngineMessage } from '../../../src/host/handle';
 import type { PageMeta } from '../../../src/messaging/protocol';
 import type { Db } from '../../../src/store/db';
@@ -117,7 +117,73 @@ describe('EngineHost', () => {
     expect(again.summary.seen).toBeGreaterThan(0);
   });
 
-  it('ignores reads for unknown articles and repeated ordinals', async () => {
+  it('rebuilds a lost session from the read itself (engine recycled while the tab stayed open)', async () => {
+    const before = host();
+    await before.analyse(meta('wire'), paras('wire'));
+    // The offscreen document closed after 5 idle minutes: a new host has no session for the page.
+    clock += 15 * 60_000;
+    const after = host();
+    const read = paras('wire').slice(0, 3);
+    const r = await after.markRead(meta('wire').canonicalUrl, [0, 1, 2], {
+      page: meta('wire'),
+      paragraphs: read,
+    });
+    expect(r.remembered).toBe(3);
+    expect((await storeCounts(db)).paragraphs).toBe(3);
+    // And the remembered paragraphs fade on the next article.
+    clock += 60_000;
+    const next = await after.analyse(meta('calder'), paras('calder'));
+    expect(next.summary.seen + next.summary.similar).toBeGreaterThan(0);
+  });
+
+  it('rebuilds through the message handler when page/read carries the text', async () => {
+    await host().analyse(meta('wire'), paras('wire'));
+    const reply = await handleEngineMessage(host(), {
+      type: 'page/read',
+      canonicalUrl: meta('wire').canonicalUrl,
+      ordinals: [0],
+      page: meta('wire'),
+      paragraphs: paras('wire').slice(0, 1),
+    });
+    expect(reply).toMatchObject({ ok: true, data: { remembered: 1 } });
+  });
+
+  it('two reads of the same paragraphs racing each other store them once', async () => {
+    const h = host();
+    await h.analyse(meta('wire'), paras('wire'));
+    const [a, b] = await Promise.all([
+      h.markRead(meta('wire').canonicalUrl, [0, 1]),
+      h.markRead(meta('wire').canonicalUrl, [0, 1]),
+    ]);
+    expect(a.remembered + b.remembered).toBe(2);
+  });
+
+  it('retries a failed model after a cool-down instead of staying degraded', async () => {
+    let fail = true;
+    const flaky = {
+      id: 'flaky',
+      async embed(texts: readonly string[]) {
+        if (fail) throw new Error('out of memory');
+        return new FakeEmbedder().embed(texts);
+      },
+    };
+    const h = host(flaky as unknown as FakeEmbedder);
+    expect((await h.analyse(meta('wire'), paras('wire'))).degraded).toBe(true);
+    fail = false;
+    expect((await h.analyse(meta('wire'), paras('wire'))).degraded).toBe(true);
+    clock += EMBED_RETRY_MS;
+    expect((await h.analyse(meta('wire'), paras('wire'))).degraded).toBe(false);
+  });
+
+  it('never matches a paragraph past its expiry, even before the sweep', async () => {
+    const h = host();
+    await h.ingest(meta('wire'), paras('wire'));
+    clock += 31 * DAY;
+    const r = await h.analyse(meta('calder'), paras('calder'));
+    expect(r.summary.seen + r.summary.similar + r.summary.changed).toBe(0);
+  });
+
+  it('ignores reads for unknown articles (without text to rebuild from) and repeated ordinals', async () => {
     const h = host();
     expect(await h.markRead('https://nowhere.example/x', [0])).toMatchObject({ remembered: 0 });
     await h.analyse(meta('wire'), paras('wire'));

@@ -28,7 +28,7 @@ export interface Fact {
   offset: number;
   /** Up to 3 lower-cased words before the token, space-joined. Used to align facts. */
   ctx: string;
-  /** For numbers: the word right after ("people", "%", "km"). Empty when none. */
+  /** For numbers: the word right after ("people", "%", "km"). For ISO dates: the year. */
   unit: string;
 }
 
@@ -386,7 +386,9 @@ const YEAR = /\b(19\d{2}|20\d{2})\b/g;
 
 function extractDates(text: string, out: Fact[], claims: Claims): void {
   for (const m of text.matchAll(ISO_DATE)) {
-    pushFact(out, claims, text, 'date', m.index, m[0], `md:${Number(m[2])}-${Number(m[3])}`);
+    // The year rides in `unit`: "2026-03-14" equals "March 14" but not "2025-03-14".
+    const md = `md:${Number(m[2])}-${Number(m[3])}`;
+    pushFact(out, claims, text, 'date', m.index, m[0], md, m[1] ?? '');
   }
   for (const m of text.matchAll(MONTH_DAY)) {
     const month = MONTHS[(m[1] ?? '').toLowerCase()] ?? 0;
