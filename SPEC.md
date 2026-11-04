@@ -180,9 +180,9 @@ Never stored:
 |---|---|
 | `storage`, `unlimitedStorage` | Memory |
 | `offscreen` | Engine host |
-| `scripting`, `tabs` | Install-time ingest of open tabs |
+| `scripting` | Content-script registration and install-time ingest of open tabs (tab URLs come from the granted host access; no `tabs` permission, which warns about browsing history) |
 | `alarms` | TTL sweep |
-| `activeTab` | Works on click before host access is granted |
+| `activeTab` | The popup reads the current tab's address (site name, per-site pause) before host access is granted |
 | optional host `https://*/*`, `http://*/*` | Requested on the onboarding page with an explanation; needed for passive operation |
 
 ## 9. Platform matrix

@@ -35,6 +35,27 @@ not been run.
 - Toolbar and store icons.
 - CI workflow, contributing guide, code of conduct, security policy, issue and PR templates.
 
+### Fixed before release (from an internal code review)
+
+- Paragraphs read after the engine was unloaded (5 idle minutes) or in the 31st open article were
+  silently not remembered. The read now carries the paragraph text and the engine rebuilds the
+  article's session.
+- The offscreen engine accepted messages from any extension context; it now accepts only the
+  background, so a content script cannot reach memory or wipe directly.
+- The drift guard now treats the same figure in a different unit ("90 km" and "90 miles", "40%"
+  and "40 people") and swapped figures ("14 dead, 12 injured" and "12 dead, 14 injured") as
+  changes, and ISO dates keep their year.
+- A failed model load no longer leaves the engine degraded until it is unloaded; it is retried
+  after a minute.
+- Live blogs with more than 600 posts, very long posts or long site names were rejected whole;
+  they are now trimmed to the message limits.
+- A page that mutates constantly (tickers, carousels) could starve live-blog and infinite-scroll
+  handling and grow an unbounded buffer; mutations are now handled in capped batches.
+- The daily expiry sweep alarm is re-created on every start, and expired paragraphs never match
+  even before the sweep runs.
+- The `tabs` permission (which warns about browsing history at install) is replaced by
+  `activeTab`; closed tabs' status entries are removed.
+
 ### Known limitations
 
 See "Limitations" in `README.md`. In short: changed-meaning recall is 0.82 on a small authored

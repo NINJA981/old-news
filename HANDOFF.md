@@ -1,7 +1,91 @@
 # HANDOFF: Old News
 
-**Last stage:** Stage 3a rerun, product UI fixes for QA round 1 (2026-10-28)
-**Next stage:** QA round 2 (independent critic), then store assets, CI, release (see "Known issues")
+**Last stage:** Release prep for the public launch, branch `release/linkedin` (2026-11-04)
+**Next:** the maintainer's decisions below, then push, tag `v0.1.0`, attach the zips, post.
+
+## Release prep (2026-11-04)
+
+### Decisions waiting for the maintainer
+
+1. **Git history.** The first eight commits (on `main`, before this branch) carry another author
+   name and email and `Co-Authored-By` trailers. Nothing was rewritten. A rewrite (for example
+   `git filter-repo --mailmap` plus a message callback) has to happen on a fresh clone before the
+   first push, and it changes every commit id.
+2. **Repository URL.** README, CHANGELOG, `package.json` and the issue-template link assume
+   `github.com/NINJA981/old-news`. Change them if the repo lives elsewhere.
+3. **Code of Conduct contact.** It points to GitHub's private reporting form. Add an email if you
+   prefer one.
+4. **The LinkedIn hook** in `docs/launch/LAUNCH.md` is a first-person anecdote. Post it only if it
+   is true for you; an alternative hook is given.
+5. **Relative days stay a change** (review item 5, declined): "today" becoming "yesterday" in a
+   next-day reprint keeps the paragraph lit with a chip. Excluding relative days would fully fade
+   the corpus pair `date-05` and fail the `pnpm eval` gate, and it goes against "trust beats
+   coverage". Revisit with real reprint data.
+
+### What changed on this branch
+
+- **README rewritten** (it still called the overlay, popup and onboarding placeholders): pitch,
+  hero GIF, install for Chrome and Firefox, how it works, privacy checks, every permission with its
+  reason, measured numbers with their commands, limitations, model download, release zips.
+- **OSS files:** CONTRIBUTING, CODE_OF_CONDUCT (Contributor Covenant 2.1), SECURITY, CHANGELOG
+  0.1.0, issue and PR templates, `.github/workflows/ci.yml` (never run on GitHub yet).
+- **Package:** licence texts ship in the build (`LICENSE.txt`, `THIRD_PARTY.md`, `licenses/`,
+  written by `scripts/copy-assets.ts`), icons 16/32/48/128 in `public/icon/` (from
+  `site/scripts/make-icons.ts`), `tabs` permission replaced by `activeTab` (no history warning),
+  `zip:firefox` script. THIRD_PARTY.md lists the UI libraries it was missing.
+- **Docs are self-contained:** no references to private planning files. The superseded QA round 1
+  captures (18 MB) are removed. `.impeccable/config.json` is documented in CONTRIBUTING.
+- **One drift-chip example everywhere:** "12 → 14 · Calder Courier said 12, 16 min ago" (what the
+  fixture clock produces). Extension screenshots show "just now", because the fixtures are read
+  seconds before capture.
+- **UI:** the popup has a designed "Nothing new here" state; the pill uses the `rounded.full` token;
+  search placeholders end with an ellipsis and turn off autocomplete.
+- **Code review fixes** (19 findings; items 1-4, 6-10, 12-15 and the dead `readModelInfo` fixed with
+  tests): reads after the engine is recycled are remembered (the read carries its text and the
+  session is rebuilt), the offscreen engine only accepts the background as sender, the guard
+  handles units, swapped figures and ISO years, a failed model is retried after 60 s, pages are
+  trimmed to the message limits instead of rejected, mutations are handled in capped throttled
+  batches, the sweep alarm is re-created on start and expired paragraphs never match, closed tabs'
+  summaries are removed, new paragraphs' facts are capped like stored ones, and a second
+  `markRead` of the same ordinals cannot store them twice.
+- **Launch kit** in `docs/launch/`: `LAUNCH.md` (post, alt text, store copy, claims table),
+  three 1280×800 store screenshots, a 1280×640 social preview and `dissolve.gif`, all from the
+  real built extension on fixture stories (`pnpm launch-assets`, `tests/e2e/launch.spec.ts`). The
+  zips are copied there but gitignored.
+
+### Verified on this branch (all through the studio RAM lock, one worker)
+
+| Command | Result |
+|---|---|
+| `pnpm lint`, `pnpm typecheck`, `pnpm check-tokens` | pass |
+| `vitest run --maxWorkers=1 --no-file-parallelism` | 612 passed (30 files) |
+| `playwright test --workers=1` (real model, no-network assertion on every test, axe, parity) | 24 passed, 5 skipped (the gated screenshot and launch specs) |
+| `pnpm eval` (authored corpus) | gates pass, metrics unchanged |
+| `pnpm build`, `pnpm build:firefox`, `pnpm zip`, `pnpm zip:firefox` | pass; Chrome zip 24.76 MB (56.73 MB unpacked), Firefox zip 24.94 MB, sources zip 81.40 MB; content script 38.3 KB gz (budget 45), popup JS 4.5 KB gz |
+| `site/`: typecheck, lint, check-tokens, 30 unit tests | pass |
+| `gitleaks detect --no-banner` (history) and `--no-git` (tree) | no leaks |
+| Built manifest | `connect-src 'self'`, no required host permissions, icons, permissions `storage, unlimitedStorage, scripting, activeTab, alarms, offscreen` |
+
+One e2e run lost its Chromium service worker under memory pressure (the layout-fixture test); the
+same test passed 4 of 4 on a re-run and the next full run passed.
+
+### Still not done
+
+- **Accuracy on real news sites is unmeasured.** The external real-article eval
+  (`accuracy/old-news` in the studio) has only a one-pair smoke set; its pairs need human-reviewed
+  labels. `pnpm eval` on the authored corpus was re-run after the guard changes (2026-11-04):
+  every metric is identical to 2026-10-27 (seen precision 1.0, wire recall 0.98, changed-meaning
+  recall 0.816, 0 changed-meaning full fades, gates pass); only `measuredAt` moved.
+- **Firefox never run.** Built and zipped only.
+- **Independent design QA round 2** did not happen; the 9.0 rubric is still the builder's own
+  score. A static audit (`impeccable detect`, web interface guidelines) found and fixed one radius
+  drift and the placeholder/autocomplete items.
+- **Review items left as documented limits:** 11 ("same article" depends on the engine's
+  lifetime), 16 (thresholds untuned), 18 (duplicated drift-record code), 5 (declined, above).
+- **Sources zip is 81 MB** because it bundles the model and wasm from `public/`, `site/public/` and
+  `site/dist/`. AMO accepts it, but excluding `site/dist` and the fetched model files would shrink it.
+- No real-site smoke list, no screen-reader pass, no video review of the dissolve, cold start
+  not re-measured.
 
 ## Stage 3a rerun: QA round 1 fixes in the extension (2026-10-28)
 
@@ -55,7 +139,7 @@ Checks at the end of this stage: `pnpm lint`, `pnpm typecheck`, `pnpm check-toke
 `OLD_NEWS_SHOTS=1`, axe 0 violations) all pass. `pnpm screenshots` passed; two of its groups needed one
 retry each after a renderer crash or an engine that never answered under memory pressure.
 
-Rubric (bible section 9), **self-scored by the builder, not an independent critic**: identity 9,
+Rubric (the ten-criterion design rubric in SPEC AC-D1), **self-scored by the builder, not an independent critic**: identity 9,
 typography 9, colour 9, layout 9, hierarchy 9, component craft 9, states and a11y 9, motion 9, system
 states 9, responsive 9; average 9.0, minimum 9. The QA r1 critic scored 8.2; a second independent pass
 is the real gate. Not done: a screen-reader pass, a video (not stills) review of the dissolve, and the
@@ -64,9 +148,9 @@ came from @motion-primitives, @animate-ui or @magicui; the UI keeps Radix, cmdk,
 
 ## QA round 1: design critic (2026-10-28), verdict REVISE
 
-Independent review of fresh screenshots (`docs/screenshots/qa-r1/`: `ext/` is the extension pass from
-`pnpm screenshots`, `site-*` is the landing page and web app at 375/768/1440 in light and dark). No code was
-edited. Rubric average **8.2** (min 7.5), no hard fail observed, so the gate (avg >= 9, min >= 8) is **not met**.
+Independent review of fresh screenshots of the extension (`pnpm screenshots`) and of the landing page and
+web app at 375/768/1440 in light and dark (those captures were removed in the release prep; they showed
+the pre-fix state). No code was edited. Rubric average **8.2** (min 7.5), no hard fail observed, so the gate (avg >= 9, min >= 8) is **not met**.
 Scores: identity 8.5, typography 8.5, colour 8.5, layout 7.5, hierarchy/content 7.5, component craft 8.5,
 states/a11y 8.5, motion 8.0, system states 8.5, responsive 8.0. Top fixes, in order:
 
@@ -79,7 +163,7 @@ states/a11y 8.5, motion 8.0, system states 8.5, responsive 8.0. Top fixes, in or
 5. Pill count and width are not deterministic under `__frame` (frame 0 reads "19 of 23" with every paragraph
    still in full ink) and the pill width jumps as digits change. No reduced-motion frame strip exists.
 
-Full list with exact fixes is in the critic report returned to the orchestrator.
+Only the top five findings were recorded in this repository; all five are fixed (see above and `site/HANDOFF.md`).
 
 ## State in one paragraph
 
@@ -178,7 +262,7 @@ drift chip was mid-fade. `site/pnpm-lock.yaml` is back to pnpm's native format a
 6. Memory screen could claim "Memory is empty." from a stale cache while memory had data.
 7. The screenshot script remembered the day-2 page it then screenshotted, so it matched itself.
 
-### Rubric (DESIGN_BIBLE section 9), self-scored by the builder, not an independent critic
+### Rubric (SPEC AC-D1), self-scored by the builder, not an independent critic
 
 | # | Criterion | Score | Evidence and what holds it back |
 |---|---|---|---|
@@ -212,7 +296,7 @@ pnpm size            # zips and reports package size; `--record` / `--check` for
 ```
 
 Load `.output/chrome-mv3` as an unpacked extension. The content script is registered at runtime, so
-**the reader must click "Allow on websites" on the onboarding page** (it opens on install) before
+**the reader must click "Allow on article pages" on the onboarding page** (it opens on install) before
 any page is read. The e2e build skips that by adding one required host permission for 127.0.0.1.
 
 ## What is done
@@ -314,17 +398,16 @@ Raw numbers: `metrics.json` (`pnpm eval`) and `test-results/engine-perf.json` (e
    card and the popup (transient), but not in the app's Drift screen.
 10. **Ad copy inside a paragraph element** can trigger drift chips about ad numbers when the ad slot's
     class is not on Readability's unlikely list (`tests/fixtures/PROVENANCE.md`).
-11. **No CI config yet.** The gates exist as commands: `pnpm test`, `lint`, `typecheck`, `build`,
-    `eval` (fails on seen precision < 0.98 or any changed-meaning full fade), `size --check`,
-    `check-tokens`, `test:e2e`.
-12. **`activeTab` is unused** until a click-to-run path exists. `docs/smoke-sites.md` (real-site smoke
-    list) still does not exist.
-13. **A shell trap for the next agent:** inside a double-quoted `node -e "..."` in this environment,
+11. **CI exists but has never run on GitHub** (`.github/workflows/ci.yml`: lint, typecheck,
+    check-tokens, unit, eval, both builds and zips, and the Chromium e2e). The repo has not been pushed.
+12. **No real-site smoke list.** `docs/smoke-sites.md` does not exist; nothing has been run on real
+    news sites. (`activeTab` was removed from the manifest in the release prep; it was never used.)
+13. **A shell trap for contributors on Windows:** inside a double-quoted `node -e "..."` in this environment,
     backslashes are eaten. Write scripts to files. Prettier and editors can turn a literal NBSP into
     an "irregular whitespace" lint error; use ` ` in regexes.
-12. **Site notes live in `site/HANDOFF.md`** (landing and web app, Stage 3b). Its perf numbers are from
+14. **Site notes live in `site/HANDOFF.md`** (landing and web app, Stage 3b). Its perf numbers are from
     one laptop under emulation and noisy; re-measure LCP on the deployed host. Lighthouse "Agentic
     Browsing" scores 75 (an experimental `ai-catalog.json` audit), left as is.
-13. **Parity depends on the sample vectors being current.** `site/src/data/embeddings.json` holds
+15. **Parity depends on the sample vectors being current.** `site/src/data/embeddings.json` holds
     build-time MiniLM vectors; if the sample stories or the model change, regenerate them
     (`pnpm --dir site fixtures`) or the parity test will say so.

@@ -95,8 +95,8 @@ idle. Details: `docs/adr/0001-architecture.md`.
 | Permission | Why |
 |---|---|
 | Site access (optional, asked on the onboarding page) | To read article pages and paint the overlay. Not granted at install. |
-| `scripting` | Registers the content script once you allow site access. |
-| `tabs` | Lists your open article tabs for the onboarding offer, and keeps the badge per tab. |
+| `scripting` | Registers the content script once you allow site access, and reads already-open tabs for the onboarding offer. |
+| `activeTab` | Lets the popup see which site the current tab is on, for the per-site switch, before site access is granted. |
 | `storage`, `unlimitedStorage` | Settings, and the paragraph memory in IndexedDB. |
 | `alarms` | The 30-day expiry sweep and unloading the model when idle. |
 | `offscreen` (Chrome) | Runs the model in an offscreen document. |
@@ -140,6 +140,11 @@ measurement of accuracy on real news sites, which has not been done yet.
 - **English only, desktop only.** Mobile Chrome has no extensions; the web app is the phone path.
 - **Drift is stored only once you read the changed paragraph.** Until then the card and popup list
   it, but the app's Drift screen does not.
+- **Relative days count as a change.** A wire story reprinted the next day often turns "today"
+  into "yesterday". Old News keeps that paragraph lit with a chip rather than risk fading a real
+  date change; it costs a glance, never a missed fact.
+- **"Same article" depends on the engine's lifetime.** Re-opening an article you just read does not
+  fade it against itself; after the engine has been unloaded (5 idle minutes), it does.
 - **Ad copy inside a paragraph** can produce a chip about an ad's numbers when the ad slot is not
   recognised.
 - **Not covered by automated tests:** the real site-access prompt (it needs a user gesture), the web

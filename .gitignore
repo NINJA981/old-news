@@ -20,3 +20,5 @@ public/fonts/
 public/licenses/
 public/LICENSE.txt
 public/THIRD_PARTY.md
+# Release zips are build output; attach them to the GitHub release.
+docs/launch/*.zip
